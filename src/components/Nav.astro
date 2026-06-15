@@ -1,0 +1,134 @@
+---
+import { nav, contact } from '../data/site';
+/** En la home los anchors funcionan; en páginas legales hay que volver a la raíz */
+interface Props { home?: boolean }
+const { home = true } = Astro.props;
+const prefix = home ? '' : '/';
+---
+
+<header class="nav" id="site-nav">
+  <div class="container nav-inner">
+    <a class="wordmark" href="/" aria-label="X21 — home">
+      <img src="/X21_Logo_Blanco.png" alt="X21" width="936" height="394" />
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      {nav.map((item) => (
+        <a href={`${prefix}${item.href}`}>{item.label}</a>
+      ))}
+      <a class="btn nav-cta" href={`${prefix}#contact`}>Contact</a>
+    </nav>
+
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    {nav.map((item) => (
+      <a href={`${prefix}${item.href}`}>{item.label}</a>
+    ))}
+    <a href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(22, 19, 16, 0.82);
+    backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+  }
+  .wordmark img {
+    height: 26px;
+    width: auto;
+    display: block;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+  .nav-links a {
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { padding: 0.5rem 1.1rem; }
+  .nav-cta:hover { color: var(--bg); }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .nav-toggle span {
+    width: 22px; height: 1.5px;
+    background: var(--gold);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-toggle[aria-expanded='true'] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-toggle[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded='true'] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.5rem var(--gutter) 1.5rem;
+    border-top: 0.5px solid var(--border);
+    background: var(--bg-deep);
+  }
+  .mobile-menu a {
+    padding: 0.7rem 0;
+    color: var(--text-muted);
+    border-bottom: 0.5px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+  }
+  @media (min-width: 861px) {
+    .mobile-menu { display: none !important; }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+      menu.hidden = open;
+    });
+    menu.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+      })
+    );
+  }
+</script>

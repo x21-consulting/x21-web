@@ -1,0 +1,379 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { hero, services, team, why, contact } from '../data/site';
+
+const icons: Record<string, string> = {
+  affairs:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg>',
+  media:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8 21h8"/></svg>',
+  risk:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>',
+};
+---
+
+<BaseLayout>
+  <Nav />
+
+  <main id="main">
+    <!-- HERO (oscuro) -->
+    <section class="hero tone-dark" id="top">
+      <div class="container hero-inner">
+        <p class="eyebrow">{hero.kicker}</p>
+        <h1 class="hero-title">
+          {hero.title.map((line, i) => (
+            <span class="hero-line" style={`--d:${i * 90}ms`}>{line}</span>
+          ))}
+        </h1>
+        <p class="hero-body">{hero.body}</p>
+        <div class="hero-actions">
+          <a class="btn" href={hero.primaryCta.href}>{hero.primaryCta.label}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES (off-white) · texto izq · imagen der -->
+    <section class="feature tone-light" id="services">
+      <div class="feature-text">
+        <div class="feature-inner">
+          <p class="eyebrow reveal">{services.eyebrow}</p>
+          <h2 class="section-title reveal">{services.title}</h2>
+          <p class="lead reveal">{services.lead}</p>
+          <div class="svc-list">
+            {services.blocks.map((b) => (
+              <article class="svc-block reveal">
+                <span class="svc-icon" set:html={icons[b.icon]} />
+                <div>
+                  <h3 class="svc-title">{b.title}</h3>
+                  <p class="svc-tagline">{b.tagline}</p>
+                  <ul class="svc-items">
+                    {b.items.map((it) => <li>{it}</li>)}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="feature-media">
+        <img class="parallax-img" src={services.image} alt={services.imageCaption} loading="lazy" />
+      </div>
+    </section>
+
+    <!-- TEAM (crema) · imagen izq · texto der -->
+    <section class="feature tone-cream" id="team">
+      <div class="feature-media">
+        <img class="parallax-img" src={team.image} alt="X21 — purposeful reputation" loading="lazy" />
+      </div>
+      <div class="feature-text">
+        <div class="feature-inner">
+          <p class="eyebrow reveal">{team.eyebrow}</p>
+          <h2 class="section-title reveal">{team.title}</h2>
+          <p class="lead reveal">{team.lead}</p>
+          <figure class="quote reveal">
+            <blockquote>“{team.quote.text}”</blockquote>
+            <figcaption>
+              <span class="q-author">{team.quote.author}</span>
+              <span class="q-role">{team.quote.role}</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY X21 (oscuro) · texto izq · imagen der -->
+    <section class="feature tone-dark" id="why">
+      <div class="feature-text">
+        <div class="feature-inner">
+          <p class="eyebrow reveal">{why.eyebrow}</p>
+          <h2 class="section-title reveal">{why.title}</h2>
+          <p class="lead reveal">{why.lead}</p>
+          <ul class="pillars">
+            {why.pillars.map((p) => (
+              <li class="reveal">
+                <span class="pillar-label">{p.label}</span>
+                <span class="pillar-body">{p.body}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="feature-media">
+        <img class="parallax-img" src={why.image} alt="X21 — communication for changing times" loading="lazy" />
+      </div>
+    </section>
+
+    <!-- CONTACT (oscuro) -->
+    <section class="section contact tone-dark" id="contact">
+      <div class="container">
+        <p class="eyebrow">{contact.eyebrow}</p>
+        <h2 class="contact-title">{contact.title}</h2>
+        <div class="contact-grid">
+          <a class="contact-item" href={contact.addressUrl} target="_blank" rel="noopener">
+            <span class="ci-label">Office</span>
+            <span class="ci-value">{contact.address}</span>
+          </a>
+          <a class="contact-item" href={contact.phoneHref}>
+            <span class="ci-label">Phone</span>
+            <span class="ci-value">{contact.phoneLabel}</span>
+          </a>
+          <a class="contact-item" href={`mailto:${contact.email}`}>
+            <span class="ci-label">Email</span>
+            <span class="ci-value">{contact.email}</span>
+          </a>
+          <a class="contact-item" href={contact.linkedin} target="_blank" rel="noopener">
+            <span class="ci-label">Community</span>
+            <span class="ci-value">LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ===== Tonos por sección (sobrescriben tokens locales) ===== */
+  .tone-dark { background: var(--bg); }
+  .tone-light {
+    --bg: #f4f0e8;
+    --bg-alt: #ece7db;
+    --bg-deep: #e7e1d4;
+    --text: #1f1b15;
+    --text-muted: #6f675a;
+    --text-faint: #9a9082;
+    --gold: #9a7635;
+    --gold-dim: #876327;
+    --border: rgba(31, 27, 21, 0.14);
+    background: var(--bg);
+  }
+  .tone-cream {
+    --bg: #e9e1d2;
+    --bg-alt: #e0d7c4;
+    --bg-deep: #ddd3c0;
+    --text: #221d15;
+    --text-muted: #6b6253;
+    --text-faint: #8c8270;
+    --gold: #8f6c2e;
+    --gold-dim: #7a5a24;
+    --border: rgba(34, 29, 21, 0.16);
+    background: var(--bg);
+  }
+
+  /* ===== Feature: mitad texto / mitad imagen a sangre ===== */
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    min-height: clamp(580px, 84vh, 940px);
+    border-top: 0.5px solid var(--border);
+  }
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(3rem, 6vw, 6rem) var(--gutter);
+  }
+  .feature-inner { width: 100%; max-width: 600px; margin-inline: auto; }
+  .feature-media {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-deep);
+  }
+  .parallax-img {
+    position: absolute;
+    left: 0;
+    top: -14%;
+    width: 100%;
+    height: 128%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: clamp(560px, 86vh, 820px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after,
+  .hero::before {
+    content: '';
+    position: absolute;
+    border: 0.5px solid var(--border);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    right: -8%;
+    top: 50%;
+    width: 46vw;
+    max-width: 620px;
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    animation: heroBreathe 17s ease-in-out infinite;
+  }
+  .hero::before {
+    right: 6%;
+    top: 30%;
+    width: 26vw;
+    max-width: 340px;
+    aspect-ratio: 1;
+    opacity: 0.7;
+    animation: heroDrift 23s ease-in-out infinite;
+  }
+  @keyframes heroBreathe {
+    0%, 100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-52%) scale(1.05); }
+  }
+  @keyframes heroDrift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-4%, 5%); }
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-title { font-size: clamp(3.2rem, 9vw, 6.5rem); line-height: 0.98; margin: 0.4rem 0 0; }
+  .hero-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    animation-delay: var(--d);
+  }
+  .hero-body { color: var(--text-muted); font-size: 1.1rem; max-width: 52ch; margin-top: 1.8rem; }
+  .hero-actions { display: flex; align-items: center; gap: 1.8rem; margin-top: 2.4rem; flex-wrap: wrap; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ===== SERVICES ===== */
+  .svc-list { display: flex; flex-direction: column; margin-top: 2.4rem; }
+  .svc-block { display: flex; gap: 1.2rem; padding: 1.5rem 0; border-top: 0.5px solid var(--border); }
+  .svc-block:first-child { border-top: none; padding-top: 0; }
+  .svc-icon { flex: none; width: 28px; height: 28px; color: var(--gold); margin-top: 2px; }
+  .svc-icon :global(svg) { width: 100%; height: 100%; }
+  .svc-title { font-family: var(--font-display); font-size: 1.45rem; font-weight: 500; color: var(--text); }
+  .svc-tagline { color: var(--text-faint); font-size: 0.88rem; margin: 0.2rem 0 0.8rem; }
+  .svc-items { list-style: none; margin: 0; padding: 0; }
+  .svc-items li {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    padding: 0.3rem 0 0.3rem 1.1rem;
+    position: relative;
+  }
+  .svc-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.78rem;
+    width: 5px;
+    height: 5px;
+    background: var(--gold-dim);
+    border-radius: 50%;
+  }
+
+  /* ===== TEAM ===== */
+  .quote { margin: 2.4rem 0 0; }
+  .quote blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    line-height: 1.22;
+    color: var(--text);
+    margin: 0 0 1.4rem;
+    border-left: 1.5px solid var(--gold);
+    padding-left: 1.5rem;
+  }
+  .quote figcaption { display: flex; flex-direction: column; gap: 0.2rem; padding-left: calc(1.5rem + 1.5px); }
+  .q-author { color: var(--gold); font-size: 0.95rem; letter-spacing: 0.02em; }
+  .q-role { color: var(--text-faint); font-size: 0.85rem; }
+
+  /* ===== WHY ===== */
+  .pillars { list-style: none; margin: 2.4rem 0 0; padding: 0; display: flex; flex-direction: column; }
+  .pillars li {
+    display: grid;
+    grid-template-columns: minmax(120px, 160px) 1fr;
+    gap: clamp(0.8rem, 2vw, 1.6rem);
+    padding: 1.3rem 0;
+    border-top: 0.5px solid var(--border);
+    align-items: baseline;
+  }
+  .pillars li:last-child { border-bottom: 0.5px solid var(--border); }
+  .pillar-label { font-family: var(--font-display); font-size: 1.4rem; color: var(--text); }
+  .pillar-body { color: var(--text-muted); font-size: 0.95rem; }
+
+  /* ===== CONTACT ===== */
+  .contact-title { font-size: clamp(2.4rem, 6vw, 4.2rem); margin-top: 0.4rem; max-width: 14ch; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    margin-top: 3.5rem;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+  .contact-item {
+    background: var(--bg);
+    padding: 1.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: background-color 0.25s ease;
+  }
+  .contact-item:hover { background: var(--bg-alt); }
+  .ci-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); }
+  .ci-value { color: var(--text); font-size: 1rem; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 860px) {
+    .feature { grid-template-columns: 1fr; }
+    .feature-media { min-height: 64vh; order: 2; }
+    .feature-text { order: 1; }
+    .pillars li { grid-template-columns: 1fr; gap: 0.3rem; }
+  }
+</style>
+
+<script>
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add('is-visible'));
+  }
+
+  // Parallax dentro de cada columna de imagen
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.parallax-img'));
+  if (!reduce && imgs.length) {
+    let ticking = false;
+    const update = () => {
+      const vh = window.innerHeight;
+      for (const img of imgs) {
+        const frame = img.parentElement as HTMLElement;
+        const rect = frame.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) continue;
+        const center = rect.top + rect.height / 2;
+        const progress = (center - vh / 2) / vh;
+        const travel = rect.height * 0.12;
+        img.style.transform = `translate3d(0, ${(-progress * travel).toFixed(1)}px, 0)`;
+      }
+      ticking = false;
+    };
+    const onScroll = () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+</script>

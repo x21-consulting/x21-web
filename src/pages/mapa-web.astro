@@ -1,0 +1,21 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { nav } from '../data/site';
+---
+
+<LegalLayout title="Site Map" description="Site map of x21.consulting.">
+  <h3>Main</h3>
+  <ul>
+    <li><a href="/">Home</a></li>
+    {nav.map((item) => (
+      <li><a href={`/${item.href}`}>{item.label}</a></li>
+    ))}
+  </ul>
+
+  <h3>Legal</h3>
+  <ul>
+    <li><a href="/aviso-legal">Legal Notice</a></li>
+    <li><a href="/declaracion-de-accesibilidad">Accessibility Statement</a></li>
+    <li><a href="/mapa-web">Site Map</a></li>
+  </ul>
+</LegalLayout>

@@ -1,0 +1,17 @@
+{
+  "name": "x21-web",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "X21 corporate landing — XPECTATIONS21 S.L.U.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.3.0",
+    "astro": "^5.9.0"
+  }
+}
