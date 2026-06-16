@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { hero, services, team, why, contact } from '../data/site';
+import { hero, services, team, why, contact, commitments } from '../data/site';
 
 const ENDPOINT =
   import.meta.env.PUBLIC_LEADS_ENDPOINT || 'https://erp.x21.consulting/api/leads';
@@ -137,8 +137,22 @@ const initials = (name: string) =>
       </div>
     </section>
 
-    <!-- CONTACT (oscuro) -->
-    <!-- BRIEFING -->
+    <!-- COMMITMENTS (oscuro) -->
+    <section class="section tone-dark commitments">
+      <div class="container">
+        <p class="eyebrow reveal">{commitments.eyebrow}</p>
+        <div class="commit-grid">
+          {commitments.items.map((c) => (
+            <div class="commit reveal">
+              <h3 class="commit-title">{c.title}</h3>
+              <p class="commit-body">{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- BRIEFING (crema) -->
     <section class="section tone-cream briefing" id="briefing" data-endpoint={ENDPOINT}>
       <div class="container">
         <div class="briefing-grid">
@@ -589,6 +603,21 @@ const initials = (name: string) =>
   .briefing .form-status { margin-top: 0.6rem; }
   .briefing .form-thanks { margin-top: 0.5rem; }
 
+  /* Estado suscrito: bloque compacto, sin portada/lead/formulario */
+  .briefing.subscribed { padding-block: clamp(2.4rem, 5vw, 3.4rem); }
+  .briefing.subscribed .briefing-grid { grid-template-columns: 1fr; gap: 0; }
+  .briefing.subscribed .briefing-art,
+  .briefing.subscribed .briefing-lead,
+  .briefing.subscribed .briefing-form { display: none; }
+  .briefing.subscribed .form-thanks { margin-top: 0.7rem; }
+
+  /* ===== COMMITMENTS ===== */
+  .commitments .eyebrow { margin-bottom: 2.4rem; }
+  .commit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4rem; }
+  .commit::before { content: ''; display: block; width: 28px; height: 2px; background: var(--gold); margin-bottom: 1.1rem; }
+  .commit-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; color: var(--text); margin: 0 0 0.5rem; line-height: 1.15; }
+  .commit-body { color: var(--text-muted); font-size: 0.92rem; line-height: 1.55; margin: 0; }
+
   /* ===== Responsive ===== */
   @media (max-width: 860px) {
     .feature { grid-template-columns: 1fr; }
@@ -598,6 +627,10 @@ const initials = (name: string) =>
     .fields { grid-template-columns: 1fr; }
     .briefing-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .briefing-art svg { max-width: 170px; }
+    .commit-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.6rem; }
+  }
+  @media (max-width: 520px) {
+    .commit-grid { grid-template-columns: 1fr; }
   }
 </style>
 
@@ -720,6 +753,11 @@ const initials = (name: string) =>
             ? (form.parentElement.querySelector('.form-thanks') as HTMLElement | null)
             : null;
           if (thanks) thanks.hidden = false;
+          if (intent === 'subscribe') {
+            try { localStorage.setItem('x21_briefing_subscribed', '1'); } catch (e) {}
+            const sec = form.closest('.briefing');
+            if (sec) sec.classList.add('subscribed');
+          }
         } else {
           if (btn) btn.disabled = false;
           setStatus('Something went wrong. Please try again or email us directly.', true);
@@ -730,4 +768,18 @@ const initials = (name: string) =>
       }
     });
   });
+
+  // Recordar suscripción al briefing y colapsar el bloque en visitas posteriores
+  try {
+    if (localStorage.getItem('x21_briefing_subscribed') === '1') {
+      const sec = document.querySelector('.briefing');
+      if (sec) {
+        sec.classList.add('subscribed');
+        const f = sec.querySelector('.briefing-form') as HTMLElement | null;
+        if (f) f.hidden = true;
+        const t = sec.querySelector('.form-thanks') as HTMLElement | null;
+        if (t) t.hidden = false;
+      }
+    }
+  } catch (e) {}
 </script>

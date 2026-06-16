@@ -153,3 +153,25 @@ export const footer = {
     { label: 'Site Map', href: '/mapa-web' },
   ],
 };
+
+export const commitments = {
+  eyebrow: 'Our commitments',
+  items: [
+    {
+      title: 'Partners, not pyramids',
+      body: 'The people who win the work do the work. Senior counsel throughout, never delegated down.',
+    },
+    {
+      title: 'Evidence before opinion',
+      body: 'We measure reputation with our GERS© model before we advise on it.',
+    },
+    {
+      title: 'Candor over comfort',
+      body: "Independent enough to tell you what you'd rather not hear.",
+    },
+    {
+      title: 'Discretion as default',
+      body: 'The most important work is the work no one sees.',
+    },
+  ],
+};
