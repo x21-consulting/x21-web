@@ -86,6 +86,8 @@ export const team = {
       area: 'Technology, Risks and Reputational Crisis',
       icon: 'risk',
       photo: '/team-juan.jpg',
+      email: 'jcardona@x21.consulting',
+      linkedin: 'https://www.linkedin.com/in/jcardonasoriano/',
       bio: 'Corporate advisor with 25 years of experience in strategic communications, reputation and sustainability. He has held executive positions at LLYC, Corporate Excellence and Grupo Ferrovial. He has advised the Government of Spain on its sustainability strategy.',
     },
     {
@@ -94,6 +96,8 @@ export const team = {
       area: 'Corporate Affairs',
       icon: 'affairs',
       photo: '/team-antonieta.jpg',
+      email: 'amendoza@x21.consulting',
+      linkedin: 'https://www.linkedin.com/in/antonieta-mendoza-de-l%C3%B3pez-a9bb6a15b',
       bio: 'Senior strategic communications and media relations professional with over 30 years of international experience across Spain, the United States and multi-regional projects. She has positioned organizations and leaders in top-tier media such as the Financial Times, Bloomberg, The Economist, CNN and BBC.',
     },
     {
@@ -102,6 +106,8 @@ export const team = {
       area: 'Corporate Affairs',
       icon: 'affairs',
       photo: '/team-claudio.jpg',
+      email: 'cvallejo@x21.consulting',
+      linkedin: 'https://www.linkedin.com/in/claudiovallejoaguilareal/',
       bio: 'Senior consultant in communications, reputation and public diplomacy with over 30 years of international experience across Spain and Latin America. He has held executive positions at LLYC, Kreab, CODERE, Ence and Unión Fenosa, leading corporate communications, crisis management and financial communications — including IPO processes — across energy, pulp, private gaming and professional services. He began his career as Commercial Attaché at the Embassy of Spain in Ecuador, coordinating ICEX activity and bilateral economic diplomacy. He combines corporate vision, multinational experience and institutional sensibility, with projects in more than eight countries across two continents.',
     },
     {
@@ -110,6 +116,8 @@ export const team = {
       area: 'Media Relations',
       icon: 'media',
       photo: '/team-gemma.jpg',
+      email: 'gemmamartinpiquet@x21.consulting',
+      linkedin: 'https://www.linkedin.com/in/gemma-martin-b166551/',
       bio: 'Senior strategic communications and media relations professional with over 20 years of international experience across Spain, the United States and multi-regional projects (Europe, the Middle East, the Americas and Asia). She has led corporate and institutional communications strategies across energy, infrastructure, finance and the public sector, positioning organizations and leaders in top-tier media (Financial Times, Bloomberg, The Economist, CNN, BBC) and at international forums (UN, Davos, EU).',
     },
   ],
