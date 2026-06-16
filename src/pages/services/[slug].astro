@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { services, team } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.blocks.map((b) => ({ params: { slug: b.slug }, props: { block: b } }));
+}
+
+const { block } = Astro.props;
+const leaders = team.members.filter((m) => block.partners.includes(m.name));
+const initials = (name: string) =>
+  name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('');
+---
+
+<BaseLayout title={`${block.title} — X21`} description={block.lead}>
+  <Nav home={false} />
+
+  <main id="main">
+    <section class="svc-page">
+      <div class="container">
+        <header class="svc-head">
+          <p class="eyebrow">Services</p>
+          <h1 class="section-title">{block.title}</h1>
+          <p class="svc-head-tag">{block.tagline}</p>
+          <p class="lead">{block.lead}</p>
+        </header>
+
+        <div class="svc-caps">
+          {block.capabilities.map((c) => (
+            <article class="svc-cap">
+              <h2 class="svc-cap-title">{c.title}</h2>
+              <p class="svc-cap-body">{c.body}</p>
+            </article>
+          ))}
+        </div>
+
+        {leaders.length > 0 && (
+          <div class="svc-leads">
+            <p class="svc-leads-label">Led by</p>
+            <div class="svc-leads-list">
+              {leaders.map((m) => (
+                <a class="svc-lead" href="/team">
+                  <span class="svc-lead-photo">
+                    {m.photo
+                      ? <img src={m.photo} alt={m.name} loading="lazy" />
+                      : <span class="svc-lead-mono">{initials(m.name)}</span>}
+                  </span>
+                  <span class="svc-lead-text">
+                    <span class="svc-lead-name">{m.name}</span>
+                    <span class="svc-lead-title">{m.title}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div class="svc-cta">
+          <a class="btn-dark" href="/#contact">Start a conversation</a>
+          <a class="svc-back" href="/#services">← All services</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .svc-page {
+    --bg: #f4f0e8;
+    --bg-alt: #ece7db;
+    --text: #1f1b15;
+    --text-muted: #6f675a;
+    --text-faint: #9a9082;
+    --gold: #9a7635;
+    --gold-dim: #876327;
+    --border: rgba(31, 27, 21, 0.14);
+    background: var(--bg);
+    color: var(--text);
+    padding: clamp(4.5rem, 9vw, 7rem) 0 clamp(4rem, 9vw, 7rem);
+    min-height: 90vh;
+  }
+  .svc-head { max-width: 640px; }
+  .svc-head-tag { color: var(--gold-dim); font-size: 0.95rem; letter-spacing: 0.04em; margin: 0.5rem 0 0; }
+  .svc-head .lead { margin-top: 1.1rem; }
+
+  .svc-caps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: clamp(2.6rem, 6vw, 4rem);
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+  .svc-cap { background: var(--bg); padding: clamp(1.4rem, 3vw, 2rem); }
+  .svc-cap-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 500; color: var(--text); margin: 0 0 0.6rem; }
+  .svc-cap-body { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+  .svc-leads { margin-top: clamp(2.6rem, 6vw, 4rem); }
+  .svc-leads-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin: 0 0 1.2rem; }
+  .svc-leads-list { display: flex; flex-wrap: wrap; gap: 2rem; }
+  .svc-lead { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+  .svc-lead-photo {
+    width: 64px; height: 64px; border-radius: 4px; overflow: hidden;
+    border: 0.5px solid var(--border); background: var(--bg-alt);
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .svc-lead-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .svc-lead-mono { font-family: var(--font-display); font-size: 1.4rem; color: var(--gold); }
+  .svc-lead-name { display: block; font-family: var(--font-display); font-size: 1.2rem; color: var(--text); }
+  .svc-lead-title { display: block; color: var(--text-muted); font-size: 0.85rem; margin-top: 0.1rem; }
+
+  .svc-cta { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; margin-top: clamp(2.8rem, 6vw, 4rem); border-top: 0.5px solid var(--border); padding-top: clamp(2rem, 5vw, 3rem); }
+  .btn-dark {
+    display: inline-block; background: var(--text); color: var(--bg);
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.85rem 1.7rem; border-radius: 4px; text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+  .svc-back { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s ease; }
+  .svc-back:hover { color: var(--text); }
+
+  @media (max-width: 720px) {
+    .svc-caps { grid-template-columns: 1fr; }
+  }
+</style>

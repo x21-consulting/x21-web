@@ -33,33 +33,42 @@ export const services = {
     {
       icon: 'affairs',
       title: 'Corporate Affairs',
+      slug: 'corporate-affairs',
       tagline: 'The strategic and institutional core.',
-      items: [
-        'Reputation strategy and narrative',
-        'Reputational due diligence in M&A',
-        'Expert reputation reports for litigation (party-appointed)',
-        'Stakeholder engagement and support: investors, regulators, public institutions, foundations and NGOs',
+      lead: "When reputation is the asset at stake, strategy can't be improvised. Corporate Affairs is where we set the narrative, protect value in critical transactions, and align the institutions and stakeholders that define your room to operate.",
+      capabilities: [
+        { title: 'Reputation strategy and narrative', body: 'A clear, defensible account of who you are and why you matter — built to hold up under scrutiny and to guide every decision and message.' },
+        { title: 'Reputational due diligence in M&A', body: 'Surfacing the reputational risk and value hidden inside a transaction before they become your problem, so you negotiate and integrate with eyes open.' },
+        { title: 'Expert reputation reports for litigation', body: 'Independent, methodologically grounded reports on reputation and its damage, prepared to stand as party-appointed expert evidence.' },
+        { title: 'Stakeholder engagement and support', body: 'Positioning and dialogue with the investors, regulators, public institutions, foundations and NGOs whose expectations shape your legitimacy.' },
       ],
+      partners: ['Antonieta Mendoza', 'Claudio Vallejo'],
     },
     {
       icon: 'media',
       title: 'Media Relations',
+      slug: 'media-relations',
       tagline: 'Visibility and voice.',
-      items: [
-        'Media relations',
-        'Spokesperson preparation',
-        'Messaging for high-stakes moments',
+      lead: 'Visibility is earned, not bought. We turn complex positions into clear messages and put your voice where it counts — above all when the stakes are highest.',
+      capabilities: [
+        { title: 'Media relations', body: 'Building and sustaining the relationships with journalists and outlets that matter to your audiences.' },
+        { title: 'Spokesperson preparation', body: 'Readying your leaders to speak with clarity and authority — on the record and under pressure.' },
+        { title: 'Messaging for high-stakes moments', body: 'Sharp, aligned messaging for the announcements, transactions and scrutiny that define how you are perceived.' },
       ],
+      partners: ['Gemma Martín'],
     },
     {
       icon: 'risk',
       title: 'Risk & Crisis Management',
+      slug: 'risk-crisis',
       tagline: 'Anticipation and protection.',
-      items: [
-        'Press and social monitoring, with sentiment analysis and narrative detection',
-        'Risk identification and mitigation',
-        'Crisis management and trust recovery',
+      lead: 'Reputation is lost faster than it is built. We anticipate what could go wrong, reduce the exposure, and stand beside you when a crisis hits — to contain the damage and rebuild trust.',
+      capabilities: [
+        { title: 'Monitoring, sentiment and narrative detection', body: 'Continuous listening across press and social, using AI to read shifting sentiment and catch emerging narratives before they escalate.' },
+        { title: 'Risk identification and mitigation', body: 'Mapping the reputational risks specific to your business and putting plans in place before they materialize.' },
+        { title: 'Crisis management and trust recovery', body: 'Clear-headed counsel and execution through the crisis, and a structured path to rebuild trust afterwards.' },
       ],
+      partners: ['Juan Cardona'],
     },
   ],
 };
