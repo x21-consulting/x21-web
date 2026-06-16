@@ -12,6 +12,7 @@ export const site = {
 export const nav = [
   { label: 'Services', href: '#services' },
   { label: 'Team', href: '#team' },
+  { label: 'Briefing', href: '/briefing' },
   { label: 'Why X21', href: '#why' },
 ];
 
@@ -174,4 +175,28 @@ export const commitments = {
       body: 'The most important work is the work no one sees.',
     },
   ],
+};
+
+export const briefing = {
+  eyebrow: 'Quarterly',
+  title: 'The Briefing',
+  teaser: 'A quarterly briefing for senior leaders. High signal, no noise.',
+  lead: 'A quarterly briefing for senior leaders — crisis autopsies, where stakeholder expectations are shifting, and insights from our Lab. High signal, no noise.',
+  expect: [
+    {
+      title: 'Crisis autopsies',
+      body: 'What happened, what the GERS lens reveals, and the lesson — read on recent reputational events.',
+    },
+    {
+      title: 'Shifting expectations',
+      body: 'Where stakeholder expectations are moving in your sector, and what that means for legitimacy.',
+    },
+    {
+      title: 'From our Lab',
+      body: 'Original reads and data drawn from our research, when they are ready to share.',
+    },
+  ],
+  // Cuando haya números, se listan aquí y aparece el archivo automáticamente.
+  // { label: 'Nº 01 — Spring 2026', href: '/briefing/01.pdf', cover: '#17130e' }
+  issues: [] as { label: string; href: string }[],
 };

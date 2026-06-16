@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { hero, services, team, why, contact, commitments } from '../data/site';
+import { hero, services, team, why, contact, commitments, briefing } from '../data/site';
 
 const ENDPOINT =
   import.meta.env.PUBLIC_LEADS_ENDPOINT || 'https://erp.x21.consulting/api/leads';
@@ -116,6 +116,36 @@ const initials = (name: string) =>
     </section>
 
     <!-- WHY X21 (oscuro) · texto izq · imagen der -->
+    <!-- BRIEFING TEASER (claro) -->
+    <section class="section tone-light briefing-teaser">
+      <div class="container">
+        <div class="bt-grid">
+          <div class="bt-cover reveal" aria-hidden="true">
+            <svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Briefing — cover">
+              <rect x="0" y="0" width="240" height="320" rx="6" fill="#17130e" />
+              <text x="22" y="40" fill="#c9a96e" font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="3">QUARTERLY</text>
+              <text x="218" y="40" text-anchor="end" fill="#efe9dd" font-family="'Inter', system-ui, sans-serif" font-size="15" font-weight="700" letter-spacing="0.5">X21</text>
+              <g fill="#efe9dd">
+                <path d="M120 168 L48 120 L72 96 Z" />
+                <path d="M120 168 L168 96 L192 120 Z" />
+                <path d="M120 168 L192 216 L168 240 Z" />
+                <path d="M120 168 L72 240 L48 216 Z" />
+              </g>
+              <line x1="22" y1="280" x2="218" y2="280" stroke="#4a4234" stroke-width="0.75" />
+              <text x="22" y="300" fill="#b8ad99" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="500" letter-spacing="2.5">THE BRIEFING</text>
+              <text x="218" y="300" text-anchor="end" fill="#7a7060" font-family="'Inter', system-ui, sans-serif" font-size="9" letter-spacing="1">Nº 01</text>
+            </svg>
+          </div>
+          <div class="bt-content">
+            <p class="eyebrow reveal">{briefing.eyebrow}</p>
+            <h2 class="bt-title reveal">{briefing.title}</h2>
+            <p class="bt-lead reveal">{briefing.teaser}</p>
+            <a class="btn-dark reveal" href="/briefing">Read the Briefing →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="feature tone-dark" id="why">
       <div class="feature-text">
         <div class="feature-inner">
@@ -148,48 +178,6 @@ const initials = (name: string) =>
               <p class="commit-body">{c.body}</p>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- BRIEFING (crema) -->
-    <section class="section tone-cream briefing" id="briefing" data-endpoint={ENDPOINT}>
-      <div class="container">
-        <div class="briefing-grid">
-          <div class="briefing-art" aria-hidden="true">
-            <svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Briefing — cover">
-              <rect x="0" y="0" width="240" height="320" rx="6" fill="#17130e" />
-              <text x="22" y="40" fill="#c9a96e" font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="3">QUARTERLY</text>
-              <text x="218" y="40" text-anchor="end" fill="#efe9dd" font-family="'Inter', system-ui, sans-serif" font-size="15" font-weight="700" letter-spacing="0.5">X21</text>
-              <g fill="#efe9dd">
-                <path d="M120 168 L48 120 L72 96 Z" />
-                <path d="M120 168 L168 96 L192 120 Z" />
-                <path d="M120 168 L192 216 L168 240 Z" />
-                <path d="M120 168 L72 240 L48 216 Z" />
-              </g>
-              <line x1="22" y1="280" x2="218" y2="280" stroke="#4a4234" stroke-width="0.75" />
-              <text x="22" y="300" fill="#b8ad99" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="500" letter-spacing="2.5">THE BRIEFING</text>
-              <text x="218" y="300" text-anchor="end" fill="#7a7060" font-family="'Inter', system-ui, sans-serif" font-size="9" letter-spacing="1">Nº 01</text>
-            </svg>
-          </div>
-          <div class="briefing-inner">
-            <p class="eyebrow">Quarterly</p>
-            <h2 class="briefing-title">The Briefing</h2>
-            <p class="briefing-lead">A quarterly briefing for senior leaders — crisis autopsies, where stakeholder expectations are shifting, and insights from our Lab. High signal, no noise.</p>
-            <form class="lead-form briefing-form" data-intent="subscribe" data-source="briefing" novalidate>
-              <div class="briefing-row">
-                <input type="email" name="email" placeholder="Work email" autocomplete="email" />
-                <button type="submit" class="btn-dark">Subscribe</button>
-              </div>
-              <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
-              <label class="consent">
-                <input type="checkbox" name="consent" />
-                <span>I agree to receive the X21 Briefing and that X21 may process my email for this purpose. See our <a href="/aviso-legal">privacy policy</a>.</span>
-              </label>
-              <p class="form-status" role="status"></p>
-            </form>
-            <p class="form-thanks" hidden>Thank you — you're on the list. The next briefing will land in your inbox.</p>
-          </div>
         </div>
       </div>
     </section>
@@ -583,33 +571,12 @@ const initials = (name: string) =>
   .contact-meta a:hover { color: var(--text); }
   .contact-meta span { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); }
 
-  /* ===== BRIEFING ===== */
-  .briefing-grid { display: grid; grid-template-columns: 280px 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-  .briefing-art { color: var(--gold); }
-  .briefing-art svg { display: block; width: 100%; max-width: 240px; height: auto; margin-inline: auto; filter: drop-shadow(0 12px 28px rgba(31, 27, 21, 0.20)); }
-  .briefing-inner { max-width: 620px; }
-  .briefing-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 500; color: var(--text); margin: 0.4rem 0 0; }
-  .briefing-lead { color: var(--text-muted); font-size: 1.02rem; line-height: 1.6; margin: 1rem 0 1.6rem; }
-  .briefing-row { display: flex; gap: 0.7rem; flex-wrap: wrap; }
-  .briefing input[type="email"] {
-    flex: 1; min-width: 220px;
-    background: #fbf9f4; border: 0.5px solid var(--border); border-radius: 4px;
-    padding: 0.8rem 0.95rem; font: inherit; font-size: 0.95rem; color: var(--text);
-  }
-  .briefing input[type="email"]::placeholder { color: var(--text-faint); }
-  .briefing input[type="email"]:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent; }
-  .briefing .btn-dark { white-space: nowrap; }
-  .briefing .consent { margin-top: 0.9rem; }
-  .briefing .form-status { margin-top: 0.6rem; }
-  .briefing .form-thanks { margin-top: 0.5rem; }
-
-  /* Estado suscrito: bloque compacto, sin portada/lead/formulario */
-  .briefing.subscribed { padding-block: clamp(2.4rem, 5vw, 3.4rem); }
-  .briefing.subscribed .briefing-grid { grid-template-columns: 1fr; gap: 0; }
-  .briefing.subscribed .briefing-art,
-  .briefing.subscribed .briefing-lead,
-  .briefing.subscribed .briefing-form { display: none; }
-  .briefing.subscribed .form-thanks { margin-top: 0.7rem; }
+  /* ===== BRIEFING TEASER ===== */
+  .bt-grid { display: flex; align-items: center; gap: clamp(1.6rem, 4vw, 3.5rem); }
+  .bt-cover { flex: none; width: 140px; }
+  .bt-cover svg { display: block; width: 100%; height: auto; border-radius: 6px; filter: drop-shadow(0 10px 24px rgba(31, 27, 21, 0.18)); }
+  .bt-title { font-family: var(--font-display); font-size: clamp(1.7rem, 3.2vw, 2.3rem); font-weight: 500; color: var(--text); margin: 0.3rem 0 0; line-height: 1.05; }
+  .bt-lead { color: var(--text-muted); font-size: 1rem; line-height: 1.55; margin: 0.7rem 0 1.3rem; max-width: 46ch; }
 
   /* ===== COMMITMENTS ===== */
   .commitments .eyebrow { margin-bottom: 2.4rem; }
@@ -625,8 +592,8 @@ const initials = (name: string) =>
     .feature-text { order: 1; }
     .pillars li { grid-template-columns: 1fr; gap: 0.3rem; }
     .fields { grid-template-columns: 1fr; }
-    .briefing-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .briefing-art svg { max-width: 170px; }
+    .bt-grid { flex-direction: column; align-items: flex-start; gap: 1.6rem; }
+    .bt-cover { width: 120px; }
     .commit-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.6rem; }
   }
   @media (max-width: 520px) {
@@ -753,11 +720,6 @@ const initials = (name: string) =>
             ? (form.parentElement.querySelector('.form-thanks') as HTMLElement | null)
             : null;
           if (thanks) thanks.hidden = false;
-          if (intent === 'subscribe') {
-            try { localStorage.setItem('x21_briefing_subscribed', '1'); } catch (e) {}
-            const sec = form.closest('.briefing');
-            if (sec) sec.classList.add('subscribed');
-          }
         } else {
           if (btn) btn.disabled = false;
           setStatus('Something went wrong. Please try again or email us directly.', true);
@@ -768,18 +730,4 @@ const initials = (name: string) =>
       }
     });
   });
-
-  // Recordar suscripción al briefing y colapsar el bloque en visitas posteriores
-  try {
-    if (localStorage.getItem('x21_briefing_subscribed') === '1') {
-      const sec = document.querySelector('.briefing');
-      if (sec) {
-        sec.classList.add('subscribed');
-        const f = sec.querySelector('.briefing-form') as HTMLElement | null;
-        if (f) f.hidden = true;
-        const t = sec.querySelector('.form-thanks') as HTMLElement | null;
-        if (t) t.hidden = false;
-      }
-    }
-  } catch (e) {}
 </script>
