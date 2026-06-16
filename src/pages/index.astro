@@ -4,6 +4,12 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { hero, services, team, why, contact } from '../data/site';
 
+const ENDPOINT =
+  import.meta.env.PUBLIC_LEADS_ENDPOINT || 'https://erp.x21.consulting/api/leads';
+const crisisPhoneHref = 'tel:+34618780772';
+const crisisPhoneLabel = '+34 618 780 772';
+const crisisEmail = 'crisis@x21.consulting';
+
 const icons: Record<string, string> = {
   affairs:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg>',
@@ -12,6 +18,9 @@ const icons: Record<string, string> = {
   risk:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>',
 };
+
+const initials = (name: string) =>
+  name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('');
 ---
 
 <BaseLayout>
@@ -62,23 +71,34 @@ const icons: Record<string, string> = {
       </div>
     </section>
 
-    <!-- TEAM (crema) · imagen izq · texto der -->
-    <section class="feature tone-cream" id="team">
-      <div class="feature-media">
-        <img class="parallax-img" src={team.image} alt="X21 — purposeful reputation" loading="lazy" />
-      </div>
-      <div class="feature-text">
-        <div class="feature-inner">
-          <p class="eyebrow reveal">{team.eyebrow}</p>
-          <h2 class="section-title reveal">{team.title}</h2>
-          <p class="lead reveal">{team.lead}</p>
-          <figure class="quote reveal">
-            <blockquote>“{team.quote.text}”</blockquote>
-            <figcaption>
-              <span class="q-author">{team.quote.author}</span>
-              <span class="q-role">{team.quote.role}</span>
-            </figcaption>
-          </figure>
+    <!-- TEAM (crema) -->
+    <section class="tone-cream" id="team">
+      <div class="feature">
+        <div class="feature-media">
+          <img class="parallax-img" src={team.image} alt="X21 — purposeful reputation" loading="lazy" />
+        </div>
+        <div class="feature-text">
+          <div class="feature-inner">
+            <p class="eyebrow reveal">{team.eyebrow}</p>
+            <h2 class="section-title reveal">{team.title}</h2>
+            <p class="lead reveal">{team.lead}</p>
+            <ul class="teaser-grid reveal">
+              {team.members.map((m) => (
+                <li class="teaser-card">
+                  <div class="teaser-photo">
+                    {m.photo
+                      ? <img src={m.photo} alt={m.name} loading="lazy" />
+                      : <span class="teaser-mono">{initials(m.name)}</span>}
+                  </div>
+                  <p class="teaser-name">{m.name}</p>
+                  <p class="teaser-title">{m.title}</p>
+                </li>
+              ))}
+            </ul>
+            <div class="teaser-actions reveal">
+              <a class="btn-dark" href="/team">Meet our partners</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -106,27 +126,96 @@ const icons: Record<string, string> = {
     </section>
 
     <!-- CONTACT (oscuro) -->
-    <section class="section contact tone-dark" id="contact">
+    <section class="section contact tone-dark" id="contact" data-endpoint={ENDPOINT}>
       <div class="container">
         <p class="eyebrow">{contact.eyebrow}</p>
         <h2 class="contact-title">{contact.title}</h2>
-        <div class="contact-grid">
-          <a class="contact-item" href={contact.addressUrl} target="_blank" rel="noopener">
-            <span class="ci-label">Office</span>
-            <span class="ci-value">{contact.address}</span>
+        <p class="contact-lead">However you arrived, there's a way in — tell us what you need.</p>
+
+        <div class="router">
+          <a class="route-card" href="#services">
+            <span class="route-k">01</span>
+            <span class="route-name">Explore</span>
+            <span class="route-desc">See what we do and how the GERS© model works.</span>
           </a>
-          <a class="contact-item" href={contact.phoneHref}>
-            <span class="ci-label">Phone</span>
-            <span class="ci-value">{contact.phoneLabel}</span>
+          <a class="route-card" href="/diagnostic">
+            <span class="route-k">02</span>
+            <span class="route-name">Diagnose</span>
+            <span class="route-desc">Get an instant reputation profile in two minutes.</span>
           </a>
-          <a class="contact-item" href={`mailto:${contact.email}`}>
-            <span class="ci-label">Email</span>
-            <span class="ci-value">{contact.email}</span>
-          </a>
-          <a class="contact-item" href={contact.linkedin} target="_blank" rel="noopener">
-            <span class="ci-label">Community</span>
-            <span class="ci-value">LinkedIn</span>
-          </a>
+          <button class="route-card" type="button" data-panel="propose">
+            <span class="route-k">03</span>
+            <span class="route-name">Propose</span>
+            <span class="route-desc">Tell us about a project and get a proposal.</span>
+          </button>
+          <button class="route-card route-crisis" type="button" data-panel="crisis">
+            <span class="route-k">04</span>
+            <span class="route-name">Crisis</span>
+            <span class="route-desc">A reputational emergency that can't wait.</span>
+          </button>
+        </div>
+
+        <!-- Panel: Crisis -->
+        <div class="panel" id="panel-crisis" hidden>
+          <div class="panel-inner">
+            <div class="crisis-now">
+              <p class="panel-kicker">Right now</p>
+              <a class="crisis-line" href={crisisPhoneHref}>{crisisPhoneLabel}</a>
+              <a class="crisis-mail" href={`mailto:${crisisEmail}`}>{crisisEmail}</a>
+              <p class="crisis-note">Call or email and you reach a person, not a queue. Or leave your details and we call you back immediately.</p>
+            </div>
+            <form class="lead-form" data-intent="crisis" novalidate>
+              <div class="fields">
+                <input type="text" name="name" placeholder="Name" autocomplete="name" />
+                <input type="text" name="company" placeholder="Company" autocomplete="organization" />
+                <input type="tel" name="phone" placeholder="Phone" autocomplete="tel" />
+                <input type="email" name="email" placeholder="Email" autocomplete="email" />
+              </div>
+              <textarea name="message" rows="3" placeholder="What's happening?"></textarea>
+              <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+              <label class="consent">
+                <input type="checkbox" name="consent" />
+                <span>I agree that X21 may process my data to respond to my request. See our <a href="/aviso-legal">privacy policy</a>.</span>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn">Request an urgent call</button>
+                <p class="form-status" role="status"></p>
+              </div>
+            </form>
+            <p class="form-thanks" hidden>Thank you — we've received your message and will contact you right away.</p>
+          </div>
+        </div>
+
+        <!-- Panel: Propose -->
+        <div class="panel" id="panel-propose" hidden>
+          <div class="panel-inner">
+            <form class="lead-form" data-intent="propose" novalidate>
+              <p class="panel-kicker">Tell us about your project</p>
+              <div class="fields">
+                <input type="text" name="name" placeholder="Name" autocomplete="name" />
+                <input type="text" name="company" placeholder="Company" autocomplete="organization" />
+                <input type="email" name="email" placeholder="Work email *" autocomplete="email" />
+                <input type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel" />
+              </div>
+              <textarea name="message" rows="4" placeholder="What would you like to achieve? Sector, challenge, timeline…"></textarea>
+              <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+              <label class="consent">
+                <input type="checkbox" name="consent" />
+                <span>I agree that X21 may process my data to respond to my request. See our <a href="/aviso-legal">privacy policy</a>.</span>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn">Request a proposal</button>
+                <p class="form-status" role="status"></p>
+              </div>
+            </form>
+            <p class="form-thanks" hidden>Thank you — your request is on its way. We'll be in touch shortly.</p>
+          </div>
+        </div>
+
+        <div class="contact-meta">
+          <a href={contact.addressUrl} target="_blank" rel="noopener"><span>Office</span>{contact.address}</a>
+          <a href={`mailto:${contact.email}`}><span>Email</span>{contact.email}</a>
+          <a href={contact.linkedin} target="_blank" rel="noopener"><span>Community</span>LinkedIn</a>
         </div>
       </div>
     </section>
@@ -291,6 +380,48 @@ const icons: Record<string, string> = {
   .q-author { color: var(--gold); font-size: 0.95rem; letter-spacing: 0.02em; }
   .q-role { color: var(--text-faint); font-size: 0.85rem; }
 
+  /* ===== TEAM · teaser de socios (dentro de la columna de texto) ===== */
+  .teaser-grid {
+    list-style: none;
+    margin: clamp(2rem, 4vw, 2.6rem) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: clamp(1.1rem, 2.4vw, 1.7rem);
+  }
+  .teaser-card { text-align: center; width: 104px; }
+  .teaser-photo {
+    width: 104px;
+    height: 104px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .teaser-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .teaser-mono { font-family: var(--font-display); font-size: 2.1rem; font-weight: 500; color: var(--gold); }
+  .teaser-name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; color: var(--text); margin-top: 0.55rem; line-height: 1.18; }
+  .teaser-title { color: var(--gold-dim); font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase; margin-top: 0.28rem; }
+  .teaser-actions { margin-top: clamp(1.8rem, 4vw, 2.6rem); }
+  .btn-dark {
+    display: inline-block;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.7rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+
   /* ===== WHY ===== */
   .pillars { list-style: none; margin: 2.4rem 0 0; padding: 0; display: flex; flex-direction: column; }
   .pillars li {
@@ -305,27 +436,78 @@ const icons: Record<string, string> = {
   .pillar-label { font-family: var(--font-display); font-size: 1.4rem; color: var(--text); }
   .pillar-body { color: var(--text-muted); font-size: 0.95rem; }
 
-  /* ===== CONTACT ===== */
+  /* ===== CONTACT · router de intención ===== */
   .contact-title { font-size: clamp(2.4rem, 6vw, 4.2rem); margin-top: 0.4rem; max-width: 14ch; }
-  .contact-grid {
+  .contact-lead { color: var(--text-muted); font-size: 1.05rem; margin-top: 1rem; max-width: 48ch; }
+
+  .router {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1px;
-    margin-top: 3.5rem;
+    margin-top: 3rem;
     background: var(--border);
     border: 0.5px solid var(--border);
   }
-  .contact-item {
+  .route-card {
     background: var(--bg);
-    padding: 1.7rem;
+    padding: 1.8rem;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.5rem;
+    text-align: left;
+    text-decoration: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
     transition: background-color 0.25s ease;
   }
-  .contact-item:hover { background: var(--bg-alt); }
-  .ci-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); }
-  .ci-value { color: var(--text); font-size: 1rem; }
+  .route-card:hover { background: var(--bg-alt); }
+  .route-k { font-size: 0.72rem; letter-spacing: 0.18em; color: var(--gold); }
+  .route-name { font-family: var(--font-display); font-size: 1.5rem; color: var(--text); }
+  .route-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.45; }
+  .route-crisis .route-name { color: var(--gold); }
+
+  .panel { margin-top: 1px; background: var(--bg-alt); border: 0.5px solid var(--border); }
+  .panel-inner { padding: clamp(1.6rem, 4vw, 2.6rem); display: grid; gap: 1.6rem; }
+  @media (min-width: 760px) {
+    #panel-crisis .panel-inner { grid-template-columns: 320px 1fr; align-items: start; }
+  }
+  .panel-kicker { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin: 0 0 0.8rem; }
+
+  .crisis-line { display: block; font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.4rem); color: var(--gold); text-decoration: none; }
+  .crisis-mail { display: inline-block; margin-top: 0.4rem; color: var(--text); text-decoration: none; border-bottom: 0.5px solid var(--gold); }
+  .crisis-note { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-top: 1rem; }
+
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .lead-form textarea { margin-top: 0.7rem; }
+  .contact input, .contact textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    font-size: 0.92rem;
+    color: var(--text);
+    resize: vertical;
+  }
+  .contact input::placeholder, .contact textarea::placeholder { color: var(--text-faint); }
+  .contact input:focus-visible, .contact textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .consent { display: flex; gap: 0.6rem; align-items: flex-start; margin-top: 1rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; cursor: pointer; }
+  .consent input { margin-top: 0.15rem; accent-color: var(--gold); width: 16px; height: 16px; flex-shrink: 0; }
+  .consent a { color: var(--gold); }
+  .form-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.3rem; }
+  button.btn { background: transparent; cursor: pointer; font: inherit; }
+  button.btn:disabled { opacity: 0.5; cursor: default; }
+  .form-status { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+  .form-status.error { color: #e0a59a; }
+  .form-thanks { font-family: var(--font-display); font-size: 1.25rem; color: var(--text); margin: 0; }
+
+  .contact-meta { display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2.6rem; }
+  .contact-meta a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; display: flex; flex-direction: column; gap: 0.3rem; transition: color 0.2s ease; }
+  .contact-meta a:hover { color: var(--text); }
+  .contact-meta span { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); }
 
   /* ===== Responsive ===== */
   @media (max-width: 860px) {
@@ -333,6 +515,7 @@ const icons: Record<string, string> = {
     .feature-media { min-height: 64vh; order: 2; }
     .feature-text { order: 1; }
     .pillars li { grid-template-columns: 1fr; gap: 0.3rem; }
+    .fields { grid-template-columns: 1fr; }
   }
 </style>
 
@@ -375,5 +558,91 @@ const icons: Record<string, string> = {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     update();
+  }
+</script>
+
+<script>
+  // Router de intención: abrir panel + enviar formularios
+  const routerSection = document.querySelector('.contact');
+  if (routerSection) {
+    const endpoint = routerSection.getAttribute('data-endpoint') || '';
+
+    routerSection.querySelectorAll('[data-panel]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-panel');
+        routerSection.querySelectorAll('.panel').forEach((p) => {
+          (p as HTMLElement).hidden = p.id !== 'panel-' + target;
+        });
+        const panel = document.getElementById('panel-' + target);
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+
+    routerSection.querySelectorAll('.lead-form').forEach((form) => {
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        const intent = form.getAttribute('data-intent') || 'explore';
+        const get = (n: string) => {
+          const el = form.querySelector('[name="' + n + '"]') as
+            | HTMLInputElement
+            | HTMLTextAreaElement
+            | null;
+          return el ? el.value.trim() : '';
+        };
+        const email = get('email');
+        const phone = get('phone');
+        const consent = (form.querySelector('[name="consent"]') as HTMLInputElement).checked;
+        const statusEl = form.querySelector('.form-status');
+        const setStatus = (m: string, err: boolean) => {
+          if (statusEl) { statusEl.textContent = m; statusEl.classList.toggle('error', err); }
+        };
+
+        const emailOk = /.+@.+\..+/.test(email);
+        const reachable = emailOk || (intent === 'crisis' && phone.length >= 6);
+        if (!reachable) {
+          setStatus(intent === 'crisis' ? 'Add a phone or email so we can reach you.' : 'Please enter a valid email.', true);
+          return;
+        }
+        if (!consent) { setStatus('Please accept the data processing notice.', true); return; }
+
+        const payload = {
+          intent,
+          name: get('name'),
+          email,
+          company: get('company'),
+          phone,
+          message: get('message'),
+          consent: true,
+          source: 'router-' + intent,
+          locale: 'en',
+          website: get('website'),
+        };
+
+        const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+        if (btn) btn.disabled = true;
+        setStatus('Sending…', false);
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.ok) {
+            (form as HTMLElement).hidden = true;
+            const thanks = form.parentElement
+              ? (form.parentElement.querySelector('.form-thanks') as HTMLElement | null)
+              : null;
+            if (thanks) thanks.hidden = false;
+          } else {
+            if (btn) btn.disabled = false;
+            setStatus('Something went wrong. Please try again or email us directly.', true);
+          }
+        } catch (e) {
+          if (btn) btn.disabled = false;
+          setStatus('Network error. Please try again or email us directly.', true);
+        }
+      });
+    });
   }
 </script>
