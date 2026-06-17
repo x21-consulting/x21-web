@@ -165,6 +165,8 @@ export const footer = {
 
 export const commitments = {
   eyebrow: 'Our commitments',
+  title: 'What you can hold us to',
+  intro: 'The principles behind every engagement — true whoever you work with, and whatever the brief.',
   items: [
     {
       title: 'Partners, not pyramids',
@@ -188,8 +190,9 @@ export const commitments = {
 export const briefing = {
   eyebrow: 'Quarterly',
   title: 'The Briefing',
-  teaser: 'A quarterly briefing for senior leaders. High signal, no noise.',
-  lead: 'A quarterly briefing for senior leaders — crisis autopsies, where stakeholder expectations are shifting, and insights from our Lab. High signal, no noise.',
+  status: 'First issue — Winter 2026/27',
+  teaser: 'A new quarterly briefing. First issue Winter 2026/27 — subscribe free.',
+  lead: "We're launching a quarterly briefing for senior leaders: crisis autopsies, where stakeholder expectations are shifting, and insights from our Lab. The first issue arrives Winter 2026/27 — subscribe free to receive it.",
   expect: [
     {
       title: 'Crisis autopsies',
@@ -204,6 +207,29 @@ export const briefing = {
       body: 'Original reads and data drawn from our research, when they are ready to share.',
     },
   ],
+  // Artículos publicados (LinkedIn Pulse). Cura una selección; enlazan fuera.
+  // Sustituye url: '#' por el enlace real de cada artículo en LinkedIn.
+  articles: [
+    {
+      title: 'AI and Reputational Risk: A Growing Challenge',
+      summary: 'Why AI has become a board-level reputational risk — and what S&P 500 disclosures reveal about it.',
+      date: 'January 2025',
+      url: 'https://www.linkedin.com/pulse/ai-reputational-risk-growing-challenge-xpectations21-csiyf/',
+    },
+    {
+      title: 'Aligning Expectations and Incentives',
+      summary: 'How BlackRock embeds reputation into its incentive system, and why aligning expectations with incentives compounds performance.',
+      date: 'November 2024',
+      url: 'https://www.linkedin.com/pulse/aligning-expectations-incentives-embedding-reputation-incentive-du0nf/',
+    },
+    {
+      title: 'Rising to Higher Ground',
+      summary: "Lessons from Alison Taylor's 'Higher Ground' on treating ethics as a strategic enabler, not a compliance checkbox.",
+      date: 'November 2024',
+      url: 'https://www.linkedin.com/pulse/rising-higher-ground-lessons-from-alison-taylor-ethics-resilience-wazdf/',
+    },
+  ] as { title: string; summary: string; date: string; url: string }[],
+
   // Cuando haya números, se listan aquí y aparece el archivo automáticamente.
   // { label: 'Nº 01 — Spring 2026', href: '/briefing/01.pdf', cover: '#17130e' }
   issues: [] as { label: string; href: string }[],

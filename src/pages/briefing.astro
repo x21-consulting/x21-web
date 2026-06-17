@@ -6,6 +6,7 @@ import { briefing } from '../data/site';
 
 const ENDPOINT = import.meta.env.PUBLIC_LEADS_ENDPOINT || 'https://erp.x21.consulting/api/leads';
 const hasIssues = briefing.issues && briefing.issues.length > 0;
+const hasArticles = briefing.articles && briefing.articles.length > 0;
 ---
 
 <BaseLayout title="The Briefing — X21" description={briefing.lead}>
@@ -35,6 +36,7 @@ const hasIssues = briefing.issues && briefing.issues.length > 0;
           <div class="bp-intro">
             <p class="eyebrow">{briefing.eyebrow}</p>
             <h1 class="bp-title">{briefing.title}</h1>
+            {briefing.status && <p class="bp-status">{briefing.status}</p>}
             <p class="bp-lead">{briefing.lead}</p>
 
             <form class="bp-form" data-intent="subscribe" data-source="briefing-page" novalidate>
@@ -64,6 +66,21 @@ const hasIssues = briefing.issues && briefing.issues.length > 0;
             ))}
           </div>
         </div>
+
+        {hasArticles && (
+          <div class="bp-writing">
+            <p class="bp-section-label">Recent writing</p>
+            <div class="bp-writing-list">
+              {briefing.articles.map((a) => (
+                <a class="bp-article" href={a.url} target="_blank" rel="noopener">
+                  <h2 class="bp-article-title">{a.title}</h2>
+                  <p class="bp-article-summary">{a.summary}</p>
+                  <p class="bp-article-meta">{a.date} · Read on LinkedIn →</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
 
         {hasIssues && (
           <div class="bp-archive">
@@ -106,6 +123,15 @@ const hasIssues = briefing.issues && briefing.issues.length > 0;
   .bp-cover svg { display: block; width: 100%; max-width: 240px; height: auto; margin-inline: auto; filter: drop-shadow(0 12px 28px rgba(31, 27, 21, 0.20)); }
   .bp-title { font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 500; color: var(--text); margin: 0.3rem 0 0; line-height: 1.02; }
   .bp-lead { color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin: 1.1rem 0 1.8rem; max-width: 52ch; }
+  .bp-status { display: inline-block; margin: 0.9rem 0 0; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); border: 0.5px solid var(--gold-dim); border-radius: 999px; padding: 0.35rem 0.85rem; }
+
+  .bp-writing { margin-top: clamp(3.5rem, 8vw, 6rem); }
+  .bp-writing-list { border-top: 0.5px solid var(--border); }
+  .bp-article { display: block; padding: 1.5rem 0; border-bottom: 0.5px solid var(--border); text-decoration: none; color: var(--text); transition: opacity 0.2s ease; }
+  .bp-article:hover { opacity: 0.78; }
+  .bp-article-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 500; color: var(--text); margin: 0 0 0.4rem; }
+  .bp-article-summary { color: var(--text-muted); font-size: 0.95rem; line-height: 1.55; margin: 0 0 0.5rem; max-width: 70ch; }
+  .bp-article-meta { font-size: 0.78rem; letter-spacing: 0.04em; color: var(--gold-dim); margin: 0; }
 
   .bp-row { display: flex; gap: 0.7rem; flex-wrap: wrap; max-width: 480px; }
   .bp input[type="email"] {
