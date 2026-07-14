@@ -2,20 +2,23 @@
 import BaseLayout from './BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { getContent, homeBase, defaultLang, type Lang } from '../i18n';
 
 interface Props {
   title: string;
   description?: string;
+  lang?: Lang;
 }
-const { title, description } = Astro.props;
+const { title, description, lang = defaultLang } = Astro.props;
+const c = getContent(lang);
 ---
 
-<BaseLayout title={`${title} — X21`} description={description} pageType="article">
-  <Nav home={false} />
+<BaseLayout title={`${title} — X21`} description={description} pageType="article" lang={lang}>
+  <Nav home={false} lang={lang} />
   <main id="main" class="legal">
     <div class="container">
       <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a><span aria-hidden="true">»</span><span>{title}</span>
+        <a href={homeBase(lang)}>{c.legal.crumbHome}</a><span aria-hidden="true">»</span><span>{title}</span>
       </nav>
       <h1 class="legal-title">{title}</h1>
       <div class="legal-body">
@@ -23,7 +26,7 @@ const { title, description } = Astro.props;
       </div>
     </div>
   </main>
-  <Footer />
+  <Footer lang={lang} />
 </BaseLayout>
 
 <style>

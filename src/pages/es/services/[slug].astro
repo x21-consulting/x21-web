@@ -1,0 +1,12 @@
+---
+import ServiceDetail from '../../../components/pages/ServiceDetail.astro';
+import { getContent } from '../../../i18n';
+
+export function getStaticPaths() {
+  return getContent('es').services.blocks.map((b) => ({ params: { slug: b.slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<ServiceDetail lang="es" slug={slug!} />

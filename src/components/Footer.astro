@@ -1,19 +1,25 @@
 ---
-import { footer, site } from '../data/site';
+import { site } from '../data/site';
+import { getContent, localizePath, defaultLang, type Lang } from '../i18n';
+
+interface Props { lang?: Lang }
+const { lang = defaultLang } = Astro.props;
+const c = getContent(lang);
+const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
   <div class="container footer-inner">
     <span class="footer-mark"><img src="/X21_Logo_Blanco.png" alt="X21" width="936" height="394" /></span>
     <nav class="footer-legal" aria-label="Legal">
-      {footer.legal.map((l) => (
-        <a href={l.href}>{l.label}</a>
+      {c.footer.legal.map((l) => (
+        <a href={localizePath(l.href, lang)}>{l.label}</a>
       ))}
     </nav>
   </div>
   <div class="container footer-base">
-    <p class="trademark">{footer.trademark}</p>
-    <p class="copyright">© {site.legalName}, {footer.year}</p>
+    <p class="trademark">{c.footer.trademark}</p>
+    <p class="copyright">© {site.legalName}, {year}</p>
   </div>
 </footer>
 

@@ -1,0 +1,30 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { getContent, localizePath, homeBase, defaultLang, type Lang } from '../../i18n';
+
+interface Props { lang?: Lang }
+const { lang = defaultLang } = Astro.props;
+const c = getContent(lang);
+const sm = c.legal.sitemap;
+const base = homeBase(lang);
+
+const resolve = (href: string) =>
+  href.startsWith('#') ? base + href : localizePath(href, lang);
+---
+
+<LegalLayout title={sm.title} description={sm.description} lang={lang}>
+  <h3>{sm.mainLabel}</h3>
+  <ul>
+    <li><a href={base}>{sm.home}</a></li>
+    {c.nav.items.map((item) => (
+      <li><a href={resolve(item.href)}>{item.label}</a></li>
+    ))}
+  </ul>
+
+  <h3>{sm.legalLabel}</h3>
+  <ul>
+    {c.footer.legal.map((l) => (
+      <li><a href={localizePath(l.href, lang)}>{l.label}</a></li>
+    ))}
+  </ul>
+</LegalLayout>

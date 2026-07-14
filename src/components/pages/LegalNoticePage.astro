@@ -1,0 +1,18 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { getContent, defaultLang, type Lang } from '../../i18n';
+
+interface Props { lang?: Lang }
+const { lang = defaultLang } = Astro.props;
+const notice = getContent(lang).legal.notice;
+---
+
+<LegalLayout title={notice.title} description={notice.description} lang={lang}>
+  <h2>{notice.heading}</h2>
+  {notice.sections.map((s) => (
+    <>
+      <h3>{s.h3}</h3>
+      <Fragment set:html={s.html} />
+    </>
+  ))}
+</LegalLayout>

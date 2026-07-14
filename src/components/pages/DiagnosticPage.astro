@@ -1,0 +1,661 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import ScaleInput from '../ScaleInput.astro';
+import { getContent, localizePath, defaultLang, type Lang } from '../../i18n';
+
+interface Props { lang?: Lang }
+const { lang = defaultLang } = Astro.props;
+const c = getContent(lang);
+const d = c.diagnostic;
+
+const ENDPOINT =
+  import.meta.env.PUBLIC_LEADS_ENDPOINT || 'https://erp.x21.consulting/api/leads';
+
+const privacyHref = localizePath('/aviso-legal', lang);
+const consentHtml = c.contact.consent.replace('{privacy}', privacyHref);
+const formMsgs = JSON.stringify(c.forms);
+
+// Configuración que necesita el script de cliente para el scoring y los textos.
+const cfg = JSON.stringify({
+  areas: d.areas.map((a) => ({ key: a.key, label: a.label })),
+  mat: d.maturityStep.dims.map((m) => m.key),
+  results: d.results,
+  deepTitle: d.deepStep.title,
+  stepOf: d.wizard.stepOf,
+});
+
+const imp = d.scale.importance;
+const mgmt = d.scale.management;
+const agree = d.scale.agreement;
+const urg = d.priorityStep.urgency;
+
+// Radar: 5 ejes en el orden de d.areas (brand, performance, transparency, integrity, purpose)
+const axisLabelPos = [
+  { x: 160, y: 34, anchor: 'middle' },
+  { x: 238, y: 96, anchor: 'start' },
+  { x: 210, y: 201, anchor: 'start' },
+  { x: 110, y: 201, anchor: 'end' },
+  { x: 84, y: 96, anchor: 'end' },
+];
+---
+
+<BaseLayout title={d.title} description={d.description} lang={lang}>
+  <Nav home={false} lang={lang} />
+
+  <main id="main">
+    <section
+      class="diag"
+      data-endpoint={ENDPOINT}
+      data-msgs={formMsgs}
+      data-cfg={cfg}
+    >
+      <div class="container">
+        <header class="diag-head">
+          <p class="eyebrow">{d.eyebrow}</p>
+          <h1 class="section-title">{d.heading}</h1>
+          <p class="lead">{d.lead}</p>
+        </header>
+
+        <!-- Barra de progreso -->
+        <div class="wz-progress" id="wz-progress" hidden>
+          <div class="wz-bar"><span id="wz-bar-fill"></span></div>
+          <p class="wz-step-label" id="wz-step-label"></p>
+        </div>
+
+        <div class="wz">
+          <!-- STEP 0 · Áreas GERS (importancia + gestión) -->
+          <div class="wz-step" data-step="0">
+            <h2 class="wz-title">{d.areasStep.title}</h2>
+            <p class="wz-intro">{d.areasStep.intro}</p>
+            <div class="area-list">
+              {d.areas.map((a) => (
+                <article class="area-card">
+                  <h3 class="area-name">{a.label}</h3>
+                  <div class="area-q">
+                    <p class="q-label"><span class="q-tag">{d.scale.importanceLabel}</span>{a.importanceQ}</p>
+                    <ScaleInput dataKey={`imp_${a.key}`} ariaLabel={a.importanceQ} low={imp[0]} high={imp[4]} />
+                  </div>
+                  <div class="area-q">
+                    <p class="q-label"><span class="q-tag">{d.scale.managementLabel}</span>{a.managementQ}</p>
+                    <ScaleInput dataKey={`gest_${a.key}`} ariaLabel={a.managementQ} low={mgmt[0]} high={mgmt[4]} />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <!-- STEP 1 · Prioridad y reto -->
+          <div class="wz-step" data-step="1" hidden>
+            <h2 class="wz-title">{d.priorityStep.title}</h2>
+            <p class="q-label">{d.priorityStep.chooseLabel}</p>
+            <div class="opt" data-key="priority" role="radiogroup" aria-label={d.priorityStep.chooseLabel}>
+              {d.areas.map((a) => (
+                <button type="button" class="opt-btn" data-v={a.key} role="radio" aria-checked="false">{a.label}</button>
+              ))}
+            </div>
+
+            <p class="q-label mt">{d.priorityStep.urgencyLabel}</p>
+            <ScaleInput dataKey="urgency" ariaLabel={d.priorityStep.urgencyLabel} low={urg[0]} high={urg[4]} />
+
+            <label class="q-label mt" for="reto">{d.priorityStep.challengeLabel}</label>
+            <textarea id="reto" class="wz-textarea" data-key="reto" rows="3" placeholder={d.priorityStep.challengePlaceholder}></textarea>
+          </div>
+
+          <!-- STEP 2 · Madurez -->
+          <div class="wz-step" data-step="2" hidden>
+            <h2 class="wz-title">{d.maturityStep.title}</h2>
+            <p class="wz-intro">{d.maturityStep.intro}</p>
+            <div class="mat-list">
+              {d.maturityStep.dims.map((m) => (
+                <div class="mat-row">
+                  <p class="q-label"><span class="q-tag">{m.label}</span>{m.q}</p>
+                  <ScaleInput dataKey={`b3_${m.key}`} ariaLabel={m.q} low={agree[0]} high={agree[4]} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- STEP 3 · Profundización (según área prioritaria) -->
+          <div class="wz-step" data-step="3" hidden>
+            <h2 class="wz-title" id="deep-title">{d.deepStep.title}</h2>
+            <p class="wz-intro">{d.deepStep.intro}</p>
+            {d.areas.map((a) => (
+              <div class="deep-group" data-area={a.key} hidden>
+                {a.deep.map((q, i) => (
+                  <div class="mat-row">
+                    <p class="q-label">{q}</p>
+                    <ScaleInput dataKey={`b35_${a.key}_${i + 1}`} ariaLabel={q} low={agree[0]} high={agree[4]} />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <!-- STEP 4 · Expectativas -->
+          <div class="wz-step" data-step="4" hidden>
+            <h2 class="wz-title">{d.expectationsStep.title}</h2>
+
+            <label class="q-label" for="resultado">{d.expectationsStep.resultLabel}</label>
+            <textarea id="resultado" class="wz-textarea" data-key="resultado" rows="3" placeholder={d.expectationsStep.resultPlaceholder}></textarea>
+
+            <p class="q-label mt">{d.expectationsStep.availabilityLabel}</p>
+            <div class="opt" data-key="disponibilidad" role="radiogroup" aria-label={d.expectationsStep.availabilityLabel}>
+              {d.expectationsStep.availability.map((o) => (
+                <button type="button" class="opt-btn" data-v={o.value} role="radio" aria-checked="false">{o.label}</button>
+              ))}
+            </div>
+
+            <p class="q-label mt">{d.expectationsStep.alignmentLabel}</p>
+            <ScaleInput dataKey="alignment" ariaLabel={d.expectationsStep.alignmentLabel} low={agree[0]} high={agree[4]} />
+          </div>
+
+          <!-- STEP 5 · Resultados + captura -->
+          <div class="wz-step" data-step="5" hidden>
+            <h2 class="wz-title">{d.results.title}</h2>
+
+            <div class="res-top">
+              <aside class="res-radar">
+                <svg width="100%" viewBox="0 0 320 214" role="img" aria-label={d.results.radarAria}>
+                  <polygon points="160,44 232.3,96.5 204.7,181.5 115.3,181.5 87.7,96.5" fill="none" stroke="var(--border)" stroke-width="0.5"></polygon>
+                  <polygon points="160,63 214.2,102.4 193.5,166.1 126.5,166.1 105.8,102.4" fill="none" stroke="var(--border)" stroke-width="0.5"></polygon>
+                  <polygon points="160,82 196.1,108.3 182.3,150.7 137.7,150.7 123.9,108.3" fill="none" stroke="var(--border)" stroke-width="0.5"></polygon>
+                  <polygon points="160,101 178.1,114.1 171.2,135.4 148.8,135.4 141.9,114.1" fill="none" stroke="var(--border)" stroke-width="0.5"></polygon>
+                  <line x1="160" y1="120" x2="160" y2="44" stroke="var(--border)" stroke-width="0.5"></line>
+                  <line x1="160" y1="120" x2="232.3" y2="96.5" stroke="var(--border)" stroke-width="0.5"></line>
+                  <line x1="160" y1="120" x2="204.7" y2="181.5" stroke="var(--border)" stroke-width="0.5"></line>
+                  <line x1="160" y1="120" x2="115.3" y2="181.5" stroke="var(--border)" stroke-width="0.5"></line>
+                  <line x1="160" y1="120" x2="87.7" y2="96.5" stroke="var(--border)" stroke-width="0.5"></line>
+                  <polygon id="poly-imp" points="" fill="none" stroke="var(--text-muted)" stroke-width="1.2" stroke-dasharray="3 2" stroke-linejoin="round"></polygon>
+                  <polygon id="poly-mgmt" points="" fill="rgba(154,118,53,0.18)" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"></polygon>
+                  {d.areas.map((a, i) => (
+                    <text x={axisLabelPos[i].x} y={axisLabelPos[i].y} text-anchor={axisLabelPos[i].anchor} font-size="10.5" fill="var(--text-muted)">{a.label}</text>
+                  ))}
+                </svg>
+                <div class="res-legend">
+                  <span class="lg lg-mgmt">{d.results.radarManagement}</span>
+                  <span class="lg lg-imp">{d.results.radarImportance}</span>
+                </div>
+              </aside>
+
+              <div class="res-indices">
+                <div class="idx">
+                  <p class="idx-label">{d.results.iarLabel}</p>
+                  <p class="idx-num"><span id="idx-iar">–</span><span class="idx-max">/5</span></p>
+                  <p class="idx-hint">{d.results.iarHint}</p>
+                </div>
+                <div class="idx">
+                  <p class="idx-label">{d.results.imrLabel}</p>
+                  <p class="idx-num"><span id="idx-imr">–</span><span class="idx-max">/5</span></p>
+                  <p class="idx-hint">{d.results.imrHint}</p>
+                </div>
+                <div class="quad">
+                  <p class="quad-label">{d.results.quadrantLabel}</p>
+                  <p class="quad-name" id="quad-name">–</p>
+                  <p class="quad-body" id="quad-body"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="res-profile">
+              <p class="res-block-label">{d.results.profileLabel}</p>
+              <h3 class="profile-name" id="profile-name">–</h3>
+              <p class="profile-body" id="profile-body"></p>
+            </div>
+
+            <div class="res-grid">
+              <div class="res-gaps">
+                <p class="res-block-label">{d.results.gapTitle}</p>
+                <p class="res-block-hint">{d.results.gapHint}</p>
+                <ul class="gap-list" id="gap-list"></ul>
+              </div>
+              <div class="res-coherence">
+                <p class="res-block-label">{d.results.coherenceTitle}</p>
+                <p class="coherence-body" id="coherence-body"></p>
+              </div>
+            </div>
+
+            <!-- Captura de datos -->
+            <div class="diag-capture" id="diag-capture">
+              <h3 class="diag-capture-title">{d.capture.title}</h3>
+              <p class="diag-capture-sub">{d.capture.sub}</p>
+              <div class="diag-fields">
+                <input type="text" id="diag-name" placeholder={d.capture.namePlaceholder} autocomplete="name" />
+                <input type="email" id="diag-email" placeholder={d.capture.emailPlaceholder} autocomplete="email" />
+                <input type="text" id="diag-company" placeholder={d.capture.companyPlaceholder} autocomplete="organization" />
+              </div>
+              <div class="hp" aria-hidden="true">
+                <label>Leave this field empty<input type="text" id="diag-website" tabindex="-1" autocomplete="off" /></label>
+              </div>
+              <label class="diag-consent">
+                <input type="checkbox" id="diag-consent" />
+                <span set:html={consentHtml} />
+              </label>
+              <div class="diag-actions">
+                <button type="button" id="diag-send" class="btn-dark">{d.capture.submit}</button>
+                <p class="diag-status" id="diag-status" role="status"></p>
+              </div>
+            </div>
+
+            <div class="diag-thanks" id="diag-thanks" hidden>
+              <p class="diag-thanks-title">{d.thanksTitle}</p>
+              <p class="diag-thanks-body">{d.thanksBody}</p>
+            </div>
+          </div>
+
+          <!-- Navegación del wizard -->
+          <div class="wz-nav">
+            <button type="button" class="wz-back btn-ghost" id="wz-back" hidden>{d.wizard.back}</button>
+            <p class="wz-hint" id="wz-hint" hidden>{d.wizard.incomplete}</p>
+            <button type="button" class="wz-next btn-dark" id="wz-next" data-see={d.wizard.seeResults}>{d.wizard.next}</button>
+            <button type="button" class="wz-restart btn-ghost" id="wz-restart" hidden>{d.wizard.restart}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  .diag {
+    --bg: #f4f0e8;
+    --bg-alt: #ece7db;
+    --text: #1f1b15;
+    --text-muted: #6f675a;
+    --text-faint: #9a9082;
+    --gold: #9a7635;
+    --gold-dim: #876327;
+    --border: rgba(31, 27, 21, 0.14);
+    background: var(--bg);
+    color: var(--text);
+    padding: clamp(4.5rem, 9vw, 7rem) 0 clamp(4rem, 9vw, 7rem);
+    min-height: 90vh;
+  }
+  .diag-head { max-width: 680px; margin-bottom: clamp(2rem, 5vw, 3rem); }
+  .diag-head .lead { margin-top: 1.1rem; }
+
+  /* Progreso */
+  .wz-progress { max-width: 760px; margin: 0 0 1.6rem; }
+  .wz-bar { height: 3px; background: var(--bg-alt); border-radius: 3px; overflow: hidden; }
+  .wz-bar span { display: block; height: 100%; width: 0; background: var(--gold); transition: width 0.35s ease; }
+  .wz-step-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin: 0.6rem 0 0; }
+
+  .wz { max-width: 760px; }
+  .wz-title { font-family: var(--font-display); font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 500; color: var(--text); margin: 0; }
+  .wz-intro { color: var(--text-muted); font-size: 0.98rem; line-height: 1.55; margin: 0.5rem 0 1.8rem; max-width: 60ch; }
+
+  .q-label { font-size: 0.98rem; color: var(--text); margin: 0; line-height: 1.4; }
+  .q-label.mt { margin-top: 1.8rem; }
+  .q-tag {
+    display: inline-block; margin-right: 0.5rem; font-size: 0.62rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gold-dim); vertical-align: middle;
+  }
+
+  .area-list { display: flex; flex-direction: column; gap: 1.4rem; }
+  .area-card { border: 0.5px solid var(--border); border-radius: 8px; padding: 1.3rem 1.4rem; background: #fbf9f4; }
+  .area-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; color: var(--text); margin: 0 0 1rem; }
+  .area-q + .area-q { margin-top: 1.1rem; }
+
+  .mat-list { display: flex; flex-direction: column; gap: 1.4rem; }
+  .mat-row { }
+
+  .deep-group { display: flex; flex-direction: column; gap: 1.4rem; }
+
+  .opt { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.55rem; }
+  .opt-btn {
+    font: inherit; font-size: 0.9rem; padding: 0.5rem 1rem;
+    background: var(--bg-alt); color: var(--text-muted);
+    border: 0.5px solid var(--border); border-radius: 999px; cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .opt-btn:hover { border-color: var(--gold); }
+  .opt-btn[aria-checked='true'] { background: var(--gold); color: #fff; border-color: var(--gold); }
+  .opt.missing .opt-btn { border-color: #c0553f; }
+
+  .wz-textarea {
+    width: 100%; margin-top: 0.55rem; background: #fbf9f4; border: 0.5px solid var(--border);
+    border-radius: 6px; padding: 0.75rem 0.9rem; font: inherit; font-size: 0.95rem; color: var(--text); resize: vertical;
+  }
+  .wz-textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent; }
+
+  /* Navegación */
+  .wz-nav { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.2rem; padding-top: 1.6rem; border-top: 0.5px solid var(--border); }
+  .wz-hint { font-size: 0.85rem; color: #a8392b; margin: 0; }
+  .btn-dark {
+    display: inline-block; background: var(--text); color: var(--bg);
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.85rem 1.7rem; border: none; border-radius: 4px; cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+  .btn-dark:disabled { opacity: 0.5; cursor: default; }
+  .btn-ghost {
+    background: transparent; border: 0.5px solid var(--border); color: var(--text-muted);
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.8rem 1.4rem; border-radius: 4px; cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--text); }
+  .wz-next { margin-left: auto; }
+
+  /* Resultados */
+  .res-top { display: grid; grid-template-columns: 320px 1fr; gap: clamp(1.6rem, 4vw, 3rem); align-items: start; margin-top: 0.6rem; }
+  .res-radar { }
+  .res-legend { display: flex; gap: 1.2rem; justify-content: center; margin-top: 0.4rem; }
+  .lg { font-size: 0.76rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.4rem; }
+  .lg::before { content: ''; width: 14px; height: 0; border-top-width: 2px; border-top-style: solid; }
+  .lg-mgmt::before { border-top-color: var(--gold); }
+  .lg-imp::before { border-top-color: var(--text-muted); border-top-style: dashed; }
+
+  .res-indices { display: flex; flex-direction: column; gap: 1rem; }
+  .idx { background: var(--bg-alt); border-radius: 6px; padding: 0.9rem 1.1rem; }
+  .idx-label { font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); margin: 0; }
+  .idx-num { font-family: var(--font-display); font-size: 1.9rem; font-weight: 500; color: var(--text); margin: 0.1rem 0 0; }
+  .idx-max { font-size: 0.9rem; color: var(--text-faint); }
+  .idx-hint { font-size: 0.8rem; color: var(--text-faint); margin: 0.1rem 0 0; }
+  .quad { border: 0.5px solid var(--gold-dim); border-radius: 6px; padding: 0.9rem 1.1rem; }
+  .quad-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); margin: 0; }
+  .quad-name { font-family: var(--font-display); font-size: 1.3rem; color: var(--text); margin: 0.2rem 0 0.3rem; }
+  .quad-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+  .res-profile { margin-top: 2.2rem; border-top: 0.5px solid var(--border); padding-top: 1.8rem; }
+  .res-block-label { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); margin: 0 0 0.5rem; }
+  .res-block-hint { font-size: 0.85rem; color: var(--text-faint); margin: 0 0 0.9rem; }
+  .profile-name { font-family: var(--font-display); font-size: 1.7rem; font-weight: 500; color: var(--gold-dim); margin: 0 0 0.4rem; }
+  .profile-body { color: var(--text-muted); font-size: 0.97rem; line-height: 1.6; margin: 0; max-width: 62ch; }
+
+  .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.2rem; margin-top: 2.2rem; }
+  .gap-list { list-style: none; margin: 0; padding: 0; }
+  .gap-list li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 0.5px solid var(--border); font-size: 0.95rem; color: var(--text); }
+  .gap-bar { flex: 1; height: 5px; background: var(--bg-alt); border-radius: 3px; overflow: hidden; margin: 0 0.4rem; }
+  .gap-bar span { display: block; height: 100%; background: var(--gold); }
+  .gap-val { color: var(--gold-dim); font-size: 0.85rem; min-width: 2.5rem; text-align: right; }
+  .coherence-body { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+  /* Captura */
+  .diag-capture { margin-top: 2.4rem; border-top: 0.5px solid var(--border); padding-top: clamp(1.8rem, 4vw, 2.6rem); }
+  .diag-capture-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; color: var(--text); margin: 0; }
+  .diag-capture-sub { color: var(--text-muted); font-size: 0.95rem; margin: 0.4rem 0 1.4rem; max-width: 60ch; }
+  .diag-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .diag-fields input { grid-column: span 1; }
+  .diag-fields input[type='email'] { grid-column: 1 / -1; }
+  .diag input[type='text'], .diag input[type='email'] {
+    width: 100%; background: #fbf9f4; border: 0.5px solid var(--border); border-radius: 4px;
+    padding: 0.75rem 0.9rem; font: inherit; font-size: 0.95rem; color: var(--text);
+  }
+  .diag input::placeholder { color: var(--text-faint); }
+  .diag input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .diag-consent { display: flex; gap: 0.6rem; align-items: flex-start; margin-top: 1.1rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; cursor: pointer; }
+  .diag-consent input { margin-top: 0.15rem; accent-color: var(--gold); width: 16px; height: 16px; flex-shrink: 0; }
+  .diag-consent :global(a) { color: var(--gold-dim); }
+  .diag-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.4rem; }
+  .diag-status { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+  .diag-status.error { color: #9c3a2e; }
+  .diag-thanks { margin-top: 2rem; border-top: 0.5px solid var(--border); padding-top: 1.8rem; }
+  .diag-thanks-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; color: var(--text); margin: 0 0 0.4rem; }
+  .diag-thanks-body { color: var(--text-muted); font-size: 0.98rem; line-height: 1.6; margin: 0; }
+
+  @media (max-width: 720px) {
+    .res-top { grid-template-columns: 1fr; }
+    .res-radar { max-width: 360px; margin-inline: auto; }
+    .res-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+    .diag-fields { grid-template-columns: 1fr; }
+    .diag-fields input[type='email'] { grid-column: 1; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector('.diag') as HTMLElement | null;
+  if (root) {
+    const ENDPOINT = root.getAttribute('data-endpoint') || '';
+    const LOCALE = document.documentElement.lang || 'en';
+    const MSG = (() => { try { return JSON.parse(root.getAttribute('data-msgs') || '{}'); } catch (e) { return {}; } })();
+    const CFG = (() => { try { return JSON.parse(root.getAttribute('data-cfg') || '{}'); } catch (e) { return {}; } })();
+    const RES = CFG.results || {};
+    const AREAS = CFG.areas || [];
+    const AREA_KEYS = AREAS.map((a: any) => a.key);
+    const MAT = CFG.mat || [];
+    const labelOf = (k: string) => (AREAS.find((a: any) => a.key === k) || {}).label || k;
+
+    const answers: Record<string, any> = {};
+
+    // ---- Controles: escalas y opciones ----
+    root.querySelectorAll('.scale').forEach((group) => {
+      const key = group.getAttribute('data-key') || '';
+      group.querySelectorAll('.scale-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          answers[key] = Number(btn.getAttribute('data-v'));
+          group.querySelectorAll('.scale-btn').forEach((b) => b.setAttribute('aria-checked', 'false'));
+          btn.setAttribute('aria-checked', 'true');
+          group.classList.remove('missing');
+        });
+      });
+    });
+    root.querySelectorAll('.opt').forEach((group) => {
+      const key = group.getAttribute('data-key') || '';
+      group.querySelectorAll('.opt-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          answers[key] = btn.getAttribute('data-v');
+          group.querySelectorAll('.opt-btn').forEach((b) => b.setAttribute('aria-checked', 'false'));
+          btn.setAttribute('aria-checked', 'true');
+          group.classList.remove('missing');
+        });
+      });
+    });
+    root.querySelectorAll('.wz-textarea').forEach((ta) => {
+      ta.addEventListener('input', () => { answers[ta.getAttribute('data-key') || ''] = (ta as HTMLTextAreaElement).value; });
+    });
+
+    // ---- Navegación del wizard ----
+    const steps = Array.from(root.querySelectorAll('.wz-step')) as HTMLElement[];
+    const TOTAL_Q = 5; // pasos de preguntas (0..4); el 5 son resultados
+    let current = 0;
+    const progress = document.getElementById('wz-progress') as HTMLElement;
+    const barFill = document.getElementById('wz-bar-fill') as HTMLElement;
+    const stepLabel = document.getElementById('wz-step-label') as HTMLElement;
+    const backBtn = document.getElementById('wz-back') as HTMLButtonElement;
+    const nextBtn = document.getElementById('wz-next') as HTMLButtonElement;
+    const restartBtn = document.getElementById('wz-restart') as HTMLButtonElement;
+    const hint = document.getElementById('wz-hint') as HTMLElement;
+    const nextLabel = nextBtn.textContent || 'Next';
+    const seeLabel = nextBtn.getAttribute('data-see') || nextLabel;
+
+    function render() {
+      steps.forEach((s) => { s.hidden = Number(s.getAttribute('data-step')) !== current; });
+      const isResults = current === 5;
+      progress.hidden = false;
+      barFill.style.width = (isResults ? 100 : (current / TOTAL_Q) * 100) + '%';
+      stepLabel.textContent = isResults ? '' : (CFG.stepOf || '').replace('{i}', String(current + 1)).replace('{n}', String(TOTAL_Q));
+      backBtn.hidden = current === 0 || isResults;
+      nextBtn.hidden = isResults;
+      restartBtn.hidden = !isResults;
+      nextBtn.textContent = current === TOTAL_Q - 1 ? seeLabel : nextLabel;
+      hint.hidden = true;
+      window.scrollTo({ top: (root as HTMLElement).offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function validateStep(i: number): boolean {
+      const step = steps[i];
+      let ok = true;
+      step.querySelectorAll('.scale').forEach((g) => {
+        // Saltar escalas dentro de un grupo de profundización oculto
+        if ((g.closest('.deep-group') as HTMLElement | null)?.hidden) return;
+        const key = g.getAttribute('data-key') || '';
+        if (answers[key] == null) { g.classList.add('missing'); ok = false; }
+      });
+      // opción prioridad y disponibilidad obligatorias
+      step.querySelectorAll('.opt').forEach((g) => {
+        const key = g.getAttribute('data-key') || '';
+        if (answers[key] == null) { g.classList.add('missing'); ok = false; }
+      });
+      return ok;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (!validateStep(current)) { hint.hidden = false; return; }
+      if (current === 1) prepareDeep();       // tras elegir prioridad
+      if (current === TOTAL_Q - 1) { compute(); current = 5; render(); return; }
+      current = Math.min(current + 1, 5);
+      render();
+    });
+    backBtn.addEventListener('click', () => { current = Math.max(current - 1, 0); render(); });
+    restartBtn.addEventListener('click', () => { location.reload(); });
+
+    // ---- Profundización según área prioritaria ----
+    function prepareDeep() {
+      const area = answers['priority'];
+      root!.querySelectorAll('.deep-group').forEach((g) => {
+        (g as HTMLElement).hidden = g.getAttribute('data-area') !== area;
+      });
+      const title = document.getElementById('deep-title');
+      if (title && CFG.deepTitle) title.textContent = CFG.deepTitle.replace('{area}', labelOf(area));
+    }
+
+    // ---- Scoring ----
+    const val = (k: string) => (answers[k] != null ? Number(answers[k]) : 3);
+    const mean = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
+    const cx = 160, cy = 120, R = 76;
+    const ang = (i: number) => ((-90 + 72 * i) * Math.PI) / 180;
+    const pt = (i: number, v: number) => [cx + (R * v / 5) * Math.cos(ang(i)), cy + (R * v / 5) * Math.sin(ang(i))];
+
+    let scored: any = null;
+
+    function compute() {
+      const imp: Record<string, number> = {}, gest: Record<string, number> = {}, gap: Record<string, number> = {};
+      AREA_KEYS.forEach((k: string) => { imp[k] = val('imp_' + k); gest[k] = val('gest_' + k); gap[k] = imp[k] - gest[k]; });
+      const IAR = mean(AREA_KEYS.map((k: string) => imp[k]));
+      const IMR = mean(AREA_KEYS.map((k: string) => gest[k]));
+      const quad = IAR >= 3 ? (IMR >= 3 ? 'advanced' : 'highPotential') : (IMR >= 3 ? 'comfortable' : 'littleRoom');
+
+      const m: Record<string, number> = {};
+      MAT.forEach((k: string) => { m[k] = val('b3_' + k); });
+      const avgBase = mean([m.governance, m.strategy]);
+      const avgMedCul = mean([m.measurement, m.culture]);
+      const excel = [m.governance, m.strategy, m.resources, m.measurement, m.culture].every((x) => x >= 4);
+      const profile = avgBase < 3 ? 'exposed' : (avgMedCul < 3 ? 'blind' : ((excel && m.crisis >= 4) ? 'resilient' : 'advanced'));
+
+      const sorted = [...AREA_KEYS].sort((a: string, b: string) => gap[b] - gap[a]);
+      const topGap = sorted[0];
+      const priority = answers['priority'] || topGap;
+
+      scored = { imp, gest, gap, IAR, IMR, quad, m, profile, topGap, priority, sorted };
+      renderResults();
+    }
+
+    function renderResults() {
+      const s = scored;
+      // Radar
+      const polyImp = AREA_KEYS.map((k: string, i: number) => { const p = pt(i, s.imp[k]); return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ');
+      const polyMgmt = AREA_KEYS.map((k: string, i: number) => { const p = pt(i, s.gest[k]); return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ');
+      (document.getElementById('poly-imp') as any)?.setAttribute('points', polyImp);
+      (document.getElementById('poly-mgmt') as any)?.setAttribute('points', polyMgmt);
+
+      setText('idx-iar', s.IAR.toFixed(1));
+      setText('idx-imr', s.IMR.toFixed(1));
+      const q = (RES.quadrants || {})[s.quad] || {};
+      setText('quad-name', q.name || '');
+      setText('quad-body', q.body || '');
+      const p = (RES.profiles || {})[s.profile] || {};
+      setText('profile-name', p.name || '');
+      setText('profile-body', p.body || '');
+
+      // Brechas (top 3 con brecha > 0)
+      const list = document.getElementById('gap-list');
+      if (list) {
+        list.innerHTML = '';
+        s.sorted.slice(0, 3).forEach((k: string) => {
+          if (s.gap[k] <= 0) return;
+          const li = document.createElement('li');
+          const pct = Math.round((s.gap[k] / 4) * 100);
+          li.innerHTML = '<span>' + labelOf(k) + '</span><span class="gap-bar"><span style="width:' + pct + '%"></span></span><span class="gap-val">+' + s.gap[k] + '</span>';
+          list.appendChild(li);
+        });
+        if (!list.children.length) {
+          const li = document.createElement('li');
+          li.textContent = '—';
+          list.appendChild(li);
+        }
+      }
+
+      // Coherencia
+      const tpl = s.priority === s.topGap ? RES.coherenceMatch : RES.coherenceMismatch;
+      const txt = (tpl || '').replace('{priority}', labelOf(s.priority)).replace('{gap}', labelOf(s.topGap));
+      setText('coherence-body', txt);
+    }
+
+    function setText(id: string, t: string) { const el = document.getElementById(id); if (el) el.textContent = t; }
+
+    // ---- Envío ----
+    const sendBtn = document.getElementById('diag-send') as HTMLButtonElement | null;
+    const statusEl = document.getElementById('diag-status');
+    const setStatus = (msg: string, err: boolean) => { if (statusEl) { statusEl.textContent = msg || ''; statusEl.classList.toggle('error', !!err); } };
+
+    if (sendBtn) {
+      sendBtn.addEventListener('click', async () => {
+        const email = (document.getElementById('diag-email') as HTMLInputElement).value.trim();
+        const consent = (document.getElementById('diag-consent') as HTMLInputElement).checked;
+        const website = (document.getElementById('diag-website') as HTMLInputElement).value.trim();
+        if (!/.+@.+\..+/.test(email)) { setStatus(MSG.invalidEmail, true); return; }
+        if (!consent) { setStatus(MSG.needConsent, true); return; }
+        if (!scored) compute();
+        const s = scored;
+
+        const row: Record<string, any> = {
+          intent: 'diagnose',
+          source: 'autodiagnostico',
+          locale: LOCALE,
+          name: (document.getElementById('diag-name') as HTMLInputElement).value.trim(),
+          email,
+          company: (document.getElementById('diag-company') as HTMLInputElement).value.trim(),
+          consent: true,
+          website,
+          IAR: Number(s.IAR.toFixed(2)),
+          IMR: Number(s.IMR.toFixed(2)),
+          quadrant: s.quad,
+          perfil: s.profile,
+          area_prioritaria: s.priority,
+          urgencia: val('urgency'),
+          reto: answers['reto'] || '',
+          resultado_esperado: answers['resultado'] || '',
+          disponibilidad: answers['disponibilidad'] || '',
+          alineacion_interna: val('alignment'),
+        };
+        AREA_KEYS.forEach((k: string) => {
+          row['imp_' + k] = s.imp[k]; row['gest_' + k] = s.gest[k]; row['gap_' + k] = s.gap[k];
+        });
+        MAT.forEach((k: string) => { row['b3_' + k] = s.m[k]; });
+        const pk = s.priority;
+        row['b35_' + pk + '_1'] = val('b35_' + pk + '_1');
+        row['b35_' + pk + '_2'] = val('b35_' + pk + '_2');
+
+        sendBtn.disabled = true;
+        setStatus(MSG.sending, false);
+        try {
+          const res = await fetch(ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(row),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.ok) {
+            const cap = document.getElementById('diag-capture');
+            const th = document.getElementById('diag-thanks');
+            if (cap) cap.hidden = true;
+            if (th) th.hidden = false;
+          } else {
+            sendBtn.disabled = false;
+            setStatus(MSG.genericError, true);
+          }
+        } catch (e) {
+          sendBtn.disabled = false;
+          setStatus(MSG.genericError, true);
+        }
+      });
+    }
+
+    render();
+  }
+</script>

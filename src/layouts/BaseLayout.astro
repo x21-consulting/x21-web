@@ -1,25 +1,31 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site';
+import { getContent, getAltPath, defaultLang, type Lang } from '../i18n';
 
 interface Props {
+  lang?: Lang;
   title?: string;
   description?: string;
   /** Si true, marca la página como secundaria (legales) para no indexar como home */
   pageType?: 'website' | 'article';
 }
 
+const { lang = defaultLang, pageType = 'website' } = Astro.props;
+const c = getContent(lang);
+
 const {
-  title = `${site.name} — Reputation to Growth`,
-  description = site.description,
-  pageType = 'website',
+  title = c.meta.defaultTitle,
+  description = c.meta.description,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, site.url).href;
+const altEn = new URL(getAltPath(Astro.url.pathname, 'en'), site.url).href;
+const altEs = new URL(getAltPath(Astro.url.pathname, 'es'), site.url).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={c.meta.htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,12 +36,16 @@ const canonical = new URL(Astro.url.pathname, site.url).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    <link rel="alternate" hreflang="en" href={altEn} />
+    <link rel="alternate" hreflang="es" href={altEs} />
+    <link rel="alternate" hreflang="x-default" href={altEn} />
+
     <meta property="og:type" content={pageType} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={c.meta.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
@@ -45,9 +55,39 @@ const canonical = new URL(Astro.url.pathname, site.url).href;
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500&display=swap"
     />
+
+    <!--
+      Idioma por defecto = idioma del navegador. En la primera visita, si el
+      navegador está en español y el usuario no ha elegido idioma antes,
+      redirige a /es/. La elección explícita (selector EN/ES) se guarda en
+      localStorage y siempre tiene prioridad. Se ejecuta antes del render para
+      evitar parpadeos.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var path = location.pathname;
+          var isEs = path === '/es' || path.indexOf('/es/') === 0;
+          var current = isEs ? 'es' : 'en';
+          var pref = localStorage.getItem('x21_lang');
+          if (pref !== 'en' && pref !== 'es') {
+            var navLang = (navigator.language || 'en').toLowerCase();
+            pref = navLang.indexOf('es') === 0 ? 'es' : 'en';
+          }
+          if (pref === current) return;
+          var target;
+          if (pref === 'es') {
+            target = path === '/' ? '/es/' : '/es' + path;
+          } else {
+            target = path.replace(/^\/es(\/|$)/, '/');
+          }
+          location.replace(target + location.search + location.hash);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
+    <a class="skip-link" href="#main">{c.meta.skip}</a>
     <slot />
   </body>
 </html>

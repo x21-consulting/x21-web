@@ -1,0 +1,751 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import { getContent, localizePath, defaultLang, type Lang } from '../../i18n';
+
+interface Props { lang?: Lang }
+const { lang = defaultLang } = Astro.props;
+const c = getContent(lang);
+const { hero, services, team, why, contact, commitments, briefing } = c;
+
+const ENDPOINT =
+  import.meta.env.PUBLIC_LEADS_ENDPOINT || 'https://erp.x21.consulting/api/leads';
+
+const privacyHref = localizePath('/aviso-legal', lang);
+const consentHtml = contact.consent.replace('{privacy}', privacyHref);
+
+// Mensajes de estado de los formularios (consumidos por el script de cliente)
+const formMsgs = JSON.stringify(c.forms);
+
+const routeIcons: Record<string, string> = {
+  explore:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5,8.5 10.5,10.5 8.5,15.5 13.5,13.5"/></svg>',
+  diagnose:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>',
+  propose:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><line x1="9" y1="12.5" x2="15" y2="12.5"/><line x1="9" y1="16" x2="15" y2="16"/></svg>',
+  crisis:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><line x1="5.6" y1="5.6" x2="9.5" y2="9.5"/><line x1="18.4" y1="5.6" x2="14.5" y2="9.5"/><line x1="5.6" y1="18.4" x2="9.5" y2="14.5"/><line x1="18.4" y1="18.4" x2="14.5" y2="14.5"/></svg>',
+};
+
+const icons: Record<string, string> = {
+  affairs:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg>',
+  media:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8 21h8"/></svg>',
+  risk:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>',
+};
+
+const initials = (name: string) =>
+  name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('');
+---
+
+<BaseLayout lang={lang}>
+  <Nav lang={lang} />
+
+  <main id="main">
+    <!-- HERO (oscuro) -->
+    <section class="hero tone-dark" id="top">
+      <div class="container hero-inner">
+        <p class="eyebrow">{hero.kicker}</p>
+        <h1 class="hero-title">
+          {hero.title.map((line, i) => (
+            <span class="hero-line" style={`--d:${i * 90}ms`}>{line}</span>
+          ))}
+        </h1>
+        <p class="hero-body">{hero.body}</p>
+        <div class="hero-actions">
+          <a class="btn" href={hero.primaryCta.href}>{hero.primaryCta.label}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES (off-white) · texto izq · imagen der -->
+    <section class="feature tone-light" id="services">
+      <div class="feature-text">
+        <div class="feature-inner">
+          <p class="eyebrow reveal">{services.eyebrow}</p>
+          <h2 class="section-title reveal">{services.title}</h2>
+          <p class="lead reveal">{services.lead}</p>
+          <div class="svc-list">
+            {services.blocks.map((b) => (
+              <article class="svc-block reveal">
+                <span class="svc-icon" set:html={icons[b.icon]} />
+                <div>
+                  <h3 class="svc-title">{b.title}</h3>
+                  <p class="svc-tagline">{b.tagline}</p>
+                  <ul class="svc-items">
+                    {b.capabilities.map((cap) => <li>{cap.title}</li>)}
+                  </ul>
+                  <a class="svc-more" href={localizePath(`/services/${b.slug}`, lang)}>{services.learnMore}</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="feature-media">
+        <img class="parallax-img" src={services.image} alt={services.imageCaption} loading="lazy" />
+      </div>
+    </section>
+
+    <!-- TEAM (crema) -->
+    <section class="tone-cream" id="team">
+      <div class="feature">
+        <div class="feature-media">
+          <img class="parallax-img" src={team.image} alt={team.title} loading="lazy" />
+        </div>
+        <div class="feature-text">
+          <div class="feature-inner">
+            <p class="eyebrow reveal">{team.eyebrow}</p>
+            <h2 class="section-title reveal">{team.title}</h2>
+            <p class="lead reveal">{team.lead}</p>
+            <ul class="teaser-grid reveal">
+              {team.members.map((m) => (
+                <li class="teaser-card">
+                  <div class="teaser-photo">
+                    {m.photo
+                      ? <img src={m.photo} alt={m.name} loading="lazy" />
+                      : <span class="teaser-mono">{initials(m.name)}</span>}
+                  </div>
+                  <p class="teaser-name">{m.name}</p>
+                  <p class="teaser-title">{m.title}</p>
+                </li>
+              ))}
+            </ul>
+            <div class="teaser-actions reveal">
+              <a class="btn-dark" href={localizePath('/team', lang)}>{team.meetPartners}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRIEFING TEASER (claro) -->
+    <section class="section tone-light briefing-teaser">
+      <div class="container">
+        <div class="bt-grid">
+          <div class="bt-cover reveal" aria-hidden="true">
+            <svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Briefing — cover">
+              <rect x="0" y="0" width="240" height="320" rx="6" fill="#17130e" />
+              <text x="22" y="40" fill="#c9a96e" font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="3">QUARTERLY</text>
+              <image href="/X21_Logo_Blanco.png" x="168" y="22" width="50" height="21" />
+              <g fill="#efe9dd">
+                <path d="M120 168 L48 120 L72 96 Z" />
+                <path d="M120 168 L168 96 L192 120 Z" />
+                <path d="M120 168 L192 216 L168 240 Z" />
+                <path d="M120 168 L72 240 L48 216 Z" />
+              </g>
+              <line x1="22" y1="280" x2="218" y2="280" stroke="#4a4234" stroke-width="0.75" />
+              <text x="22" y="300" fill="#b8ad99" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="500" letter-spacing="2.5">THE BRIEFING</text>
+              <text x="218" y="300" text-anchor="end" fill="#7a7060" font-family="'Inter', system-ui, sans-serif" font-size="9" letter-spacing="1">Nº 01</text>
+            </svg>
+          </div>
+          <div class="bt-content">
+            <p class="eyebrow reveal">{briefing.eyebrow}</p>
+            <h2 class="bt-title reveal">{briefing.title}</h2>
+            <p class="bt-lead reveal">{briefing.teaser}</p>
+            <a class="btn-dark reveal" href={localizePath('/briefing', lang)}>{briefing.teaserCta}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY X21 (oscuro) · texto izq · imagen der -->
+    <section class="feature tone-dark" id="why">
+      <div class="feature-text">
+        <div class="feature-inner">
+          <p class="eyebrow reveal">{why.eyebrow}</p>
+          <h2 class="section-title reveal">{why.title}</h2>
+          <p class="lead reveal">{why.lead}</p>
+          <ul class="pillars">
+            {why.pillars.map((p) => (
+              <li class="reveal">
+                <span class="pillar-label">{p.label}</span>
+                <span class="pillar-body">{p.body}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="feature-media">
+        <img class="parallax-img" src={why.image} alt={why.title} loading="lazy" />
+      </div>
+    </section>
+
+    <!-- COMMITMENTS (oscuro) -->
+    <section class="section tone-dark commitments">
+      <div class="container">
+        <div class="commit-layout">
+          <div class="commit-head">
+            <svg class="x-mark reveal" viewBox="0 0 240 240" aria-hidden="true" fill="currentColor">
+              <path d="M120 120 L24 56 L56 24 Z" />
+              <path d="M120 120 L184 24 L216 56 Z" />
+              <path d="M120 120 L216 184 L184 216 Z" />
+              <path d="M120 120 L56 216 L24 184 Z" />
+            </svg>
+            <p class="eyebrow reveal">{commitments.eyebrow}</p>
+            <h2 class="commit-heading reveal">{commitments.title}</h2>
+            <p class="commit-intro reveal">{commitments.intro}</p>
+          </div>
+          <div class="commit-grid">
+            {commitments.items.map((ci) => (
+              <div class="commit reveal">
+                <h3 class="commit-title">{ci.title}</h3>
+                <p class="commit-body">{ci.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact tone-dark" id="contact" data-endpoint={ENDPOINT} data-msgs={formMsgs}>
+      <div class="container">
+        <p class="eyebrow">{contact.eyebrow}</p>
+        <h2 class="contact-title">{contact.title}</h2>
+        <p class="contact-lead">{contact.lead}</p>
+
+        <div class="router">
+          <a class="route-card" href="#services">
+            <span class="route-top"><span class="route-icon" set:html={routeIcons.explore} /><span class="route-k">01</span></span>
+            <span class="route-name">{contact.routes.explore.name}</span>
+            <span class="route-desc">{contact.routes.explore.desc}</span>
+          </a>
+          <a class="route-card" href={localizePath('/diagnostic', lang)}>
+            <span class="route-top"><span class="route-icon" set:html={routeIcons.diagnose} /><span class="route-k">02</span></span>
+            <span class="route-name">{contact.routes.diagnose.name}</span>
+            <span class="route-desc">{contact.routes.diagnose.desc}</span>
+          </a>
+          <button class="route-card" type="button" data-panel="propose">
+            <span class="route-top"><span class="route-icon" set:html={routeIcons.propose} /><span class="route-k">03</span></span>
+            <span class="route-name">{contact.routes.propose.name}</span>
+            <span class="route-desc">{contact.routes.propose.desc}</span>
+          </button>
+          <button class="route-card route-crisis" type="button" data-panel="crisis">
+            <span class="route-top"><span class="route-icon" set:html={routeIcons.crisis} /><span class="route-k">04</span></span>
+            <span class="route-name">{contact.routes.crisis.name}</span>
+            <span class="route-desc">{contact.routes.crisis.desc}</span>
+          </button>
+        </div>
+
+        <!-- Panel: Crisis -->
+        <div class="panel" id="panel-crisis" hidden>
+          <div class="panel-inner">
+            <div class="crisis-now">
+              <p class="panel-kicker">{contact.crisis.now}</p>
+              <a class="crisis-line" href={contact.crisis.phoneHref}>{contact.crisis.phoneLabel}</a>
+              <a class="crisis-mail" href={`mailto:${contact.crisis.email}`}>{contact.crisis.email}</a>
+              <p class="crisis-note">{contact.crisis.note}</p>
+            </div>
+            <form class="lead-form" data-intent="crisis" novalidate>
+              <div class="fields">
+                <input type="text" name="name" placeholder={contact.fields.name} autocomplete="name" />
+                <input type="text" name="company" placeholder={contact.fields.company} autocomplete="organization" />
+                <input type="tel" name="phone" placeholder={contact.fields.phone} autocomplete="tel" />
+                <input type="email" name="email" placeholder={contact.fields.email} autocomplete="email" />
+              </div>
+              <textarea name="message" rows="3" placeholder={contact.crisis.msgPlaceholder}></textarea>
+              <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+              <label class="consent">
+                <input type="checkbox" name="consent" />
+                <span set:html={consentHtml} />
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn">{contact.crisis.submit}</button>
+                <p class="form-status" role="status"></p>
+              </div>
+            </form>
+            <p class="form-thanks" hidden>{contact.crisis.thanks}</p>
+          </div>
+        </div>
+
+        <!-- Panel: Propose -->
+        <div class="panel" id="panel-propose" hidden>
+          <div class="panel-inner">
+            <form class="lead-form" data-intent="propose" novalidate>
+              <p class="panel-kicker">{contact.propose.kicker}</p>
+              <div class="fields">
+                <input type="text" name="name" placeholder={contact.fields.name} autocomplete="name" />
+                <input type="text" name="company" placeholder={contact.fields.company} autocomplete="organization" />
+                <input type="email" name="email" placeholder={contact.propose.emailPlaceholder} autocomplete="email" />
+                <input type="tel" name="phone" placeholder={contact.propose.phonePlaceholder} autocomplete="tel" />
+              </div>
+              <textarea name="message" rows="4" placeholder={contact.propose.msgPlaceholder}></textarea>
+              <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+              <label class="consent">
+                <input type="checkbox" name="consent" />
+                <span set:html={consentHtml} />
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn">{contact.propose.submit}</button>
+                <p class="form-status" role="status"></p>
+              </div>
+            </form>
+            <p class="form-thanks" hidden>{contact.propose.thanks}</p>
+          </div>
+        </div>
+
+        <div class="contact-meta">
+          <a href={contact.addressUrl} target="_blank" rel="noopener"><span>{contact.meta.office}</span>{contact.address}</a>
+          <a href={`mailto:${contact.email}`}><span>{contact.meta.email}</span>{contact.email}</a>
+          <a href={contact.linkedin} target="_blank" rel="noopener"><span>{contact.meta.community}</span>LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  /* ===== Tonos por sección (sobrescriben tokens locales) ===== */
+  .tone-dark { background: var(--bg); }
+  .tone-light {
+    --bg: #f4f0e8;
+    --bg-alt: #ece7db;
+    --bg-deep: #e7e1d4;
+    --text: #1f1b15;
+    --text-muted: #6f675a;
+    --text-faint: #9a9082;
+    --gold: #9a7635;
+    --gold-dim: #876327;
+    --border: rgba(31, 27, 21, 0.14);
+    background: var(--bg);
+  }
+  .tone-cream {
+    --bg: #e9e1d2;
+    --bg-alt: #e0d7c4;
+    --bg-deep: #ddd3c0;
+    --text: #221d15;
+    --text-muted: #6b6253;
+    --text-faint: #8c8270;
+    --gold: #8f6c2e;
+    --gold-dim: #7a5a24;
+    --border: rgba(34, 29, 21, 0.16);
+    background: var(--bg);
+  }
+
+  /* ===== Feature: mitad texto / mitad imagen a sangre ===== */
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    min-height: clamp(580px, 84vh, 940px);
+    border-top: 0.5px solid var(--border);
+  }
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(3rem, 6vw, 6rem) var(--gutter);
+  }
+  .feature-inner { width: 100%; max-width: 600px; margin-inline: auto; }
+  .feature-media {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-deep);
+  }
+  .parallax-img {
+    position: absolute;
+    left: 0;
+    top: -14%;
+    width: 100%;
+    height: 128%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: clamp(560px, 86vh, 820px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after,
+  .hero::before {
+    content: '';
+    position: absolute;
+    border: 0.5px solid var(--border);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    right: -8%;
+    top: 50%;
+    width: 46vw;
+    max-width: 620px;
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    animation: heroBreathe 17s ease-in-out infinite;
+  }
+  .hero::before {
+    right: 6%;
+    top: 30%;
+    width: 26vw;
+    max-width: 340px;
+    aspect-ratio: 1;
+    opacity: 0.7;
+    animation: heroDrift 23s ease-in-out infinite;
+  }
+  @keyframes heroBreathe {
+    0%, 100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-52%) scale(1.05); }
+  }
+  @keyframes heroDrift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-4%, 5%); }
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-title { font-size: clamp(3.2rem, 9vw, 6.5rem); line-height: 0.98; margin: 0.4rem 0 0; }
+  .hero-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    animation-delay: var(--d);
+  }
+  .hero-body { color: var(--text-muted); font-size: 1.1rem; max-width: 52ch; margin-top: 1.8rem; }
+  .hero-actions { display: flex; align-items: center; gap: 1.8rem; margin-top: 2.4rem; flex-wrap: wrap; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ===== SERVICES ===== */
+  .svc-list { display: flex; flex-direction: column; margin-top: 2.4rem; }
+  .svc-more { display: inline-block; margin-top: 0.9rem; font-size: 0.82rem; letter-spacing: 0.06em; color: var(--gold-dim); text-decoration: none; border-bottom: 0.5px solid transparent; transition: border-color 0.2s ease; }
+  .svc-more:hover { border-color: var(--gold-dim); }
+  .svc-block { display: flex; gap: 1.2rem; padding: 1.5rem 0; border-top: 0.5px solid var(--border); }
+  .svc-block:first-child { border-top: none; padding-top: 0; }
+  .svc-icon { flex: none; width: 28px; height: 28px; color: var(--gold); margin-top: 2px; }
+  .svc-icon :global(svg) { width: 100%; height: 100%; }
+  .svc-title { font-family: var(--font-display); font-size: 1.45rem; font-weight: 500; color: var(--text); }
+  .svc-tagline { color: var(--text-faint); font-size: 0.88rem; margin: 0.2rem 0 0.8rem; }
+  .svc-items { list-style: none; margin: 0; padding: 0; }
+  .svc-items li {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    padding: 0.3rem 0 0.3rem 1.1rem;
+    position: relative;
+  }
+  .svc-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.78rem;
+    width: 5px;
+    height: 5px;
+    background: var(--gold-dim);
+    border-radius: 50%;
+  }
+
+  /* ===== TEAM · teaser de socios (dentro de la columna de texto) ===== */
+  .teaser-grid {
+    list-style: none;
+    margin: clamp(2rem, 4vw, 2.6rem) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: clamp(1.1rem, 2.4vw, 1.7rem);
+  }
+  .teaser-card { text-align: center; width: 104px; }
+  .teaser-photo {
+    width: 104px;
+    height: 104px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .teaser-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .teaser-mono { font-family: var(--font-display); font-size: 2.1rem; font-weight: 500; color: var(--gold); }
+  .teaser-name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; color: var(--text); margin-top: 0.55rem; line-height: 1.18; }
+  .teaser-title { color: var(--gold-dim); font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase; margin-top: 0.28rem; }
+  .teaser-actions { margin-top: clamp(1.8rem, 4vw, 2.6rem); }
+  .btn-dark {
+    display: inline-block;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.7rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+
+  /* ===== WHY ===== */
+  .pillars { list-style: none; margin: 2.4rem 0 0; padding: 0; display: flex; flex-direction: column; }
+  .pillars li {
+    display: grid;
+    grid-template-columns: minmax(120px, 160px) 1fr;
+    gap: clamp(0.8rem, 2vw, 1.6rem);
+    padding: 1.3rem 0;
+    border-top: 0.5px solid var(--border);
+    align-items: baseline;
+  }
+  .pillars li:last-child { border-bottom: 0.5px solid var(--border); }
+  .pillar-label { font-family: var(--font-display); font-size: 1.4rem; color: var(--text); }
+  .pillar-body { color: var(--text-muted); font-size: 0.95rem; }
+
+  /* ===== CONTACT · router de intención ===== */
+  .contact-title { font-size: clamp(2.4rem, 6vw, 4.2rem); margin-top: 0.4rem; max-width: 14ch; }
+  .contact-lead { color: var(--text-muted); font-size: 1.05rem; margin-top: 1rem; max-width: 48ch; }
+
+  .router {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    margin-top: 3rem;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+  .route-card {
+    background: var(--bg);
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+    text-decoration: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+  }
+  .route-card:hover { background: var(--bg-alt); }
+  .route-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+  .route-icon { width: 26px; height: 26px; color: var(--gold); display: block; }
+  .route-icon :global(svg) { width: 100%; height: 100%; }
+  .route-card:hover .route-icon { opacity: 0.82; }
+  .route-k { font-size: 0.72rem; letter-spacing: 0.18em; color: var(--gold); }
+  .route-name { font-family: var(--font-display); font-size: 1.5rem; color: var(--text); }
+  .route-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.45; }
+  .route-crisis .route-name { color: var(--gold); }
+
+  .panel { margin-top: 1px; background: var(--bg-alt); border: 0.5px solid var(--border); }
+  .panel-inner { padding: clamp(1.6rem, 4vw, 2.6rem); display: grid; gap: 1.6rem; }
+  @media (min-width: 760px) {
+    #panel-crisis .panel-inner { grid-template-columns: 320px 1fr; align-items: start; }
+  }
+  .panel-kicker { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin: 0 0 0.8rem; }
+
+  .crisis-line { display: block; font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.4rem); color: var(--gold); text-decoration: none; }
+  .crisis-mail { display: inline-block; margin-top: 0.4rem; color: var(--text); text-decoration: none; border-bottom: 0.5px solid var(--gold); }
+  .crisis-note { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-top: 1rem; }
+
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .lead-form textarea { margin-top: 0.7rem; }
+  .contact input, .contact textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    font-size: 0.92rem;
+    color: var(--text);
+    resize: vertical;
+  }
+  .contact input::placeholder, .contact textarea::placeholder { color: var(--text-faint); }
+  .contact input:focus-visible, .contact textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .consent { display: flex; gap: 0.6rem; align-items: flex-start; margin-top: 1rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; cursor: pointer; }
+  .consent input { margin-top: 0.15rem; accent-color: var(--gold); width: 16px; height: 16px; flex-shrink: 0; }
+  .consent :global(a) { color: var(--gold); }
+  .form-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.3rem; }
+  button.btn { background: transparent; cursor: pointer; font: inherit; }
+  button.btn:disabled { opacity: 0.5; cursor: default; }
+  .form-status { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+  .form-status.error { color: #e0a59a; }
+  .form-thanks { font-family: var(--font-display); font-size: 1.25rem; color: var(--text); margin: 0; }
+
+  .contact-meta { display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2.6rem; }
+  .contact-meta a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; display: flex; flex-direction: column; gap: 0.3rem; transition: color 0.2s ease; }
+  .contact-meta a:hover { color: var(--text); }
+  .contact-meta span { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); }
+
+  /* ===== BRIEFING TEASER ===== */
+  .bt-grid { display: flex; align-items: center; gap: clamp(1.6rem, 4vw, 3.5rem); }
+  .bt-cover { flex: none; width: 140px; }
+  .bt-cover svg { display: block; width: 100%; height: auto; border-radius: 6px; filter: drop-shadow(0 10px 24px rgba(31, 27, 21, 0.18)); }
+  .bt-title { font-family: var(--font-display); font-size: clamp(1.7rem, 3.2vw, 2.3rem); font-weight: 500; color: var(--text); margin: 0.3rem 0 0; line-height: 1.05; }
+  .bt-lead { color: var(--text-muted); font-size: 1rem; line-height: 1.55; margin: 0.7rem 0 1.3rem; max-width: 46ch; }
+
+  /* ===== COMMITMENTS ===== */
+  .commitments { background: rgba(201, 169, 110, 0.04); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+  .commit-layout { display: grid; grid-template-columns: 340px 1fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+  .commit-head .x-mark { width: 54px; height: 54px; color: var(--gold); display: block; margin-bottom: 1.5rem; }
+  .commit-head .eyebrow { margin-bottom: 0.6rem; }
+  .commit-heading { font-family: var(--font-display); font-size: clamp(1.9rem, 3.5vw, 2.6rem); font-weight: 500; color: var(--text); margin: 0; line-height: 1.05; }
+  .commit-intro { color: var(--text-muted); font-size: 0.98rem; line-height: 1.6; margin: 1rem 0 0; max-width: 34ch; }
+  .commit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem; }
+  .commit::before { content: ''; display: block; width: 28px; height: 2px; background: var(--gold); margin-bottom: 1.1rem; }
+  .commit-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; color: var(--text); margin: 0 0 0.5rem; line-height: 1.15; }
+  .commit-body { color: var(--text-muted); font-size: 0.92rem; line-height: 1.55; margin: 0; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 860px) {
+    .feature { grid-template-columns: 1fr; }
+    .feature-media { min-height: 64vh; order: 2; }
+    .feature-text { order: 1; }
+    .pillars li { grid-template-columns: 1fr; gap: 0.3rem; }
+    .fields { grid-template-columns: 1fr; }
+    .bt-grid { flex-direction: column; align-items: flex-start; gap: 1.6rem; }
+    .bt-cover { width: 120px; }
+    .commit-layout { grid-template-columns: 1fr; gap: 2.4rem; }
+    .commit-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.6rem; }
+  }
+  @media (max-width: 520px) {
+    .commit-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add('is-visible'));
+  }
+
+  // Parallax dentro de cada columna de imagen
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.parallax-img'));
+  if (!reduce && imgs.length) {
+    let ticking = false;
+    const update = () => {
+      const vh = window.innerHeight;
+      for (const img of imgs) {
+        const frame = img.parentElement as HTMLElement;
+        const rect = frame.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) continue;
+        const center = rect.top + rect.height / 2;
+        const progress = (center - vh / 2) / vh;
+        const travel = rect.height * 0.12;
+        img.style.transform = `translate3d(0, ${(-progress * travel).toFixed(1)}px, 0)`;
+      }
+      ticking = false;
+    };
+    const onScroll = () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+</script>
+
+<script>
+  // Router de intención: abrir panel (solo en la sección de contacto)
+  const routerSection = document.querySelector('.contact');
+  if (routerSection) {
+    routerSection.querySelectorAll('[data-panel]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-panel');
+        routerSection.querySelectorAll('.panel').forEach((p) => {
+          (p as HTMLElement).hidden = p.id !== 'panel-' + target;
+        });
+        const panel = document.getElementById('panel-' + target);
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+  }
+
+  // Textos de estado localizados (inyectados desde el servidor) + idioma actual
+  const msgHost = document.querySelector('.contact') as HTMLElement | null;
+  const MSG = (() => {
+    try { return JSON.parse(msgHost?.getAttribute('data-msgs') || '{}'); } catch (e) { return {}; }
+  })();
+  const LOCALE = document.documentElement.lang || 'en';
+
+  // Envío de formularios de lead (contacto, propuesta, crisis)
+  document.querySelectorAll('.lead-form').forEach((form) => {
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const intent = form.getAttribute('data-intent') || 'explore';
+      const endpoint =
+        (form.closest('[data-endpoint]') as HTMLElement | null)?.getAttribute('data-endpoint') || '';
+      const source = form.getAttribute('data-source') || 'router-' + intent;
+      const get = (n: string) => {
+        const el = form.querySelector('[name="' + n + '"]') as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | null;
+        return el ? el.value.trim() : '';
+      };
+      const email = get('email');
+      const phone = get('phone');
+      const consentEl = form.querySelector('[name="consent"]') as HTMLInputElement | null;
+      const consent = consentEl ? consentEl.checked : false;
+      const statusEl = form.querySelector('.form-status');
+      const setStatus = (m: string, err: boolean) => {
+        if (statusEl) { statusEl.textContent = m; statusEl.classList.toggle('error', err); }
+      };
+
+      const emailOk = /.+@.+\..+/.test(email);
+      const reachable = emailOk || (intent === 'crisis' && phone.length >= 6);
+      if (!reachable) {
+        setStatus(intent === 'crisis' ? MSG.needReach : MSG.invalidEmail, true);
+        return;
+      }
+      if (!consent) { setStatus(MSG.needConsent, true); return; }
+
+      const payload = {
+        intent,
+        name: get('name'),
+        email,
+        company: get('company'),
+        phone,
+        message: get('message'),
+        consent: true,
+        source,
+        locale: LOCALE,
+        website: get('website'),
+      };
+
+      const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (btn) btn.disabled = true;
+      setStatus(MSG.sending, false);
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          (form as HTMLElement).hidden = true;
+          const thanks = form.parentElement
+            ? (form.parentElement.querySelector('.form-thanks') as HTMLElement | null)
+            : null;
+          if (thanks) thanks.hidden = false;
+        } else {
+          if (btn) btn.disabled = false;
+          setStatus(MSG.genericError, true);
+        }
+      } catch (e) {
+        if (btn) btn.disabled = false;
+        setStatus(MSG.networkError, true);
+      }
+    });
+  });
+</script>

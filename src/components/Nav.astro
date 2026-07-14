@@ -1,22 +1,48 @@
 ---
-import { nav, contact } from '../data/site';
-/** En la home los anchors funcionan; en páginas legales hay que volver a la raíz */
-interface Props { home?: boolean }
-const { home = true } = Astro.props;
-const prefix = home ? '' : '/';
+import {
+  getContent,
+  localizePath,
+  homeBase,
+  getAltPath,
+  defaultLang,
+  type Lang,
+} from '../i18n';
+
+/** En la home los anchors funcionan; en otras páginas hay que volver al inicio */
+interface Props { home?: boolean; lang?: Lang }
+const { home = true, lang = defaultLang } = Astro.props;
+const c = getContent(lang);
+const base = homeBase(lang);
+
+/** Resuelve el href de un item de nav según idioma y si estamos en la home. */
+const resolve = (href: string) => {
+  if (href.startsWith('#')) return home ? href : base + href;
+  return localizePath(href, lang);
+};
+const contactHref = home ? '#contact' : base + '#contact';
+
+const otherLang: Lang = lang === 'es' ? 'en' : 'es';
+const altHref = getAltPath(Astro.url.pathname, otherLang);
 ---
 
 <header class="nav" id="site-nav">
   <div class="container nav-inner">
-    <a class="wordmark" href="/" aria-label="X21 — home">
+    <a class="wordmark" href={base} aria-label={c.nav.homeAria}>
       <img src="/X21_Logo_Blanco.png" alt="X21" width="936" height="394" />
     </a>
 
     <nav class="nav-links" aria-label="Primary">
-      {nav.map((item) => (
-        <a href={`${prefix}${item.href}`}>{item.label}</a>
+      {c.nav.items.map((item) => (
+        <a href={resolve(item.href)}>{item.label}</a>
       ))}
-      <a class="btn nav-cta" href={`${prefix}#contact`}>Contact</a>
+      <a class="btn nav-cta" href={contactHref}>{c.nav.contact}</a>
+      <a
+        class="lang-switch"
+        href={altHref}
+        data-lang-switch={otherLang}
+        aria-label={c.nav.switchAria}
+        title={c.nav.otherLangName}
+      >{c.nav.otherLangLabel}</a>
     </nav>
 
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -25,10 +51,12 @@ const prefix = home ? '' : '/';
   </div>
 
   <div class="mobile-menu" id="mobile-menu" hidden>
-    {nav.map((item) => (
-      <a href={`${prefix}${item.href}`}>{item.label}</a>
+    {c.nav.items.map((item) => (
+      <a href={resolve(item.href)}>{item.label}</a>
     ))}
-    <a href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+    <a href={contactHref}>{c.nav.contact}</a>
+    <a href={c.contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+    <a class="mobile-lang" href={altHref} data-lang-switch={otherLang}>{c.nav.otherLangName}</a>
   </div>
 </header>
 
@@ -71,6 +99,22 @@ const prefix = home ? '' : '/';
   .nav-cta { padding: 0.5rem 1.1rem; }
   .nav-cta:hover { color: var(--bg); }
 
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.1rem;
+    padding: 0.28rem 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--text-muted);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .lang-switch:hover { color: var(--gold); border-color: var(--gold); }
+
   .nav-toggle {
     display: none;
     flex-direction: column;
@@ -104,6 +148,7 @@ const prefix = home ? '' : '/';
     font-size: 0.95rem;
   }
   .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-lang { color: var(--gold) !important; }
 
   @media (max-width: 860px) {
     .nav-links { display: none; }
@@ -131,4 +176,11 @@ const prefix = home ? '' : '/';
       })
     );
   }
+
+  // Al usar el selector EN/ES, guarda la preferencia para que se respete después.
+  document.querySelectorAll('[data-lang-switch]').forEach((el) => {
+    el.addEventListener('click', () => {
+      try { localStorage.setItem('x21_lang', el.getAttribute('data-lang-switch') || 'en'); } catch (e) {}
+    });
+  });
 </script>

@@ -1,0 +1,44 @@
+---
+// Escala 1–5 reutilizable (radiogroup accesible). El estado lo gestiona el
+// script del wizard vía [data-key] y aria-checked.
+interface Props { dataKey: string; ariaLabel: string; low: string; high: string }
+const { dataKey, ariaLabel, low, high } = Astro.props;
+---
+
+<div class="scale" data-key={dataKey} role="radiogroup" aria-label={ariaLabel}>
+  {[1, 2, 3, 4, 5].map((v) => (
+    <button type="button" class="scale-btn" data-v={v} role="radio" aria-checked="false" aria-label={String(v)}>{v}</button>
+  ))}
+  <div class="scale-ends"><span>{low}</span><span>{high}</span></div>
+</div>
+
+<style>
+  .scale { margin-top: 0.55rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; max-width: 340px; }
+  .scale-btn {
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    background: var(--bg-alt, #ece7db);
+    color: var(--text-muted, #6f675a);
+    border: 0.5px solid var(--border, rgba(31,27,21,0.14));
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .scale-btn:hover { border-color: var(--gold, #9a7635); }
+  .scale-btn[aria-checked='true'] {
+    background: var(--gold, #9a7635);
+    color: #fff;
+    border-color: var(--gold, #9a7635);
+  }
+  .scale-btn:focus-visible { outline: 2px solid var(--gold, #9a7635); outline-offset: 2px; }
+  .scale-ends {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--text-faint, #9a9082);
+    margin-top: 0.2rem;
+  }
+  .scale.missing .scale-btn { border-color: #c0553f; }
+</style>
