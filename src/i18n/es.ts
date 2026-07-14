@@ -222,7 +222,7 @@ export const es: SiteContent = {
       'Evalúa tu organización en las cinco dimensiones GERS© y tu capacidad para gestionar la reputación — y obtén un perfil al instante.',
     eyebrow: 'Autodiagnóstico',
     heading: '¿Cómo de alineada está tu reputación?',
-    lead: 'Un autodiagnóstico de 10 minutos basado en nuestro modelo GERS©. Puntúa cada dimensión por su importancia y por cómo la gestionáis hoy, añade la madurez de vuestra gestión reputacional y obtén un perfil al instante: brechas, índices y vuestro tipo de reputación. Para un análisis completo y comparado con tu sector, déjanos tus datos al final.',
+    lead: 'Un autodiagnóstico de 10 minutos basado en nuestro modelo GERS©. Puntúa cada dimensión por su importancia y por cómo la gestionáis hoy, añade la madurez de vuestra gestión reputacional y obtén un perfil al instante: brechas, índices y vuestro tipo de reputación. Para un análisis completo elaborado por nuestro equipo, déjanos tus datos al final.',
     startCta: 'Empezar el diagnóstico',
 
     wizard: {
@@ -387,14 +387,14 @@ export const es: SiteContent = {
     // por dimensión, la recomendación y el informe completo requieren email.
     capture: {
       title: 'Desbloquea tu desglose completo',
-      sub: 'Déjanos tus datos para ver tus brechas dimensión a dimensión y por dónde empezar — y recibe por email tu informe GERS© completo, comparado con tu sector.',
+      sub: 'Déjanos tus datos para ver tus brechas dimensión a dimensión y por dónde empezar — y recibe por email tu informe GERS© completo, elaborado por nuestro equipo.',
       namePlaceholder: 'Nombre',
       emailPlaceholder: 'Email profesional *',
       companyPlaceholder: 'Empresa',
       submit: 'Desbloquear y enviarme el informe',
     },
     thanksTitle: 'Tu informe completo está en camino.',
-    thanksBody: 'Nos pondremos en contacto en breve con tu análisis GERS© completo y comparado con tu sector. Abajo tienes tu desglose detallado para ir empezando.',
+    thanksBody: 'Nos pondremos en contacto en breve con tu análisis GERS© completo, elaborado por nuestro equipo. Abajo tienes tu desglose detallado para ir empezando.',
   },
 
   briefing: {

@@ -225,7 +225,7 @@ export const en = {
       'Assess your organization across the five GERS© dimensions and your capacity to manage reputation — and get an instant profile.',
     eyebrow: 'Self-diagnostic',
     heading: 'How aligned is your reputation?',
-    lead: 'A 10-minute self-diagnostic built on our GERS© model. Rate each dimension by importance and by how well you manage it today, add your reputation-management maturity, and get an instant profile: gaps, indices and your reputation type. For a full, sector-benchmarked assessment, leave your details at the end.',
+    lead: 'A 10-minute self-diagnostic built on our GERS© model. Rate each dimension by importance and by how well you manage it today, add your reputation-management maturity, and get an instant profile: gaps, indices and your reputation type. For a full assessment prepared by our team, leave your details at the end.',
     startCta: 'Start the diagnostic',
 
     wizard: {
@@ -390,14 +390,14 @@ export const en = {
     // por dimensión, la recomendación y el informe completo requieren email.
     capture: {
       title: 'Unlock your full breakdown',
-      sub: 'Leave your details to reveal your dimension-by-dimension gaps and where to focus — and get your full, sector-benchmarked GERS© report by email.',
+      sub: 'Leave your details to reveal your dimension-by-dimension gaps and where to focus — and get your full GERS© report by email.',
       namePlaceholder: 'Name',
       emailPlaceholder: 'Work email *',
       companyPlaceholder: 'Company',
       submit: 'Unlock and send my report',
     },
     thanksTitle: 'Your full report is on its way.',
-    thanksBody: 'We will be in touch shortly with your complete, sector-benchmarked GERS© assessment. Below is your detailed breakdown to get started.',
+    thanksBody: 'We will be in touch shortly with your complete GERS© assessment, prepared by our team. Below is your detailed breakdown to get started.',
   },
 
   briefing: {
