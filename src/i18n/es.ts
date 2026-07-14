@@ -221,7 +221,7 @@ export const es: SiteContent = {
     description:
       'Evalúa a tu organización en las cinco dimensiones GERS© y su capacidad para gestionar la reputación, y obtén un perfil al instante.',
     eyebrow: 'Autodiagnóstico',
-    heading: '¿Cómo de alineada está tu reputación?',
+    heading: '¿Está alineada tu reputación con lo que esperan de ti?',
     lead: 'Un autodiagnóstico de 10 minutos basado en nuestro modelo GERS©. Puntúa cada dimensión según su importancia y según cómo la gestiona hoy tu organización, valora su madurez en la gestión de la reputación y obtén al instante tu perfil: brechas, índices y tu tipo de reputación. Al terminar, déjanos tus datos y nuestro equipo preparará tu análisis completo.',
     startCta: 'Empezar el diagnóstico',
 
