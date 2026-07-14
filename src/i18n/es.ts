@@ -219,10 +219,10 @@ export const es: SiteContent = {
   diagnostic: {
     title: 'Autodiagnóstico de reputación — X21',
     description:
-      'Evalúa tu organización en las cinco dimensiones GERS© y tu capacidad para gestionar la reputación — y obtén un perfil al instante.',
+      'Evalúa a tu organización en las cinco dimensiones GERS© y su capacidad para gestionar la reputación, y obtén un perfil al instante.',
     eyebrow: 'Autodiagnóstico',
     heading: '¿Cómo de alineada está tu reputación?',
-    lead: 'Un autodiagnóstico de 10 minutos basado en nuestro modelo GERS©. Puntúa cada dimensión por su importancia y por cómo la gestionáis hoy, añade la madurez de vuestra gestión reputacional y obtén un perfil al instante: brechas, índices y vuestro tipo de reputación. Para un análisis completo elaborado por nuestro equipo, déjanos tus datos al final.',
+    lead: 'Un autodiagnóstico de 10 minutos basado en nuestro modelo GERS©. Puntúa cada dimensión según su importancia y según cómo la gestiona hoy tu organización, valora su madurez en la gestión de la reputación y obtén al instante tu perfil: brechas, índices y tu tipo de reputación. Al terminar, déjanos tus datos y nuestro equipo preparará tu análisis completo.',
     startCta: 'Empezar el diagnóstico',
 
     wizard: {
@@ -236,42 +236,42 @@ export const es: SiteContent = {
 
     scale: {
       importanceLabel: 'Importancia',
-      managementLabel: 'Cómo lo gestionáis hoy',
-      importance: ['Nada importante', 'Poco', 'Moderada', 'Muy', 'Crítica'],
-      management: ['Muy floja', 'Floja', 'Aceptable', 'Fuerte', 'Excelente'],
+      managementLabel: 'Gestión actual',
+      importance: ['Nada importante', 'Poco importante', 'Importancia media', 'Muy importante', 'Crítica'],
+      management: ['Muy débil', 'Débil', 'Aceptable', 'Buena', 'Excelente'],
       agreement: ['Muy en desacuerdo', 'En desacuerdo', 'Neutral', 'De acuerdo', 'Muy de acuerdo'],
     },
 
     areasStep: {
       title: 'Las cinco dimensiones GERS©',
-      intro: 'Para cada dimensión, indícanos qué importancia tiene para tu organización y cómo de bien la gestionáis hoy.',
+      intro: 'Para cada dimensión, indícanos qué importancia tiene para tu organización y cómo la gestiona hoy.',
     },
     areas: [
       {
         key: 'brand',
         label: 'Marca',
         importanceQ: '¿Qué importancia tiene para tu organización una marca fuerte y reconocida?',
-        managementQ: '¿Cómo de bien gestionáis hoy vuestra identidad de marca y su reconocimiento?',
+        managementQ: '¿Cómo gestiona hoy tu organización su identidad de marca y su reconocimiento?',
         deep: [
           'Nuestra marca está claramente diferenciada de la competencia.',
-          'Nuestro liderazgo es visible y se asocia a la marca.',
+          'Nuestros líderes son visibles y se asocian a la marca.',
         ],
       },
       {
         key: 'performance',
         label: 'Desempeño',
-        importanceQ: '¿Qué importancia tiene para vuestra reputación cumplir de forma consistente los compromisos?',
-        managementQ: '¿Con qué consistencia cumplís hoy los compromisos que adquirís con vuestros grupos de interés?',
+        importanceQ: '¿Qué importancia tiene para tu reputación cumplir los compromisos de forma consistente?',
+        managementQ: '¿Con qué consistencia cumple hoy tu organización los compromisos que adquiere con sus grupos de interés?',
         deep: [
-          'Podemos evidenciar nuestro historial ante los grupos de interés.',
+          'Podemos demostrar nuestro historial ante los grupos de interés.',
           'Gestionamos las expectativas antes de asumir compromisos.',
         ],
       },
       {
         key: 'transparency',
         label: 'Transparencia',
-        importanceQ: '¿Qué importancia tiene para vuestra legitimidad una comunicación abierta y a tiempo?',
-        managementQ: '¿Con qué transparencia comunicáis hoy, incluso cuando las noticias son difíciles?',
+        importanceQ: '¿Qué importancia tiene para tu legitimidad una comunicación abierta y a tiempo?',
+        managementQ: '¿Con qué transparencia comunica hoy tu organización, incluso cuando las noticias son difíciles?',
         deep: [
           'Divulgamos la información relevante de forma proactiva.',
           'Tenemos canales claros de diálogo con los grupos de interés.',
@@ -280,8 +280,8 @@ export const es: SiteContent = {
       {
         key: 'integrity',
         label: 'Integridad',
-        importanceQ: '¿Qué importancia tiene que vuestras acciones se correspondan con los valores que declaráis?',
-        managementQ: '¿Cómo de alineadas están hoy vuestras acciones cotidianas con vuestros valores públicos?',
+        importanceQ: '¿Qué importancia tiene que las acciones de tu organización se correspondan con los valores que declara?',
+        managementQ: '¿Hasta qué punto se alinean hoy las acciones cotidianas de tu organización con sus valores públicos?',
         deep: [
           'Contamos con mecanismos eficaces de ética y cumplimiento.',
           'Los incidentes se gestionan de forma coherente con nuestros valores.',
@@ -290,8 +290,8 @@ export const es: SiteContent = {
       {
         key: 'purpose',
         label: 'Propósito',
-        importanceQ: '¿Qué importancia tiene un propósito claro e impacto positivo más allá de los resultados comerciales?',
-        managementQ: '¿Cómo de bien articuláis y cumplís hoy vuestro propósito?',
+        importanceQ: '¿Qué importancia tienen un propósito claro y un impacto positivo más allá de los resultados comerciales?',
+        managementQ: '¿Con qué claridad articula y cumple hoy tu organización su propósito?',
         deep: [
           'Nuestro propósito está integrado en las decisiones de negocio.',
           'Medimos nuestro impacto más allá de los resultados financieros.',
@@ -301,21 +301,21 @@ export const es: SiteContent = {
 
     priorityStep: {
       title: 'Prioridad y reto',
-      chooseLabel: '¿Qué dimensión es vuestra prioridad ahora mismo?',
+      chooseLabel: '¿Qué dimensión es tu prioridad ahora mismo?',
       urgencyLabel: '¿Qué urgencia tiene actuar sobre ella?',
-      urgency: ['Nada urgente', 'Baja', 'Moderada', 'Alta', 'Muy urgente'],
-      challengeLabel: '¿Cuál es el principal reto reputacional al que os enfrentáis?',
+      urgency: ['Nada urgente', 'Poco urgente', 'Urgencia media', 'Bastante urgente', 'Muy urgente'],
+      challengeLabel: '¿Cuál es el principal reto reputacional al que te enfrentas?',
       challengePlaceholder: 'Descríbelo brevemente…',
     },
 
     maturityStep: {
-      title: 'Madurez de la gestión reputacional',
-      intro: '¿Cuánto de acuerdo estás con cada afirmación sobre tu organización?',
+      title: 'Madurez en la gestión de la reputación',
+      intro: '¿En qué medida estás de acuerdo con cada afirmación sobre tu organización?',
       dims: [
-        { key: 'governance', label: 'Gobernanza', q: 'La reputación tiene un responsable claro a nivel de dirección o consejo.' },
+        { key: 'governance', label: 'Gobernanza', q: 'La reputación tiene un responsable claro en la dirección o el consejo.' },
         { key: 'strategy', label: 'Estrategia y relato', q: 'Tenemos una estrategia de reputación y un relato definidos.' },
-        { key: 'resources', label: 'Recursos', q: 'La gestión de la reputación cuenta con presupuesto y recursos adecuados.' },
-        { key: 'measurement', label: 'Medición', q: 'Medimos nuestra reputación con datos y la seguimos en el tiempo.' },
+        { key: 'resources', label: 'Recursos', q: 'La gestión de la reputación cuenta con presupuesto y recursos suficientes.' },
+        { key: 'measurement', label: 'Medición', q: 'Medimos nuestra reputación con datos y hacemos seguimiento en el tiempo.' },
         { key: 'culture', label: 'Cultura', q: 'Nuestra cultura sostiene la reputación en toda la organización.' },
         { key: 'crisis', label: 'Preparación ante crisis', q: 'Estamos preparados para responder con eficacia ante una crisis reputacional.' },
       ],
@@ -323,53 +323,53 @@ export const es: SiteContent = {
 
     deepStep: {
       title: 'Profundicemos en {area}',
-      intro: 'Unas afirmaciones específicas de tu dimensión prioritaria.',
+      intro: 'Algunas afirmaciones específicas sobre tu dimensión prioritaria.',
     },
 
     expectationsStep: {
       title: 'Expectativas',
       resultLabel: '¿Qué resultado te gustaría conseguir?',
-      resultPlaceholder: 'El resultado que haría que mereciera la pena…',
-      availabilityLabel: '¿Cuándo querríais actuar?',
+      resultPlaceholder: 'El resultado que haría que todo esto mereciera la pena…',
+      availabilityLabel: '¿Cuándo te gustaría actuar?',
       availability: [
         { value: 'now', label: 'De inmediato' },
         { value: 'quarter', label: 'Este trimestre' },
         { value: 'year', label: 'Este año' },
         { value: 'exploring', label: 'Solo explorando' },
       ],
-      alignmentLabel: '¿Cómo de alineado está vuestro equipo directivo en esto?',
+      alignmentLabel: '¿Hasta qué punto está alineado tu equipo directivo en esto?',
     },
 
     results: {
       title: 'Tu perfil de reputación',
       imrLabel: 'Índice de Madurez Reputacional',
       iarLabel: 'Índice de Ambición Reputacional',
-      imrHint: 'Dónde estáis',
-      iarHint: 'Hacia dónde queréis ir',
+      imrHint: 'Dónde estás',
+      iarHint: 'Hacia dónde quieres ir',
       radarAria: 'Radar de importancia frente a gestión actual en las cinco dimensiones GERS',
       radarImportance: 'Importancia',
       radarManagement: 'Gestión actual',
-      quadrantLabel: 'Vuestra posición',
+      quadrantLabel: 'Tu posición',
       quadrants: {
-        highPotential: { name: 'Alto potencial', body: 'Ambición alta con margen para madurar — el momento ideal para invertir en reputación.' },
-        advanced: { name: 'Avanzados', body: 'Ambición alta y gestión fuerte — proteged y demostrad vuestra ventaja.' },
-        littleRoom: { name: 'Poco recorrido', body: 'Ambición y madurez más bajas — la reputación aún no es una palanca que estéis usando.' },
-        comfortable: { name: 'Consolidados', body: 'Gestión fuerte con ambición más baja — sólido, con recorrido si eleváis el listón.' },
+        highPotential: { name: 'Alto potencial', body: 'Ambición alta con margen para madurar: el momento ideal para invertir en reputación.' },
+        advanced: { name: 'Referente', body: 'Ambición alta y gestión sólida: protege y demuestra tu ventaja.' },
+        littleRoom: { name: 'Poco recorrido', body: 'Ambición y madurez más bajas: la reputación todavía no es una palanca que estés aprovechando.' },
+        comfortable: { name: 'Consolidado', body: 'Gestión sólida con menor ambición: una buena base, con recorrido si elevas el listón.' },
       },
-      profileLabel: 'Vuestro tipo de reputación',
+      profileLabel: 'Tu tipo de reputación',
       profiles: {
-        exposed: { name: 'Expuesto', body: 'Falta lo básico — no hay responsable ni estrategia claros de reputación. Ese es el primer cuello de botella a resolver.' },
-        blind: { name: 'A ciegas', body: 'La base existe, pero falta medición y una cultura que la sostenga. Gestionáis la reputación sin instrumentos.' },
-        resilient: { name: 'Resiliente', body: 'Fuertes en todo y preparados ante una crisis. Vuestra reputación es un activo real — seguid demostrándolo.' },
-        advanced: { name: 'Avanzado', body: 'Sin bloqueo estratégico ni de medición claro, pero aún sin excelencia uniforme. Cerrad las últimas brechas.' },
+        exposed: { name: 'Expuesto', body: 'Falta lo básico: no hay un responsable ni una estrategia claros de reputación. Ese es el primer cuello de botella que resolver.' },
+        blind: { name: 'A ciegas', body: 'La base existe, pero faltan medición y una cultura que la sostenga. Gestionas la reputación sin instrumentos.' },
+        resilient: { name: 'Resiliente', body: 'Gestión sólida en todo y preparada para una crisis. Tu reputación es un activo real: sigue demostrándolo.' },
+        advanced: { name: 'Avanzado', body: 'Sin bloqueos claros de estrategia ni de medición, aunque todavía sin una excelencia uniforme. Cierra las últimas brechas.' },
       },
-      gapTitle: 'Vuestras mayores brechas',
-      gapHint: 'Donde una dimensión importa mucho más de lo que hoy la gestionáis.',
-      coherenceTitle: 'Foco frente a realidad',
-      coherenceMatch: 'Vuestra prioridad ({priority}) coincide con vuestra mayor brecha — el foco está bien puesto.',
-      coherenceMismatch: 'Vuestra mayor brecha está en {gap}, no en la dimensión que priorizasteis ({priority}). Merece una segunda mirada — es un punto ciego frecuente.',
+      gapTitle: 'Tus mayores brechas',
+      gapHint: 'Donde una dimensión importa mucho más de lo que hoy la gestionas.',
+      coherenceTitle: 'Foco frente a la realidad',
+      coherenceMatch: 'Tu prioridad ({priority}) coincide con tu mayor brecha: el foco está bien puesto.',
+      coherenceMismatch: 'Tu mayor brecha está en {gap}, no en la dimensión que priorizaste ({priority}). Conviene revisarlo: es un punto ciego habitual.',
       recoTitle: 'Por dónde empezar',
-      recoLead: 'Vuestra mayor brecha está en {gap}. Es justo lo que nuestro trabajo de {service} está pensado para cerrar.',
+      recoLead: 'Tu mayor brecha está en {gap}, justo lo que nuestro trabajo de {service} está pensado para cerrar.',
       recoCta: 'Ver {service} →',
       recoPartners: 'Dirigido por',
     },
@@ -387,7 +387,7 @@ export const es: SiteContent = {
     // por dimensión, la recomendación y el informe completo requieren email.
     capture: {
       title: 'Desbloquea tu desglose completo',
-      sub: 'Déjanos tus datos para ver tus brechas dimensión a dimensión y por dónde empezar — y recibe por email tu informe GERS© completo, elaborado por nuestro equipo.',
+      sub: 'Déjanos tus datos para ver tus brechas dimensión a dimensión y por dónde empezar, y recibe por email tu informe GERS© completo, elaborado por nuestro equipo.',
       namePlaceholder: 'Nombre',
       emailPlaceholder: 'Email profesional *',
       companyPlaceholder: 'Empresa',
