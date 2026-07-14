@@ -17,6 +17,14 @@ const privacyHref = localizePath('/aviso-legal', lang);
 const consentHtml = c.contact.consent.replace('{privacy}', privacyHref);
 const formMsgs = JSON.stringify(c.forms);
 
+// Servicio recomendado por dimensión (para el bloque de recomendación).
+const svcBySlug = Object.fromEntries(
+  c.services.blocks.map((b) => [
+    b.slug,
+    { title: b.title, tagline: b.tagline, href: localizePath(`/services/${b.slug}`, lang), partners: b.partners },
+  ])
+);
+
 // Configuración que necesita el script de cliente para el scoring y los textos.
 const cfg = JSON.stringify({
   areas: d.areas.map((a) => ({ key: a.key, label: a.label })),
@@ -24,6 +32,8 @@ const cfg = JSON.stringify({
   results: d.results,
   deepTitle: d.deepStep.title,
   stepOf: d.wizard.stepOf,
+  recoMap: d.recoMap,
+  services: svcBySlug,
 });
 
 const imp = d.scale.importance;
@@ -204,19 +214,7 @@ const axisLabelPos = [
               <p class="profile-body" id="profile-body"></p>
             </div>
 
-            <div class="res-grid">
-              <div class="res-gaps">
-                <p class="res-block-label">{d.results.gapTitle}</p>
-                <p class="res-block-hint">{d.results.gapHint}</p>
-                <ul class="gap-list" id="gap-list"></ul>
-              </div>
-              <div class="res-coherence">
-                <p class="res-block-label">{d.results.coherenceTitle}</p>
-                <p class="coherence-body" id="coherence-body"></p>
-              </div>
-            </div>
-
-            <!-- Captura de datos -->
+            <!-- Captura de datos (desbloqueo del desglose + informe) -->
             <div class="diag-capture" id="diag-capture">
               <h3 class="diag-capture-title">{d.capture.title}</h3>
               <p class="diag-capture-sub">{d.capture.sub}</p>
@@ -238,9 +236,33 @@ const axisLabelPos = [
               </div>
             </div>
 
-            <div class="diag-thanks" id="diag-thanks" hidden>
-              <p class="diag-thanks-title">{d.thanksTitle}</p>
-              <p class="diag-thanks-body">{d.thanksBody}</p>
+            <!-- Zona desbloqueada: aparece tras dejar el email -->
+            <div class="res-gated" id="res-gated" hidden>
+              <div class="diag-thanks">
+                <p class="diag-thanks-title">{d.thanksTitle}</p>
+                <p class="diag-thanks-body">{d.thanksBody}</p>
+              </div>
+
+              <div class="res-grid">
+                <div class="res-gaps">
+                  <p class="res-block-label">{d.results.gapTitle}</p>
+                  <p class="res-block-hint">{d.results.gapHint}</p>
+                  <ul class="gap-list" id="gap-list"></ul>
+                </div>
+                <div class="res-coherence">
+                  <p class="res-block-label">{d.results.coherenceTitle}</p>
+                  <p class="coherence-body" id="coherence-body"></p>
+                </div>
+              </div>
+
+              <div class="res-reco">
+                <p class="res-block-label">{d.results.recoTitle}</p>
+                <div class="reco-card">
+                  <p class="reco-lead" id="reco-lead"></p>
+                  <p class="reco-partners" id="reco-partners"></p>
+                  <a class="reco-cta" id="reco-cta" href="#"></a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -373,6 +395,17 @@ const axisLabelPos = [
   .gap-bar span { display: block; height: 100%; background: var(--gold); }
   .gap-val { color: var(--gold-dim); font-size: 0.85rem; min-width: 2.5rem; text-align: right; }
   .coherence-body { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+  .res-reco { margin-top: 2.2rem; }
+  .reco-card { border: 0.5px solid var(--gold-dim); border-radius: 8px; padding: 1.4rem 1.5rem; background: rgba(154, 118, 53, 0.05); }
+  .reco-lead { color: var(--text); font-size: 1rem; line-height: 1.6; margin: 0; max-width: 62ch; }
+  .reco-partners { color: var(--text-muted); font-size: 0.85rem; margin: 0.7rem 0 1.1rem; }
+  .reco-cta {
+    display: inline-block; background: var(--text); color: var(--bg);
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; transition: opacity 0.2s ease;
+  }
+  .reco-cta:hover { opacity: 0.85; }
 
   /* Captura */
   .diag-capture { margin-top: 2.4rem; border-top: 0.5px solid var(--border); padding-top: clamp(1.8rem, 4vw, 2.6rem); }
@@ -584,6 +617,16 @@ const axisLabelPos = [
       const tpl = s.priority === s.topGap ? RES.coherenceMatch : RES.coherenceMismatch;
       const txt = (tpl || '').replace('{priority}', labelOf(s.priority)).replace('{gap}', labelOf(s.topGap));
       setText('coherence-body', txt);
+
+      // Recomendación: mayor brecha → servicio de X21
+      const slug = (CFG.recoMap || {})[s.topGap];
+      const svc = (CFG.services || {})[slug];
+      if (svc) {
+        setText('reco-lead', (RES.recoLead || '').replace('{gap}', labelOf(s.topGap)).replace('{service}', svc.title));
+        setText('reco-partners', svc.partners && svc.partners.length ? RES.recoPartners + ' ' + svc.partners.join(', ') : '');
+        const cta = document.getElementById('reco-cta');
+        if (cta) { cta.textContent = (RES.recoCta || '').replace('{service}', svc.title); cta.setAttribute('href', svc.href); }
+      }
     }
 
     function setText(id: string, t: string) { const el = document.getElementById(id); if (el) el.textContent = t; }
@@ -642,9 +685,9 @@ const axisLabelPos = [
           const data = await res.json().catch(() => ({}));
           if (res.ok && data.ok) {
             const cap = document.getElementById('diag-capture');
-            const th = document.getElementById('diag-thanks');
+            const gated = document.getElementById('res-gated');
             if (cap) cap.hidden = true;
-            if (th) th.hidden = false;
+            if (gated) { gated.hidden = false; gated.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
           } else {
             sendBtn.disabled = false;
             setStatus(MSG.genericError, true);

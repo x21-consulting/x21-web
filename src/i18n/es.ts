@@ -368,18 +368,33 @@ export const es: SiteContent = {
       coherenceTitle: 'Foco frente a realidad',
       coherenceMatch: 'Vuestra prioridad ({priority}) coincide con vuestra mayor brecha — el foco está bien puesto.',
       coherenceMismatch: 'Vuestra mayor brecha está en {gap}, no en la dimensión que priorizasteis ({priority}). Merece una segunda mirada — es un punto ciego frecuente.',
+      recoTitle: 'Por dónde empezar',
+      recoLead: 'Vuestra mayor brecha está en {gap}. Es justo lo que nuestro trabajo de {service} está pensado para cerrar.',
+      recoCta: 'Ver {service} →',
+      recoPartners: 'Dirigido por',
     },
 
+    // Dimensión con mayor brecha → servicio recomendado (slug de services.blocks)
+    recoMap: {
+      brand: 'media-relations',
+      performance: 'corporate-affairs',
+      transparency: 'media-relations',
+      integrity: 'corporate-affairs',
+      purpose: 'corporate-affairs',
+    },
+
+    // Captura como "desbloqueo": los resultados de arriba se ven; el desglose
+    // por dimensión, la recomendación y el informe completo requieren email.
     capture: {
-      title: 'Obtén tu análisis GERS© completo',
-      sub: 'Comparado con tu sector y elaborado por nuestro equipo, a partir de las respuestas que acabas de dar.',
+      title: 'Desbloquea tu desglose completo',
+      sub: 'Déjanos tus datos para ver tus brechas dimensión a dimensión y por dónde empezar — y recibe por email tu informe GERS© completo, comparado con tu sector.',
       namePlaceholder: 'Nombre',
       emailPlaceholder: 'Email profesional *',
       companyPlaceholder: 'Empresa',
-      submit: 'Enviarme mi informe completo',
+      submit: 'Desbloquear y enviarme el informe',
     },
-    thanksTitle: 'Gracias — tu solicitud está en camino.',
-    thanksBody: 'Nos pondremos en contacto en breve con tu análisis GERS© completo y comparado con tu sector.',
+    thanksTitle: 'Tu informe completo está en camino.',
+    thanksBody: 'Nos pondremos en contacto en breve con tu análisis GERS© completo y comparado con tu sector. Abajo tienes tu desglose detallado para ir empezando.',
   },
 
   briefing: {

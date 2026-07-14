@@ -371,18 +371,33 @@ export const en = {
       coherenceTitle: 'Focus vs. reality',
       coherenceMatch: 'Your priority ({priority}) matches your largest gap — your focus is well placed.',
       coherenceMismatch: 'Your largest gap is in {gap}, not the dimension you prioritized ({priority}). Worth a second look — this is a common blind spot.',
+      recoTitle: 'Where to focus',
+      recoLead: 'Your biggest gap is in {gap}. This is exactly what our {service} work is built to close.',
+      recoCta: 'Explore {service} →',
+      recoPartners: 'Led by',
     },
 
+    // Dimensión con mayor brecha → servicio recomendado (slug de services.blocks)
+    recoMap: {
+      brand: 'media-relations',
+      performance: 'corporate-affairs',
+      transparency: 'media-relations',
+      integrity: 'corporate-affairs',
+      purpose: 'corporate-affairs',
+    },
+
+    // Captura como "desbloqueo": los resultados de arriba se ven; el desglose
+    // por dimensión, la recomendación y el informe completo requieren email.
     capture: {
-      title: 'Get your full GERS© assessment',
-      sub: 'Benchmarked against your sector and delivered by our team, based on the answers you just gave.',
+      title: 'Unlock your full breakdown',
+      sub: 'Leave your details to reveal your dimension-by-dimension gaps and where to focus — and get your full, sector-benchmarked GERS© report by email.',
       namePlaceholder: 'Name',
       emailPlaceholder: 'Work email *',
       companyPlaceholder: 'Company',
-      submit: 'Send me my full report',
+      submit: 'Unlock and send my report',
     },
-    thanksTitle: 'Thank you — your request is on its way.',
-    thanksBody: 'We will be in touch shortly with your full, sector-benchmarked GERS© assessment.',
+    thanksTitle: 'Your full report is on its way.',
+    thanksBody: 'We will be in touch shortly with your complete, sector-benchmarked GERS© assessment. Below is your detailed breakdown to get started.',
   },
 
   briefing: {
