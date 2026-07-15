@@ -247,7 +247,7 @@ export const en = {
 
     areasStep: {
       title: 'The five GERS© dimensions',
-      intro: 'For each dimension, tell us how important it is to your organization and how well you manage it today.',
+      intro: 'For each dimension, rate two things: how important it is in light of what your stakeholders expect (not just its internal relevance) and how well your organization manages it today.',
     },
     areas: [
       {

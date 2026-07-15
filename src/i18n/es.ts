@@ -244,7 +244,7 @@ export const es: SiteContent = {
 
     areasStep: {
       title: 'Las cinco dimensiones GERS©',
-      intro: 'Para cada dimensión, indícanos qué importancia tiene para la organización y cómo la gestiona hoy.',
+      intro: 'Para cada dimensión, valora dos cosas: la importancia que tiene según lo que esperan los grupos de interés (no solo su relevancia interna) y cómo la gestiona hoy la organización.',
     },
     areas: [
       {
