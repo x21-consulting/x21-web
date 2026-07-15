@@ -95,7 +95,7 @@ export const en = {
     eyebrow: 'Team',
     title: 'Reputation Advisors',
     image: '/team.jpg',
-    lead: 'We bring together experts in reputation strategy, data analytics, and stakeholder engagement to help design, validate, and govern strategic plans with reputational intelligence.',
+    lead: 'We bring together experts in reputation strategy, data analytics and stakeholder engagement to help design, validate and govern strategic plans through reputational intelligence.',
     meetPartners: 'Meet the team',
     members: [
       {
@@ -106,7 +106,7 @@ export const en = {
         photo: '/team-juan.jpg',
         email: 'jcardona@x21.consulting',
         linkedin: 'https://www.linkedin.com/in/jcardonasoriano/',
-        bio: 'Corporate advisor with 25 years of experience in strategic communications, reputation and sustainability. He has held executive positions at LLYC, Corporate Excellence and Grupo Ferrovial. He has advised the Government of Spain on its sustainability strategy.',
+        bio: 'Corporate advisor with 25 years of experience in strategy, reputation, communications and sustainability. He has held executive positions at LLYC, Corporate Excellence and Grupo Ferrovial, advising leading companies and institutions on reputational risk management and integrating stakeholder expectations into strategic decision-making.',
       },
       {
         name: 'Antonieta Mendoza',
@@ -126,7 +126,7 @@ export const en = {
         photo: '/team-claudio.jpg',
         email: 'cvallejo@x21.consulting',
         linkedin: 'https://www.linkedin.com/in/claudiovallejoaguilareal/',
-        bio: 'Senior consultant in communications, reputation and public diplomacy with over 30 years of international experience across Spain and Latin America. He has held executive positions at LLYC, Kreab, CODERE, Ence and Unión Fenosa, leading corporate communications, crisis management and financial communications — including IPO processes — across energy, pulp, private gaming and professional services. He began his career as Commercial Attaché at the Embassy of Spain in Ecuador, coordinating ICEX activity and bilateral economic diplomacy. He combines corporate vision, multinational experience and institutional sensibility, with projects in more than eight countries across two continents.',
+        bio: 'Senior communications, reputation and corporate affairs consultant with over 30 years of international experience across Spain and Latin America. He has held executive positions at LLYC, Kreab, Codere, Ence and Unión Fenosa, combining a strong corporate track record with institutional experience as Commercial Attaché at the Embassy of Spain in Ecuador and responsibility for ICEX activities in Ecuador.',
       },
       {
         name: 'Gemma Martín',
@@ -136,7 +136,7 @@ export const en = {
         photo: '/team-gemma.jpg',
         email: 'gemmamartinpiquet@x21.consulting',
         linkedin: 'https://www.linkedin.com/in/gemma-martin-b166551/',
-        bio: 'Senior strategic communications and media relations professional with over 20 years of international experience across Spain, the United States and multi-regional projects (Europe, the Middle East, the Americas and Asia). She has led corporate and institutional communications strategies across energy, infrastructure, finance and the public sector, positioning organizations and leaders in top-tier media (Financial Times, Bloomberg, The Economist, CNN, BBC) and at international forums (UN, Davos, EU).',
+        bio: 'Senior strategic communications and media relations professional with over 20 years of international experience across Spain, the United States and multi-regional projects. She has positioned organizations and leaders in international media and at leading forums such as the United Nations, Davos and the European Union.',
       },
     ],
     quote: {
@@ -160,11 +160,11 @@ export const en = {
     image: '/why.jpg',
     lead: 'Most reputation tools measure perception. Our proprietary GERS© model goes deeper — gauging how closely your conduct aligns with what stakeholders expect of you. Scientifically validated and powered by AI and natural-language processing to read those expectations, it connects reputation directly to advocacy and a higher Net Promoter Score (NPS): the behavior that grows your business.',
     pillars: [
-      { label: 'Brand', body: 'Enhance your corporate identity to foster trust and recognition.' },
-      { label: 'Performance', body: 'Meet stakeholder expectations through measurable impact.' },
-      { label: 'Transparency', body: 'Build credibility with clear and open communication.' },
-      { label: 'Integrity', body: 'Reinforce ethical practices to strengthen relationships.' },
-      { label: 'Social Impact', body: 'Contribute beyond commercial results and connect with a greater mission.' },
+      { label: 'Brand', body: 'Build a distinctive identity that inspires trust and preference.' },
+      { label: 'Performance', body: 'Prove results that meet the expectations of your stakeholders.' },
+      { label: 'Transparency', body: 'Earn credibility through clear, open and consistent communication.' },
+      { label: 'Integrity', body: 'Reinforce trust by acting with ethics, consistency and responsibility.' },
+      { label: 'Social Impact', body: 'Create shared value by contributing tangibly to the progress of society.' },
     ],
   },
 

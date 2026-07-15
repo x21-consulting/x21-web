@@ -157,11 +157,11 @@ export const es: SiteContent = {
     image: '/why.jpg',
     lead: 'La mayoría de las herramientas de reputación miden la percepción. Nuestro modelo propio, GERS©, va más allá: calibra hasta qué punto la conducta corporativa se corresponde con lo que los grupos de interés esperan de la organización. Validado científicamente e impulsado por IA y procesamiento del lenguaje natural para leer esas expectativas, conecta la reputación directamente con la recomendación y con un mayor Net Promoter Score (NPS): el comportamiento que hace crecer el negocio.',
     pillars: [
-      { label: 'Marca', body: 'Una identidad corporativa que genera confianza y reconocimiento.' },
-      { label: 'Desempeño', body: 'El cumplimiento de las expectativas de los grupos de interés, con un impacto medible.' },
-      { label: 'Transparencia', body: 'Credibilidad construida con una comunicación clara y abierta.' },
-      { label: 'Integridad', body: 'Prácticas éticas que refuerzan las relaciones.' },
-      { label: 'Impacto Social', body: 'Un cambio significativo conectado con una misión mayor.' },
+      { label: 'Marca', body: 'Construye una identidad diferencial que inspire confianza y preferencia.' },
+      { label: 'Desempeño', body: 'Demuestra resultados que respondan a las expectativas de los grupos de interés.' },
+      { label: 'Transparencia', body: 'Genera credibilidad mediante una comunicación clara, abierta y consistente.' },
+      { label: 'Integridad', body: 'Refuerza la confianza actuando con ética, coherencia y responsabilidad.' },
+      { label: 'Impacto Social', body: 'Genera valor compartido contribuyendo de forma tangible al progreso de la sociedad.' },
     ],
   },
 
