@@ -250,7 +250,7 @@ export const es: SiteContent = {
       {
         key: 'brand',
         label: 'Marca',
-        importanceQ: '¿Qué importancia tiene para la organización una marca fuerte y reconocida?',
+        importanceQ: '¿Qué importancia dan tus grupos de interés a una marca fuerte y reconocida?',
         managementQ: '¿Cómo gestiona hoy la organización su identidad de marca y su reconocimiento?',
         deep: [
           'Nuestra marca está claramente diferenciada de la competencia.',
@@ -260,7 +260,7 @@ export const es: SiteContent = {
       {
         key: 'performance',
         label: 'Desempeño',
-        importanceQ: '¿Qué importancia tiene para la reputación cumplir los compromisos de forma consistente?',
+        importanceQ: '¿Qué importancia dan tus grupos de interés a que cumplas tus compromisos de forma consistente?',
         managementQ: '¿Con qué consistencia cumple hoy la organización los compromisos que adquiere con sus grupos de interés?',
         deep: [
           'Podemos demostrar nuestro historial ante los grupos de interés.',
@@ -270,7 +270,7 @@ export const es: SiteContent = {
       {
         key: 'transparency',
         label: 'Transparencia',
-        importanceQ: '¿Qué importancia tiene para la legitimidad una comunicación abierta y a tiempo?',
+        importanceQ: '¿Qué importancia dan tus grupos de interés a una comunicación abierta y a tiempo?',
         managementQ: '¿Con qué transparencia comunica hoy la organización, incluso cuando las noticias son difíciles?',
         deep: [
           'Divulgamos la información relevante de forma proactiva.',
@@ -280,7 +280,7 @@ export const es: SiteContent = {
       {
         key: 'integrity',
         label: 'Integridad',
-        importanceQ: '¿Qué importancia tiene que las acciones de la organización se correspondan con los valores que declara?',
+        importanceQ: '¿Qué importancia dan tus grupos de interés a que tus acciones se correspondan con tus valores?',
         managementQ: '¿Hasta qué punto se alinean hoy las acciones cotidianas de la organización con sus valores públicos?',
         deep: [
           'Contamos con mecanismos eficaces de ética y cumplimiento.',
@@ -290,7 +290,7 @@ export const es: SiteContent = {
       {
         key: 'purpose',
         label: 'Impacto Social',
-        importanceQ: '¿Qué importancia tiene un impacto social positivo más allá de los resultados comerciales?',
+        importanceQ: '¿Qué importancia dan tus grupos de interés a un impacto social positivo más allá de los resultados comerciales?',
         managementQ: '¿Con qué claridad genera hoy la organización un impacto social positivo?',
         deep: [
           'Nuestro impacto social está integrado en las decisiones de negocio.',

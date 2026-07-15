@@ -253,7 +253,7 @@ export const en = {
       {
         key: 'brand',
         label: 'Brand',
-        importanceQ: 'How important is a strong, recognized brand to your organization?',
+        importanceQ: 'How much importance do your stakeholders place on a strong, recognized brand?',
         managementQ: 'How well do you manage your brand identity and recognition today?',
         deep: [
           'Our brand is clearly differentiated from our competitors.',
@@ -263,7 +263,7 @@ export const en = {
       {
         key: 'performance',
         label: 'Performance',
-        importanceQ: 'How important is consistently delivering on your commitments to your reputation?',
+        importanceQ: 'How much importance do your stakeholders place on consistently delivering on your commitments?',
         managementQ: 'How consistently do you deliver on the commitments you make to stakeholders?',
         deep: [
           'We can evidence our track record to stakeholders.',
@@ -273,7 +273,7 @@ export const en = {
       {
         key: 'transparency',
         label: 'Transparency',
-        importanceQ: 'How important is open, timely communication to your legitimacy?',
+        importanceQ: 'How much importance do your stakeholders place on open, timely communication?',
         managementQ: 'How openly do you communicate today, including when the news is difficult?',
         deep: [
           'We disclose material information proactively.',
@@ -283,7 +283,7 @@ export const en = {
       {
         key: 'integrity',
         label: 'Integrity',
-        importanceQ: 'How important is it that your actions match your stated values?',
+        importanceQ: 'How much importance do your stakeholders place on your actions matching your stated values?',
         managementQ: 'How well do your day-to-day actions align with your public values today?',
         deep: [
           'We have effective ethics and compliance mechanisms.',
@@ -293,7 +293,7 @@ export const en = {
       {
         key: 'purpose',
         label: 'Social Impact',
-        importanceQ: 'How important is a positive social impact beyond commercial results?',
+        importanceQ: 'How much importance do your stakeholders place on a positive social impact beyond commercial results?',
         managementQ: 'How well does your organization deliver a positive social impact today?',
         deep: [
           'Our social impact is embedded in our business decisions.',
