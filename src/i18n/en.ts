@@ -331,6 +331,18 @@ export const en = {
 
     expectationsStep: {
       title: 'Expectations',
+      contextLabel: "What's driving your interest right now?",
+      context: [
+        { value: 'm_and_a', label: 'Corporate transaction (M&A)' },
+        { value: 'growth', label: 'Growth and scaling' },
+        { value: 'digital', label: 'Digital transformation' },
+        { value: 'launch', label: 'Product or service launch' },
+        { value: 'strategy', label: 'Strategic plan' },
+        { value: 'restructuring', label: 'Restructuring or reorganization' },
+        { value: 'international', label: 'Internationalization' },
+        { value: 'crisis', label: 'Crisis or reputational risk' },
+        { value: 'other', label: 'Other' },
+      ],
       resultLabel: 'What outcome would you like to achieve?',
       resultPlaceholder: 'The result that would make this worthwhile…',
       availabilityLabel: 'When would you want to act?',
@@ -464,6 +476,7 @@ export const en = {
     needReach: 'Add a phone or email so we can reach you.',
     genericError: 'Something went wrong. Please try again or email us directly.',
     networkError: 'Network error. Please try again or email us directly.',
+    alreadyDone: 'We have already received a diagnostic from this email. We will be in touch.',
   },
 
   legal: {

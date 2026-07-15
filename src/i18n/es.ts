@@ -328,6 +328,18 @@ export const es: SiteContent = {
 
     expectationsStep: {
       title: 'Expectativas',
+      contextLabel: '¿Qué motiva ahora mismo tu interés?',
+      context: [
+        { value: 'm_and_a', label: 'Operación corporativa (M&A)' },
+        { value: 'growth', label: 'Crecimiento y escalado' },
+        { value: 'digital', label: 'Transformación digital' },
+        { value: 'launch', label: 'Lanzamiento de producto o servicio' },
+        { value: 'strategy', label: 'Plan estratégico' },
+        { value: 'restructuring', label: 'Reestructuración o reorganización' },
+        { value: 'international', label: 'Internacionalización' },
+        { value: 'crisis', label: 'Crisis o riesgo reputacional' },
+        { value: 'other', label: 'Otro' },
+      ],
       resultLabel: '¿Qué resultado se busca conseguir?',
       resultPlaceholder: 'El resultado que haría que todo esto mereciera la pena…',
       availabilityLabel: '¿Cuándo conviene actuar?',
@@ -460,6 +472,7 @@ export const es: SiteContent = {
     needReach: 'Añade un teléfono o un email para que podamos contactarte.',
     genericError: 'Algo ha ido mal. Inténtalo de nuevo o escríbenos directamente.',
     networkError: 'Error de red. Inténtalo de nuevo o escríbenos directamente.',
+    alreadyDone: 'Ya hemos recibido un diagnóstico con este email. Nos pondremos en contacto contigo.',
   },
 
   legal: {

@@ -147,7 +147,14 @@ const axisLabelPos = [
           <div class="wz-step" data-step="4" hidden>
             <h2 class="wz-title">{d.expectationsStep.title}</h2>
 
-            <label class="q-label" for="resultado">{d.expectationsStep.resultLabel}</label>
+            <p class="q-label">{d.expectationsStep.contextLabel}</p>
+            <div class="opt" data-key="contexto" role="radiogroup" aria-label={d.expectationsStep.contextLabel}>
+              {d.expectationsStep.context.map((o) => (
+                <button type="button" class="opt-btn" data-v={o.value} role="radio" aria-checked="false">{o.label}</button>
+              ))}
+            </div>
+
+            <label class="q-label mt" for="resultado">{d.expectationsStep.resultLabel}</label>
             <textarea id="resultado" class="wz-textarea" data-key="resultado" rows="3" placeholder={d.expectationsStep.resultPlaceholder}></textarea>
 
             <p class="q-label mt">{d.expectationsStep.availabilityLabel}</p>
@@ -636,13 +643,22 @@ const axisLabelPos = [
     const statusEl = document.getElementById('diag-status');
     const setStatus = (msg: string, err: boolean) => { if (statusEl) { statusEl.textContent = msg || ''; statusEl.classList.toggle('error', !!err); } };
 
+    // Control "una vez por email" (guard de conveniencia en este navegador; el
+    // control real lo hace el ERP al deduplicar por email).
+    const DONE_KEY = 'x21_diag_emails';
+    const doneEmails = () => { try { return JSON.parse(localStorage.getItem(DONE_KEY) || '[]'); } catch (e) { return []; } };
+    const markDone = (em: string) => { try { const l = doneEmails(); if (!l.includes(em)) l.push(em); localStorage.setItem(DONE_KEY, JSON.stringify(l)); } catch (e) {} };
+    const SESSION_BY_PROFILE: Record<string, string> = { exposed: 'governance', blind: 'measurement', resilient: 'protection', advanced: 'optimization' };
+
     if (sendBtn) {
       sendBtn.addEventListener('click', async () => {
         const email = (document.getElementById('diag-email') as HTMLInputElement).value.trim();
+        const emailKey = email.toLowerCase();
         const consent = (document.getElementById('diag-consent') as HTMLInputElement).checked;
         const website = (document.getElementById('diag-website') as HTMLInputElement).value.trim();
         if (!/.+@.+\..+/.test(email)) { setStatus(MSG.invalidEmail, true); return; }
         if (!consent) { setStatus(MSG.needConsent, true); return; }
+        if (doneEmails().includes(emailKey)) { setStatus(MSG.alreadyDone, false); return; }
         if (!scored) compute();
         const s = scored;
 
@@ -661,10 +677,12 @@ const axisLabelPos = [
           perfil: s.profile,
           area_prioritaria: s.priority,
           urgencia: val('urgency'),
+          contexto: answers['contexto'] || '',
           reto: answers['reto'] || '',
           resultado_esperado: answers['resultado'] || '',
           disponibilidad: answers['disponibilidad'] || '',
           alineacion_interna: val('alignment'),
+          suggested_session: SESSION_BY_PROFILE[s.profile] || 'optimization',
         };
         AREA_KEYS.forEach((k: string) => {
           row['imp_' + k] = s.imp[k]; row['gest_' + k] = s.gest[k]; row['gap_' + k] = s.gap[k];
@@ -684,10 +702,15 @@ const axisLabelPos = [
           });
           const data = await res.json().catch(() => ({}));
           if (res.ok && data.ok) {
+            markDone(emailKey);
             const cap = document.getElementById('diag-capture');
             const gated = document.getElementById('res-gated');
             if (cap) cap.hidden = true;
             if (gated) { gated.hidden = false; gated.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+          } else if (res.status === 409 || data.code === 'duplicate' || data.duplicate) {
+            markDone(emailKey);
+            sendBtn.disabled = false;
+            setStatus(MSG.alreadyDone, false);
           } else {
             sendBtn.disabled = false;
             setStatus(MSG.genericError, true);

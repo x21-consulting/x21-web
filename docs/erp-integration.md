@@ -85,10 +85,12 @@ La web calcula TODO en el cliente y envía una fila plana ya lista:
 
   "area_prioritaria": "brand",
   "urgencia": 4,
+  "contexto": "m_and_a",
   "reto": "Texto libre",
   "resultado_esperado": "Texto libre",
   "disponibilidad": "quarter",
   "alineacion_interna": 3,
+  "suggested_session": "governance",
 
   "imp_brand": 4, "gest_brand": 2, "gap_brand": 2,
   "imp_performance": 4, "gest_performance": 3, "gap_performance": 1,
@@ -116,6 +118,10 @@ La web calcula TODO en el cliente y envía una fila plana ya lista:
 - `quadrant`: `highPotential | advanced | littleRoom | comfortable`.
 - `perfil`: `exposed | blind | resilient | advanced`.
 - `disponibilidad`: `now | quarter | year | exploring`.
+- `contexto`: motivo del interés — `m_and_a | growth | digital | launch | strategy | restructuring | international | crisis | other`.
+- `suggested_session`: tipo de sesión sugerida, derivada del `perfil` por la web
+  (`governance | measurement | protection | optimization`; ver §3). El ERP puede
+  usarla o sobrescribirla.
 
 > El cálculo de `quadrant` y `perfil` ya lo hace la web (ver
 > `src/components/pages/DiagnosticPage.astro`). El ERP puede confiar en los
@@ -125,6 +131,12 @@ La web calcula TODO en el cliente y envía una fila plana ya lista:
 
 ## 3. Qué debe hacer el ERP al recibir un `diagnose`
 
+0. **Control de unicidad por email (una vez por empresa).** Antes de insertar,
+   comprobar si ese `email` ya tiene un diagnóstico. Si ya existe, **no crear una
+   fila duplicada** y responder con `HTTP 409` o `{ "ok": false, "code": "duplicate" }`.
+   La web detecta esa respuesta y muestra "ya hemos recibido un diagnóstico con
+   este email". (La web añade además un guard por email en el navegador, pero el
+   control real es este, en el servidor.)
 1. **Guardar el diagnóstico** en una tabla propia (p. ej. `diagnostics`), una
    fila por envío, con todos los campos anteriores + `created_at`.
 2. **Crear/actualizar el Lead** (tabla `leads`) por email, para que aparezca en
@@ -139,9 +151,26 @@ La web calcula TODO en el cliente y envía una fila plana ya lista:
    > sectores). De momento el informe es cualitativo, sin comparación por sector.
 4. **Enviar el email con Resend** (`RESEND_API_KEY`, remitente `RESEND_FROM`
    verificado en el dominio): entregar el informe (o un "hemos recibido tu
-   diagnóstico, aquí tienes tu perfil" + el informe cuando esté listo). Opcional:
+   diagnóstico, aquí tienes tu perfil" + el informe cuando esté listo). El
+   **objetivo del email es proponer un encuentro**, y la sesión se **personaliza
+   según el diagnóstico** (ver mapa abajo, campo `suggested_session`). Opcional:
    copia interna a `LEAD_NOTIFICATION_EMAIL` para avisar al equipo comercial.
 5. Responder `{ "ok": true }`.
+
+### Tipo de sesión propuesta según perfil
+
+La web ya envía `suggested_session` derivada del `perfil`. El ERP la usa para
+personalizar la invitación del email (nombres orientativos, ajústalos):
+
+| `perfil` | `suggested_session` | Sesión propuesta | Foco |
+|---|---|---|---|
+| `exposed` | `governance` | Sesión de gobernanza y estrategia reputacional | Establecer responsable, estrategia y relato — la base que falta. |
+| `blind` | `measurement` | Sesión de medición reputacional (GERS) | Poner instrumentos: medir y crear cultura que lo sostenga. |
+| `resilient` | `protection` | Sesión de protección y ventaja reputacional | Proteger y demostrar una reputación ya sólida. |
+| `advanced` | `optimization` | Sesión de optimización reputacional | Cerrar las últimas brechas hacia la excelencia. |
+
+`contexto`, `area_prioritaria`, `urgencia` y `disponibilidad` afinan el tono y la
+prioridad de la propuesta (p. ej. `contexto: "crisis"` → sesión urgente).
 
 Para `crisis`/`propose`/`subscribe`: basta con crear/actualizar el lead (y, en
 `subscribe`, alta en la lista del Briefing) y responder `{ "ok": true }`.
