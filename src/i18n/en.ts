@@ -96,7 +96,7 @@ export const en = {
     title: 'Reputation Advisors',
     image: '/team.jpg',
     lead: 'We bring together experts in reputation strategy, data analytics, and stakeholder engagement to help design, validate, and govern strategic plans with reputational intelligence.',
-    meetPartners: 'Meet our partners',
+    meetPartners: 'Meet the team',
     members: [
       {
         name: 'Juan Cardona',
@@ -146,8 +146,8 @@ export const en = {
     },
     // Página /team
     page: {
-      title: 'Our partners',
-      lead: 'Meet the X21 partners — senior advisors in corporate affairs, media relations, technology and reputational crisis.',
+      title: 'Our team',
+      lead: 'Meet the X21 team — senior advisors in corporate affairs, media relations, technology and reputational crisis.',
       back: '← Back to home',
       cta: 'Start the conversation',
       linkedin: 'LinkedIn',
@@ -156,7 +156,7 @@ export const en = {
 
   why: {
     eyebrow: 'Why X21',
-    title: 'The science of reputation',
+    title: 'Evidence-based reputation',
     image: '/why.jpg',
     lead: 'Most reputation tools measure perception. Our proprietary GERS© model goes deeper — gauging how closely your conduct aligns with what stakeholders expect of you. Scientifically validated and powered by AI and natural-language processing to read those expectations, it connects reputation directly to advocacy and a higher Net Promoter Score (NPS): the behavior that grows your business.',
     pillars: [
@@ -164,7 +164,7 @@ export const en = {
       { label: 'Performance', body: 'Meet stakeholder expectations through measurable impact.' },
       { label: 'Transparency', body: 'Build credibility with clear and open communication.' },
       { label: 'Integrity', body: 'Reinforce ethical practices to strengthen relationships.' },
-      { label: 'Purpose', body: 'Drive meaningful change and connect with a greater mission.' },
+      { label: 'Social Impact', body: 'Contribute beyond commercial results and connect with a greater mission.' },
     ],
   },
 
@@ -173,7 +173,7 @@ export const en = {
     title: 'What you can hold us to',
     intro: 'The principles behind every engagement — true whoever you work with, and whatever the brief.',
     items: [
-      { title: 'Partners, not pyramids', body: 'The people who win the work do the work. Senior counsel throughout, never delegated down.' },
+      { title: 'Senior counsel', body: 'The people who win the work do the work. Senior counsel throughout, never delegated down.' },
       { title: 'Evidence before opinion', body: 'We measure reputation with our GERS© model before we advise on it.' },
       { title: 'Candor over comfort', body: "Independent enough to tell you what you'd rather not hear." },
       { title: 'Discretion as default', body: 'The most important work is the work no one sees.' },
@@ -192,8 +192,8 @@ export const en = {
     linkedin: 'https://www.linkedin.com/company/x21-consulting/',
     meta: { office: 'Office', email: 'Email', community: 'Community' },
     routes: {
-      explore: { name: 'Explore', desc: 'See what we do and how the GERS© model works.' },
-      diagnose: { name: 'Diagnose', desc: 'Get an instant reputation profile in two minutes.' },
+      explore: { name: 'Explore', desc: 'See what we do and meet the advisory team.' },
+      diagnose: { name: 'Diagnose', desc: 'Explore the GERS© model and get a reputation profile in two minutes.' },
       propose: { name: 'Propose', desc: 'Tell us about a project and get a proposal.' },
       crisis: { name: 'Crisis', desc: "A reputational emergency that can't wait." },
     },
@@ -292,11 +292,11 @@ export const en = {
       },
       {
         key: 'purpose',
-        label: 'Purpose',
-        importanceQ: 'How important is a clear purpose and positive impact beyond commercial results?',
-        managementQ: 'How well do you articulate and deliver on your purpose today?',
+        label: 'Social Impact',
+        importanceQ: 'How important is a positive social impact beyond commercial results?',
+        managementQ: 'How well does your organization deliver a positive social impact today?',
         deep: [
-          'Our purpose is embedded in our business decisions.',
+          'Our social impact is embedded in our business decisions.',
           'We measure our impact beyond financial results.',
         ],
       },
@@ -401,11 +401,11 @@ export const en = {
   },
 
   briefing: {
-    eyebrow: 'Quarterly',
+    eyebrow: 'Biannual',
     title: 'The Briefing',
     status: 'First issue — Winter 2026/27',
-    teaser: 'A new quarterly briefing. First issue Winter 2026/27 — subscribe free.',
-    lead: "We're launching a quarterly briefing for senior leaders: crisis autopsies, where stakeholder expectations are shifting, and insights from our Lab. The first issue arrives Winter 2026/27 — subscribe free to receive it.",
+    teaser: 'A new biannual briefing. First issue Winter 2026/27 — subscribe free.',
+    lead: "We're launching a biannual briefing for senior leaders: crisis autopsies, where stakeholder expectations are shifting, and insights from our Lab. The first issue arrives Winter 2026/27 — subscribe free to receive it.",
     teaserCta: 'Read the Briefing →',
     expectLabel: 'What to expect',
     writingLabel: 'Recent writing',

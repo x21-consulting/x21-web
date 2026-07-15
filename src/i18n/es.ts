@@ -45,12 +45,12 @@ export const es: SiteContent = {
         title: 'Corporate Affairs',
         slug: 'corporate-affairs',
         tagline: 'El núcleo estratégico e institucional.',
-        lead: 'Cuando la reputación es el activo en juego, la estrategia no se improvisa. En Corporate Affairs definimos el relato, protegemos el valor en las operaciones críticas y alineamos a las instituciones y grupos de interés que determinan tu margen de actuación.',
+        lead: 'Cuando la reputación es el activo en juego, la estrategia no se improvisa. En Corporate Affairs definimos el relato, protegemos el valor en las operaciones críticas y alineamos a las instituciones y grupos de interés que determinan el margen de actuación de la compañía.',
         capabilities: [
-          { title: 'Estrategia de reputación y relato', body: 'Un relato claro y defendible de quién eres y por qué importas, construido para resistir el escrutinio y guiar cada decisión y cada mensaje.' },
-          { title: 'Due diligence reputacional en M&A', body: 'Sacamos a la luz el riesgo y el valor reputacional ocultos en una operación antes de que se conviertan en tu problema, para que negocies e integres con conocimiento de causa.' },
+          { title: 'Estrategia de reputación y relato', body: 'Un relato claro y defendible de quién es la organización y por qué es relevante, construido para resistir el escrutinio y guiar cada decisión y cada mensaje.' },
+          { title: 'Due diligence reputacional en M&A', body: 'Sacamos a la luz el riesgo y el valor reputacional ocultos en una operación antes de que se conviertan en un problema, para negociar e integrar con conocimiento de causa.' },
           { title: 'Informes periciales de reputación para litigios', body: 'Informes independientes y con base metodológica sobre la reputación y su daño, preparados para sostenerse como prueba pericial de parte.' },
-          { title: 'Relación y apoyo a grupos de interés', body: 'Posicionamiento y diálogo con los inversores, reguladores, instituciones públicas, fundaciones y ONG cuyas expectativas configuran tu legitimidad.' },
+          { title: 'Relación y apoyo a grupos de interés', body: 'Posicionamiento y diálogo con los inversores, reguladores, instituciones públicas, fundaciones y ONG cuyas expectativas configuran la legitimidad de la organización.' },
         ],
         partners: ['Antonieta Mendoza', 'Claudio Vallejo'],
       },
@@ -59,11 +59,11 @@ export const es: SiteContent = {
         title: 'Relación con Medios',
         slug: 'media-relations',
         tagline: 'Visibilidad y voz.',
-        lead: 'La visibilidad se gana, no se compra. Convertimos posiciones complejas en mensajes claros y llevamos tu voz allí donde cuenta, sobre todo cuando hay más en juego.',
+        lead: 'La visibilidad se gana, no se compra. Convertimos posiciones complejas en mensajes claros y proyectamos la voz de la organización allí donde cuenta, sobre todo cuando hay más en juego.',
         capabilities: [
-          { title: 'Relación con medios', body: 'Construimos y mantenemos las relaciones con los periodistas y los medios que importan a tus audiencias.' },
-          { title: 'Preparación de portavoces', body: 'Preparamos a tus líderes para hablar con claridad y autoridad, ante la prensa y bajo presión.' },
-          { title: 'Mensajes para momentos decisivos', body: 'Mensajes precisos y coherentes para los anuncios, las operaciones y los momentos de escrutinio que definen cómo te perciben.' },
+          { title: 'Relación con medios', body: 'Construimos y mantenemos las relaciones con los periodistas y los medios que importan a las audiencias clave.' },
+          { title: 'Preparación de portavoces', body: 'Preparamos a los portavoces para hablar con claridad y autoridad, ante la prensa y bajo presión.' },
+          { title: 'Mensajes para momentos decisivos', body: 'Mensajes precisos y coherentes para los anuncios, las operaciones y los momentos de escrutinio que definen cómo se percibe a la organización.' },
         ],
         partners: ['Gemma Martín'],
       },
@@ -72,10 +72,10 @@ export const es: SiteContent = {
         title: 'Gestión de Riesgos y Crisis',
         slug: 'risk-crisis',
         tagline: 'Anticipación y protección.',
-        lead: 'La reputación se pierde más rápido de lo que se construye. Anticipamos lo que podría salir mal, reducimos la exposición y estamos a tu lado cuando llega la crisis, para contener el daño y reconstruir la confianza.',
+        lead: 'La reputación se pierde más rápido de lo que se construye. Anticipamos lo que podría salir mal, reducimos la exposición y acompañamos cuando llega la crisis, para contener el daño y reconstruir la confianza.',
         capabilities: [
           { title: 'Monitorización, sentimiento y detección de relatos', body: 'Escucha continua en prensa y redes, con IA para captar los cambios de sentimiento y detectar los relatos emergentes antes de que se agraven.' },
-          { title: 'Identificación y mitigación de riesgos', body: 'Trazamos el mapa de los riesgos reputacionales propios de tu negocio y ponemos en marcha planes antes de que se materialicen.' },
+          { title: 'Identificación y mitigación de riesgos', body: 'Trazamos el mapa de los riesgos reputacionales propios del negocio y ponemos en marcha planes antes de que se materialicen.' },
           { title: 'Gestión de crisis y recuperación de la confianza', body: 'Asesoramiento sereno y ejecución durante la crisis, y una hoja de ruta para reconstruir la confianza después.' },
         ],
         partners: ['Juan Cardona'],
@@ -93,8 +93,8 @@ export const es: SiteContent = {
     eyebrow: 'Equipo',
     title: 'Asesores de Reputación',
     image: '/team.jpg',
-    lead: 'Reunimos a expertos en estrategia de reputación, analítica de datos y relación con grupos de interés para ayudarte a diseñar, validar y gobernar planes estratégicos con inteligencia reputacional.',
-    meetPartners: 'Conoce a los socios',
+    lead: 'Reunimos a expertos en estrategia de reputación, analítica de datos y relación con grupos de interés para ayudar a diseñar, validar y gobernar planes estratégicos con inteligencia reputacional.',
+    meetPartners: 'Conoce al equipo',
     members: [
       {
         name: 'Juan Cardona',
@@ -104,7 +104,7 @@ export const es: SiteContent = {
         photo: '/team-juan.jpg',
         email: 'jcardona@x21.consulting',
         linkedin: 'https://www.linkedin.com/in/jcardonasoriano/',
-        bio: 'Asesor corporativo con 25 años de experiencia en comunicación estratégica, reputación y sostenibilidad. Ha ocupado puestos ejecutivos en LLYC, Corporate Excellence y Grupo Ferrovial. Ha asesorado al Gobierno de España en su estrategia de sostenibilidad.',
+        bio: 'Asesor corporativo con 25 años de experiencia en estrategia, reputación, comunicación y sostenibilidad. Ha ocupado puestos ejecutivos en LLYC, Corporate Excellence y Grupo Ferrovial, asesorando a grandes compañías e instituciones en la gestión de riesgos reputacionales e integrando las expectativas de sus grupos de interés en la toma de decisiones estratégicas.',
       },
       {
         name: 'Antonieta Mendoza',
@@ -124,7 +124,7 @@ export const es: SiteContent = {
         photo: '/team-claudio.jpg',
         email: 'cvallejo@x21.consulting',
         linkedin: 'https://www.linkedin.com/in/claudiovallejoaguilareal/',
-        bio: 'Consultor sénior en comunicación, reputación y diplomacia pública con más de 30 años de experiencia internacional en España y América Latina. Ha ocupado puestos ejecutivos en LLYC, Kreab, CODERE, Ence y Unión Fenosa, liderando la comunicación corporativa, la gestión de crisis y la comunicación financiera —incluidos procesos de salida a bolsa— en los sectores de energía, celulosa, juego privado y servicios profesionales. Inició su carrera como Agregado Comercial en la Embajada de España en Ecuador, coordinando la actividad del ICEX y la diplomacia económica bilateral. Combina visión corporativa, experiencia multinacional y sensibilidad institucional, con proyectos en más de ocho países de dos continentes.',
+        bio: 'Consultor sénior en comunicación, reputación y asuntos corporativos con más de 30 años de experiencia internacional en España y América Latina. Ha ocupado puestos ejecutivos en LLYC, Kreab, Codere, Ence y Unión Fenosa, combinando una sólida trayectoria corporativa con experiencia institucional como Agregado Comercial de la Embajada de España en Ecuador y responsable de la actividad del ICEX en Ecuador.',
       },
       {
         name: 'Gemma Martín',
@@ -134,7 +134,7 @@ export const es: SiteContent = {
         photo: '/team-gemma.jpg',
         email: 'gemmamartinpiquet@x21.consulting',
         linkedin: 'https://www.linkedin.com/in/gemma-martin-b166551/',
-        bio: 'Profesional sénior de comunicación estratégica y relación con medios con más de 20 años de experiencia internacional en España, Estados Unidos y proyectos multirregionales (Europa, Oriente Medio, América y Asia). Ha liderado estrategias de comunicación corporativa e institucional en energía, infraestructuras, finanzas y sector público, posicionando a organizaciones y líderes en medios de primer nivel (Financial Times, Bloomberg, The Economist, CNN, BBC) y en foros internacionales (ONU, Davos, UE).',
+        bio: 'Profesional sénior de comunicación estratégica y relación con medios con más de 20 años de experiencia internacional en España, Estados Unidos y proyectos multirregionales. Ha posicionado a organizaciones y líderes en medios internacionales y foros de referencia como la ONU, Davos y la Unión Europea.',
       },
     ],
     quote: {
@@ -143,8 +143,8 @@ export const es: SiteContent = {
       role: 'Fundador y CEO de X21',
     },
     page: {
-      title: 'Nuestros socios',
-      lead: 'Conoce a los socios de X21: asesores sénior en corporate affairs, relación con medios, tecnología y crisis reputacional.',
+      title: 'Nuestro equipo',
+      lead: 'Conoce al equipo de X21: asesores sénior en corporate affairs, relación con medios, tecnología y crisis reputacional.',
       back: '← Volver al inicio',
       cta: 'Empieza la conversación',
       linkedin: 'LinkedIn',
@@ -153,34 +153,34 @@ export const es: SiteContent = {
 
   why: {
     eyebrow: 'Por qué X21',
-    title: 'La ciencia de la reputación',
+    title: 'Reputación basada en evidencias',
     image: '/why.jpg',
-    lead: 'La mayoría de las herramientas de reputación miden la percepción. Nuestro modelo propio, GERS©, va más allá: calibra hasta qué punto tu conducta se corresponde con lo que tus grupos de interés esperan de ti. Validado científicamente e impulsado por IA y procesamiento del lenguaje natural para leer esas expectativas, conecta la reputación directamente con la recomendación y con un mayor Net Promoter Score (NPS): el comportamiento que hace crecer tu negocio.',
+    lead: 'La mayoría de las herramientas de reputación miden la percepción. Nuestro modelo propio, GERS©, va más allá: calibra hasta qué punto la conducta corporativa se corresponde con lo que los grupos de interés esperan de la organización. Validado científicamente e impulsado por IA y procesamiento del lenguaje natural para leer esas expectativas, conecta la reputación directamente con la recomendación y con un mayor Net Promoter Score (NPS): el comportamiento que hace crecer el negocio.',
     pillars: [
-      { label: 'Marca', body: 'Refuerza tu identidad corporativa para generar confianza y reconocimiento.' },
-      { label: 'Desempeño', body: 'Cumple las expectativas de tus grupos de interés con un impacto medible.' },
-      { label: 'Transparencia', body: 'Construye credibilidad con una comunicación clara y abierta.' },
-      { label: 'Integridad', body: 'Consolida prácticas éticas para fortalecer las relaciones.' },
-      { label: 'Propósito', body: 'Impulsa un cambio significativo y conecta con una misión mayor.' },
+      { label: 'Marca', body: 'Una identidad corporativa que genera confianza y reconocimiento.' },
+      { label: 'Desempeño', body: 'El cumplimiento de las expectativas de los grupos de interés, con un impacto medible.' },
+      { label: 'Transparencia', body: 'Credibilidad construida con una comunicación clara y abierta.' },
+      { label: 'Integridad', body: 'Prácticas éticas que refuerzan las relaciones.' },
+      { label: 'Impacto Social', body: 'Un cambio significativo conectado con una misión mayor.' },
     ],
   },
 
   commitments: {
     eyebrow: 'Nuestros compromisos',
-    title: 'Lo que puedes exigirnos',
-    intro: 'Los principios que hay detrás de cada proyecto: válidos con quienquiera que trabajes y sea cual sea el encargo.',
+    title: 'Lo que se nos puede exigir',
+    intro: 'Los principios que hay detrás de cada proyecto, sea quien sea el interlocutor y sea cual sea el encargo.',
     items: [
-      { title: 'Socios, no pirámides', body: 'Quien gana el proyecto es quien lo ejecuta. Asesoramiento sénior de principio a fin, que nunca se delega en perfiles junior.' },
+      { title: 'Asesoramiento sénior', body: 'Quien gana el proyecto es quien lo ejecuta. Trabajo sénior de principio a fin, que nunca se delega en perfiles junior.' },
       { title: 'Evidencia antes que opinión', body: 'Medimos la reputación con nuestro modelo GERS© antes de asesorar sobre ella.' },
-      { title: 'Franqueza antes que comodidad', body: 'Lo bastante independientes para decirte lo que preferirías no oír.' },
+      { title: 'Franqueza antes que comodidad', body: 'Independientes para decir lo que no siempre se quiere oír.' },
       { title: 'Discreción por defecto', body: 'El trabajo más importante es el que nadie ve.' },
     ],
   },
 
   contact: {
     eyebrow: 'Contacto',
-    title: 'Tu crecimiento empieza aquí.',
-    lead: 'Sea cual sea el motivo que te ha traído hasta aquí, cuéntanos qué necesitas.',
+    title: 'Aquí empieza el crecimiento.',
+    lead: 'Sea cual sea el motivo de la visita, cuéntanos qué necesitas.',
     address: 'Velázquez, 34 — 7F, 28001 Madrid, España',
     addressUrl: 'https://maps.google.com/?q=Velázquez+34+Madrid',
     phoneLabel: '+34 910 623 660',
@@ -189,8 +189,8 @@ export const es: SiteContent = {
     linkedin: 'https://www.linkedin.com/company/x21-consulting/',
     meta: { office: 'Oficina', email: 'Email', community: 'Comunidad' },
     routes: {
-      explore: { name: 'Explorar', desc: 'Descubre qué hacemos y cómo funciona el modelo GERS©.' },
-      diagnose: { name: 'Diagnosticar', desc: 'Consigue un perfil de reputación en dos minutos.' },
+      explore: { name: 'Explorar', desc: 'Descubre qué hacemos y el equipo de asesores.' },
+      diagnose: { name: 'Diagnosticar', desc: 'Descubre el modelo GERS© y consigue un perfil de reputación en dos minutos.' },
       propose: { name: 'Proponer', desc: 'Cuéntanos un proyecto y recibe una propuesta.' },
       crisis: { name: 'Crisis', desc: 'Una emergencia reputacional que no puede esperar.' },
     },
@@ -219,10 +219,10 @@ export const es: SiteContent = {
   diagnostic: {
     title: 'Autodiagnóstico de reputación — X21',
     description:
-      'Evalúa a tu organización en las cinco dimensiones GERS© y su capacidad para gestionar la reputación, y obtén un perfil al instante.',
+      'Evalúa la organización en las cinco dimensiones GERS© y su capacidad para gestionar la reputación, y obtén un perfil al instante.',
     eyebrow: 'Autodiagnóstico',
-    heading: '¿Está alineada tu reputación con lo que esperan de ti?',
-    lead: 'Un autodiagnóstico de 10 minutos basado en nuestro modelo GERS©. Puntúa cada dimensión según su importancia y según cómo la gestiona hoy tu organización, valora su madurez en la gestión de la reputación y obtén al instante tu perfil: brechas, índices y tu tipo de reputación. Al terminar, déjanos tus datos y nuestro equipo preparará tu análisis completo.',
+    heading: '¿Está alineada la reputación corporativa con lo que esperan los grupos de interés?',
+    lead: 'Un autodiagnóstico de 10 minutos basado en nuestro modelo GERS©. Puntúa cada dimensión según su importancia y según cómo la gestiona hoy la organización, valora la madurez en la gestión de la reputación y obtén al instante un perfil: brechas, índices y tipo de reputación. Al terminar, déjanos tus datos y nuestro equipo preparará el análisis completo.',
     startCta: 'Empezar el diagnóstico',
 
     wizard: {
@@ -244,14 +244,14 @@ export const es: SiteContent = {
 
     areasStep: {
       title: 'Las cinco dimensiones GERS©',
-      intro: 'Para cada dimensión, indícanos qué importancia tiene para tu organización y cómo la gestiona hoy.',
+      intro: 'Para cada dimensión, indícanos qué importancia tiene para la organización y cómo la gestiona hoy.',
     },
     areas: [
       {
         key: 'brand',
         label: 'Marca',
-        importanceQ: '¿Qué importancia tiene para tu organización una marca fuerte y reconocida?',
-        managementQ: '¿Cómo gestiona hoy tu organización su identidad de marca y su reconocimiento?',
+        importanceQ: '¿Qué importancia tiene para la organización una marca fuerte y reconocida?',
+        managementQ: '¿Cómo gestiona hoy la organización su identidad de marca y su reconocimiento?',
         deep: [
           'Nuestra marca está claramente diferenciada de la competencia.',
           'Nuestros líderes son visibles y se asocian a la marca.',
@@ -260,8 +260,8 @@ export const es: SiteContent = {
       {
         key: 'performance',
         label: 'Desempeño',
-        importanceQ: '¿Qué importancia tiene para tu reputación cumplir los compromisos de forma consistente?',
-        managementQ: '¿Con qué consistencia cumple hoy tu organización los compromisos que adquiere con sus grupos de interés?',
+        importanceQ: '¿Qué importancia tiene para la reputación cumplir los compromisos de forma consistente?',
+        managementQ: '¿Con qué consistencia cumple hoy la organización los compromisos que adquiere con sus grupos de interés?',
         deep: [
           'Podemos demostrar nuestro historial ante los grupos de interés.',
           'Gestionamos las expectativas antes de asumir compromisos.',
@@ -270,8 +270,8 @@ export const es: SiteContent = {
       {
         key: 'transparency',
         label: 'Transparencia',
-        importanceQ: '¿Qué importancia tiene para tu legitimidad una comunicación abierta y a tiempo?',
-        managementQ: '¿Con qué transparencia comunica hoy tu organización, incluso cuando las noticias son difíciles?',
+        importanceQ: '¿Qué importancia tiene para la legitimidad una comunicación abierta y a tiempo?',
+        managementQ: '¿Con qué transparencia comunica hoy la organización, incluso cuando las noticias son difíciles?',
         deep: [
           'Divulgamos la información relevante de forma proactiva.',
           'Tenemos canales claros de diálogo con los grupos de interés.',
@@ -280,8 +280,8 @@ export const es: SiteContent = {
       {
         key: 'integrity',
         label: 'Integridad',
-        importanceQ: '¿Qué importancia tiene que las acciones de tu organización se correspondan con los valores que declara?',
-        managementQ: '¿Hasta qué punto se alinean hoy las acciones cotidianas de tu organización con sus valores públicos?',
+        importanceQ: '¿Qué importancia tiene que las acciones de la organización se correspondan con los valores que declara?',
+        managementQ: '¿Hasta qué punto se alinean hoy las acciones cotidianas de la organización con sus valores públicos?',
         deep: [
           'Contamos con mecanismos eficaces de ética y cumplimiento.',
           'Los incidentes se gestionan de forma coherente con nuestros valores.',
@@ -289,11 +289,11 @@ export const es: SiteContent = {
       },
       {
         key: 'purpose',
-        label: 'Propósito',
-        importanceQ: '¿Qué importancia tienen un propósito claro y un impacto positivo más allá de los resultados comerciales?',
-        managementQ: '¿Con qué claridad articula y cumple hoy tu organización su propósito?',
+        label: 'Impacto Social',
+        importanceQ: '¿Qué importancia tiene un impacto social positivo más allá de los resultados comerciales?',
+        managementQ: '¿Con qué claridad genera hoy la organización un impacto social positivo?',
         deep: [
-          'Nuestro propósito está integrado en las decisiones de negocio.',
+          'Nuestro impacto social está integrado en las decisiones de negocio.',
           'Medimos nuestro impacto más allá de los resultados financieros.',
         ],
       },
@@ -301,16 +301,16 @@ export const es: SiteContent = {
 
     priorityStep: {
       title: 'Prioridad y reto',
-      chooseLabel: '¿Qué dimensión es tu prioridad ahora mismo?',
+      chooseLabel: '¿Qué dimensión es la prioridad ahora mismo?',
       urgencyLabel: '¿Qué urgencia tiene actuar sobre ella?',
       urgency: ['Nada urgente', 'Poco urgente', 'Urgencia media', 'Bastante urgente', 'Muy urgente'],
-      challengeLabel: '¿Cuál es el principal reto reputacional al que te enfrentas?',
+      challengeLabel: '¿Cuál es el principal reto reputacional al que se enfrenta la organización?',
       challengePlaceholder: 'Descríbelo brevemente…',
     },
 
     maturityStep: {
       title: 'Madurez en la gestión de la reputación',
-      intro: '¿En qué medida estás de acuerdo con cada afirmación sobre tu organización?',
+      intro: 'Indica en qué medida cada afirmación describe a la organización.',
       dims: [
         { key: 'governance', label: 'Gobernanza', q: 'La reputación tiene un responsable claro en la dirección o el consejo.' },
         { key: 'strategy', label: 'Estrategia y relato', q: 'Tenemos una estrategia de reputación y un relato definidos.' },
@@ -323,53 +323,53 @@ export const es: SiteContent = {
 
     deepStep: {
       title: 'Profundicemos en {area}',
-      intro: 'Algunas afirmaciones específicas sobre tu dimensión prioritaria.',
+      intro: 'Algunas afirmaciones específicas sobre la dimensión prioritaria.',
     },
 
     expectationsStep: {
       title: 'Expectativas',
-      resultLabel: '¿Qué resultado te gustaría conseguir?',
+      resultLabel: '¿Qué resultado se busca conseguir?',
       resultPlaceholder: 'El resultado que haría que todo esto mereciera la pena…',
-      availabilityLabel: '¿Cuándo te gustaría actuar?',
+      availabilityLabel: '¿Cuándo conviene actuar?',
       availability: [
         { value: 'now', label: 'De inmediato' },
         { value: 'quarter', label: 'Este trimestre' },
         { value: 'year', label: 'Este año' },
         { value: 'exploring', label: 'Solo explorando' },
       ],
-      alignmentLabel: '¿Hasta qué punto está alineado tu equipo directivo en esto?',
+      alignmentLabel: '¿Hasta qué punto está alineado el equipo directivo en esto?',
     },
 
     results: {
       title: 'Tu perfil de reputación',
       imrLabel: 'Índice de Madurez Reputacional',
       iarLabel: 'Índice de Ambición Reputacional',
-      imrHint: 'Dónde estás',
-      iarHint: 'Hacia dónde quieres ir',
+      imrHint: 'Situación actual',
+      iarHint: 'Aspiración',
       radarAria: 'Radar de importancia frente a gestión actual en las cinco dimensiones GERS',
       radarImportance: 'Importancia',
       radarManagement: 'Gestión actual',
-      quadrantLabel: 'Tu posición',
+      quadrantLabel: 'Posición',
       quadrants: {
         highPotential: { name: 'Alto potencial', body: 'Ambición alta con margen para madurar: el momento ideal para invertir en reputación.' },
-        advanced: { name: 'Referente', body: 'Ambición alta y gestión sólida: protege y demuestra tu ventaja.' },
-        littleRoom: { name: 'Poco recorrido', body: 'Ambición y madurez más bajas: la reputación todavía no es una palanca que estés aprovechando.' },
-        comfortable: { name: 'Consolidado', body: 'Gestión sólida con menor ambición: una buena base, con recorrido si elevas el listón.' },
+        advanced: { name: 'Referente', body: 'Ambición alta y gestión sólida: una ventaja que conviene proteger y demostrar.' },
+        littleRoom: { name: 'Poco recorrido', body: 'Ambición y madurez más bajas: la reputación todavía no es una palanca en uso.' },
+        comfortable: { name: 'Consolidado', body: 'Gestión sólida con menor ambición: una buena base, con recorrido si se eleva el listón.' },
       },
-      profileLabel: 'Tu tipo de reputación',
+      profileLabel: 'Tipo de reputación',
       profiles: {
         exposed: { name: 'Expuesto', body: 'Falta lo básico: no hay un responsable ni una estrategia claros de reputación. Ese es el primer cuello de botella que resolver.' },
-        blind: { name: 'A ciegas', body: 'La base existe, pero faltan medición y una cultura que la sostenga. Gestionas la reputación sin instrumentos.' },
-        resilient: { name: 'Resiliente', body: 'Gestión sólida en todo y preparada para una crisis. Tu reputación es un activo real: sigue demostrándolo.' },
-        advanced: { name: 'Avanzado', body: 'Sin bloqueos claros de estrategia ni de medición, aunque todavía sin una excelencia uniforme. Cierra las últimas brechas.' },
+        blind: { name: 'A ciegas', body: 'La base existe, pero faltan medición y una cultura que la sostenga. Se gestiona la reputación sin instrumentos.' },
+        resilient: { name: 'Resiliente', body: 'Gestión sólida en todo y preparada para una crisis. La reputación es un activo real que conviene seguir demostrando.' },
+        advanced: { name: 'Avanzado', body: 'Sin bloqueos claros de estrategia ni de medición, aunque todavía sin una excelencia uniforme. Quedan por cerrar las últimas brechas.' },
       },
-      gapTitle: 'Tus mayores brechas',
-      gapHint: 'Donde una dimensión importa mucho más de lo que hoy la gestionas.',
+      gapTitle: 'Mayores brechas',
+      gapHint: 'Donde una dimensión importa mucho más de lo que hoy se gestiona.',
       coherenceTitle: 'Foco frente a la realidad',
-      coherenceMatch: 'Tu prioridad ({priority}) coincide con tu mayor brecha: el foco está bien puesto.',
-      coherenceMismatch: 'Tu mayor brecha está en {gap}, no en la dimensión que priorizaste ({priority}). Conviene revisarlo: es un punto ciego habitual.',
+      coherenceMatch: 'La prioridad ({priority}) coincide con la mayor brecha: el foco está bien puesto.',
+      coherenceMismatch: 'La mayor brecha está en {gap}, no en la dimensión priorizada ({priority}). Conviene revisarlo: es un punto ciego habitual.',
       recoTitle: 'Por dónde empezar',
-      recoLead: 'Tu mayor brecha está en {gap}, justo lo que nuestro trabajo de {service} está pensado para cerrar.',
+      recoLead: 'La mayor brecha está en {gap}, justo lo que nuestro trabajo de {service} está pensado para cerrar.',
       recoCta: 'Ver {service} →',
       recoPartners: 'Dirigido por',
     },
@@ -386,23 +386,23 @@ export const es: SiteContent = {
     // Captura como "desbloqueo": los resultados de arriba se ven; el desglose
     // por dimensión, la recomendación y el informe completo requieren email.
     capture: {
-      title: 'Desbloquea tu desglose completo',
-      sub: 'Déjanos tus datos para ver tus brechas dimensión a dimensión y por dónde empezar, y recibe por email tu informe GERS© completo, elaborado por nuestro equipo.',
+      title: 'Desbloquea el desglose completo',
+      sub: 'Déjanos tus datos para ver el desglose de brechas dimensión a dimensión y por dónde empezar, y recibe por email el informe GERS© completo, elaborado por nuestro equipo.',
       namePlaceholder: 'Nombre',
       emailPlaceholder: 'Email profesional *',
       companyPlaceholder: 'Empresa',
       submit: 'Desbloquear y enviarme el informe',
     },
-    thanksTitle: 'Tu informe completo está en camino.',
-    thanksBody: 'Nos pondremos en contacto en breve con tu análisis GERS© completo, elaborado por nuestro equipo. Abajo tienes tu desglose detallado para ir empezando.',
+    thanksTitle: 'El informe completo está en camino.',
+    thanksBody: 'Nos pondremos en contacto en breve con el análisis GERS© completo, elaborado por nuestro equipo. Abajo tienes el desglose detallado para ir empezando.',
   },
 
   briefing: {
-    eyebrow: 'Trimestral',
+    eyebrow: 'Semestral',
     title: 'The Briefing',
     status: 'Primer número — Invierno 2026/27',
-    teaser: 'Un nuevo briefing trimestral. Primer número en invierno de 2026/27; suscríbete gratis.',
-    lead: 'Lanzamos un briefing trimestral para la alta dirección: autopsias de crisis, hacia dónde se están moviendo las expectativas de los grupos de interés e ideas de nuestro Lab. El primer número llega en invierno de 2026/27; suscríbete gratis para recibirlo.',
+    teaser: 'Un nuevo briefing semestral. Primer número en invierno de 2026/27. Suscríbete gratis.',
+    lead: 'Lanzamos un briefing semestral para la alta dirección: autopsias de crisis, hacia dónde se están moviendo las expectativas de los grupos de interés e ideas de nuestro Lab. El primer número llega en invierno de 2026/27. Suscríbete gratis para recibirlo.',
     teaserCta: 'Leer el Briefing →',
     expectLabel: 'Qué vas a encontrar',
     writingLabel: 'Publicaciones recientes',
@@ -418,7 +418,7 @@ export const es: SiteContent = {
     },
     expect: [
       { title: 'Autopsias de crisis', body: 'Qué pasó, qué revela la mirada GERS y cuál es la lección: análisis de casos reputacionales recientes.' },
-      { title: 'Expectativas en movimiento', body: 'Hacia dónde se mueven las expectativas de los grupos de interés en tu sector y qué significa para tu legitimidad.' },
+      { title: 'Expectativas en movimiento', body: 'Hacia dónde se mueven las expectativas de los grupos de interés en cada sector y qué significa para la legitimidad.' },
       { title: 'Desde nuestro Lab', body: 'Lecturas y datos originales extraídos de nuestra investigación, cuando estén listos para compartir.' },
     ],
     articles: [
